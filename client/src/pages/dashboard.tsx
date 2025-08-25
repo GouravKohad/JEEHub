@@ -38,15 +38,15 @@ export default function Dashboard() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
-  const { data: tasks = [], isLoading: tasksLoading } = useQuery({
+  const { data: tasks = [], isLoading: tasksLoading } = useQuery<any[]>({
     queryKey: ["/api/tasks"],
   });
 
-  const { data: files = [], isLoading: filesLoading } = useQuery({
+  const { data: files = [], isLoading: filesLoading } = useQuery<any[]>({
     queryKey: ["/api/files"],
   });
 
-  const { data: performance = [], isLoading: performanceLoading } = useQuery({
+  const { data: performance = [], isLoading: performanceLoading } = useQuery<any[]>({
     queryKey: ["/api/performance"],
   });
 

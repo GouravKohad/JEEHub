@@ -34,7 +34,7 @@ export default function Files() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
-  const { data: files = [], isLoading } = useQuery({
+  const { data: files = [], isLoading } = useQuery<any[]>({
     queryKey: ["/api/files"],
   });
 

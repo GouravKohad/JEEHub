@@ -103,6 +103,10 @@ export class MemStorage implements IStorage {
     const task: Task = {
       ...insertTask,
       id,
+      description: insertTask.description || null,
+      dueDate: insertTask.dueDate || null,
+      priority: insertTask.priority || 'medium',
+      completed: insertTask.completed || false,
       createdAt: now,
       updatedAt: now,
     };
@@ -164,6 +168,7 @@ export class MemStorage implements IStorage {
     const file: File = {
       ...insertFile,
       id,
+      subject: insertFile.subject || null,
       uploadedAt: new Date(),
     };
     this.files.set(id, file);

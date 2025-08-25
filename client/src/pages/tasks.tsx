@@ -42,7 +42,7 @@ export default function Tasks() {
     }
   }, []);
 
-  const { data: tasks = [], isLoading } = useQuery({
+  const { data: tasks = [], isLoading } = useQuery<any[]>({
     queryKey: ["/api/tasks"],
   });
 

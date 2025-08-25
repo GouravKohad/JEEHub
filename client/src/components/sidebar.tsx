@@ -33,7 +33,7 @@ export function Sidebar() {
   const [location] = useLocation();
   const { theme, setTheme } = useTheme();
 
-  const { data: tasks = [] } = useQuery({
+  const { data: tasks = [] } = useQuery<any[]>({
     queryKey: ["/api/tasks"],
   });
 

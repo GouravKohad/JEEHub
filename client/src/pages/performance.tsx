@@ -15,15 +15,15 @@ import {
 import { cn } from "@/lib/utils";
 
 export default function Performance() {
-  const { data: performance = [], isLoading: performanceLoading } = useQuery({
+  const { data: performance = [], isLoading: performanceLoading } = useQuery<any[]>({
     queryKey: ["/api/performance"],
   });
 
-  const { data: tasks = [], isLoading: tasksLoading } = useQuery({
+  const { data: tasks = [], isLoading: tasksLoading } = useQuery<any[]>({
     queryKey: ["/api/tasks"],
   });
 
-  const { data: studySessions = [], isLoading: sessionsLoading } = useQuery({
+  const { data: studySessions = [], isLoading: sessionsLoading } = useQuery<any[]>({
     queryKey: ["/api/study-sessions"],
   });
 
