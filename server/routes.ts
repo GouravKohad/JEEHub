@@ -39,7 +39,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const task = await storage.createTask(validatedData);
       res.status(201).json(task);
     } catch (error) {
-      res.status(400).json({ message: "Invalid task data" });
+      console.error("Task creation error:", error);
+      res.status(400).json({ message: "Invalid task data", error: error instanceof Error ? error.message : 'Unknown error' });
     }
   });
 
