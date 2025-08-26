@@ -1,7 +1,8 @@
-import { GraduationCap, Bell, User } from 'lucide-react';
+import { useState } from 'react';
+import { GraduationCap, Settings, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { SettingsModal } from '@/components/new-modals/settings-modal';
 import type { UserProfile } from '@/lib/storage';
 
 interface HeaderProps {
@@ -9,6 +10,8 @@ interface HeaderProps {
 }
 
 export function Header({ userProfile }: HeaderProps) {
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  
   const getInitials = (name: string) => {
     return name
       .split(' ')
@@ -34,16 +37,11 @@ export function Header({ userProfile }: HeaderProps) {
             <Button
               variant="ghost"
               size="sm"
+              onClick={() => setIsSettingsOpen(true)}
               className="relative p-2 text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-110"
-              data-testid="button-notifications"
+              data-testid="button-settings"
             >
-              <Bell size={18} className="transition-transform duration-300 hover:rotate-12" />
-              <Badge 
-                variant="destructive" 
-                className="absolute -top-1 -right-1 w-4 h-4 text-xs flex items-center justify-center p-0 animate-bounce-subtle"
-              >
-                3
-              </Badge>
+              <Settings size={18} className="transition-transform duration-300 hover:rotate-90" />
             </Button>
             <div 
               className="w-8 h-8 bg-gradient-to-r from-jee-secondary to-jee-primary rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer"
@@ -61,6 +59,11 @@ export function Header({ userProfile }: HeaderProps) {
           </div>
         </div>
       </div>
+
+      <SettingsModal
+        open={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+      />
     </header>
   );
 }
