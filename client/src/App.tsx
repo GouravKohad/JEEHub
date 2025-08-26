@@ -105,7 +105,7 @@ function App() {
                 <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-6 bg-card border border-border rounded-xl p-1 shadow-sm hover:shadow-lg transition-all duration-300">
                   <TabsTrigger 
                     value="dashboard" 
-                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
+                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
                     data-testid="tab-dashboard"
                   >
                     <LayoutDashboard size={16} className="transition-transform duration-300" />
@@ -113,7 +113,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="tasks" 
-                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
+                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
                     data-testid="tab-tasks"
                   >
                     <CheckSquare size={16} className="transition-transform duration-300" />
@@ -121,7 +121,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="subjects" 
-                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
+                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
                     data-testid="tab-subjects"
                   >
                     <BookOpen size={16} className="transition-transform duration-300" />
@@ -129,7 +129,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="resources" 
-                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
+                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
                     data-testid="tab-resources"
                   >
                     <ExternalLink size={16} className="transition-transform duration-300" />
@@ -137,7 +137,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="timer" 
-                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
+                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
                     data-testid="tab-timer"
                   >
                     <Clock size={16} className="transition-transform duration-300" />
@@ -145,7 +145,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="schedule" 
-                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
+                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
                     data-testid="tab-schedule"
                   >
                     <Calendar size={16} className="transition-transform duration-300" />

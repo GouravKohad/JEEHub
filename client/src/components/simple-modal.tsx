@@ -33,10 +33,10 @@ export function SimpleModal({
 
   return (
     <div 
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 md:p-6 modal-backdrop"
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-4 md:p-6 modal-backdrop"
       style={{ 
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        zIndex: 9999 
+        zIndex: 99999 
       }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
@@ -44,7 +44,7 @@ export function SimpleModal({
     >
       <div 
         className={`modal-content ${scrollable ? 'modal-content-scrollable' : ''} ${modalSizeClass} bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full ${sizeClasses[size]} ${className}`}
-        style={{ zIndex: 10000 }}
+        style={{ zIndex: 100000 }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header - Fixed */}

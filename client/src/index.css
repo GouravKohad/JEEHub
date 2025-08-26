@@ -61,6 +61,12 @@
   /* Animation Variables */
   --animation-duration: 0.3s;
   --animation-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Tab transition duration */
+  --tab-transition-duration: 300ms;
+  
+  /* Color transition */
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 .dark {
@@ -106,16 +112,29 @@
   .jee-primary {
     background-color: var(--jee-primary);
     color: white;
+    transition: all 0.3s ease;
   }
   
   .jee-secondary {
     background-color: var(--jee-secondary);
     color: white;
+    transition: all 0.3s ease;
   }
   
   .jee-accent {
     background-color: var(--jee-accent);
     color: white;
+    transition: all 0.3s ease;
+  }
+  
+  /* Enhanced tab transitions */
+  [data-state="active"] {
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1) !important;
+  }
+  
+  /* Primary color transitions */
+  .bg-primary, [data-state="active"]:not([data-state="inactive"]) {
+    transition: background-color 0.4s cubic-bezier(0.23, 1, 0.32, 1) !important;
   }
   
   .physics-theme {
