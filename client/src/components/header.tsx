@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { GraduationCap, Settings, User } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { GraduationCap, User } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
-import { SettingsModal } from '@/components/new-modals/settings-modal';
 import type { UserProfile } from '@/lib/storage';
 import { userProfileStorage } from '@/lib/storage';
 
@@ -11,22 +9,12 @@ interface HeaderProps {
 }
 
 export function Header({ userProfile }: HeaderProps) {
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [currentProfile, setCurrentProfile] = useState<UserProfile | null>(userProfile);
 
-  // Update local profile when prop changes or when settings are updated
+  // Update local profile when prop changes
   useEffect(() => {
     setCurrentProfile(userProfile);
   }, [userProfile]);
-
-  const handleSettingsClose = () => {
-    setIsSettingsOpen(false);
-    // Refresh profile from storage to get latest changes
-    const updatedProfile = userProfileStorage.get();
-    if (updatedProfile) {
-      setCurrentProfile(updatedProfile);
-    }
-  };
   
   const getInitials = (name: string) => {
     return name
@@ -50,15 +38,6 @@ export function Header({ userProfile }: HeaderProps) {
           
           <div className="flex items-center space-x-4 animate-slide-in-right">
             <ThemeToggle />
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsSettingsOpen(true)}
-              className="relative p-2 text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-110"
-              data-testid="button-settings"
-            >
-              <Settings size={18} className="transition-transform duration-300 hover:rotate-90" />
-            </Button>
             <div 
               className="w-8 h-8 bg-gradient-to-r from-jee-secondary to-jee-primary rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer"
               data-testid="user-avatar"
@@ -75,11 +54,6 @@ export function Header({ userProfile }: HeaderProps) {
           </div>
         </div>
       </div>
-
-      <SettingsModal
-        open={isSettingsOpen}
-        onClose={handleSettingsClose}
-      />
     </header>
   );
 }
