@@ -86,7 +86,7 @@ export function ResourceModal({ open, onOpenChange, onResourceCreated }: Resourc
     <Dialog open={open} onOpenChange={onOpenChange} modal>
       <DialogContent 
         className="sm:max-w-md animate-scale-in bg-background border-border shadow-lg"
-        style={{ zIndex: 9999 }}
+        style={{ zIndex: 51 }}
       >
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold text-foreground">

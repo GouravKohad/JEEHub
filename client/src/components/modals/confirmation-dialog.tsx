@@ -47,7 +47,7 @@ export function ConfirmationDialog({
     <Dialog open={open} onOpenChange={onOpenChange} modal>
       <DialogContent 
         className="sm:max-w-md animate-scale-in bg-background border-border shadow-lg"
-        style={{ zIndex: 9999 }}
+        style={{ zIndex: 51 }}
       >
         <DialogHeader className="text-center">
           <div className={`mx-auto w-12 h-12 ${iconBgColor} rounded-full flex items-center justify-center mb-4`}>
