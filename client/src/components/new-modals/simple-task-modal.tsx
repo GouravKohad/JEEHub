@@ -43,28 +43,37 @@ export function SimpleTaskModal({ open, onClose, onTaskCreated }: SimpleTaskModa
   const priority = watch('priority');
   const today = new Date().toISOString().split('T')[0];
 
-  const onSubmit = async (data: InsertTask) => {
+  const onSubmit = (data: InsertTask) => {
+    console.log('Form submitted with data:', data);
+    console.log('Form errors:', errors);
     setIsSubmitting(true);
-    try {
-      const task = taskStorage.create(data);
-      
-      toast({
-        title: 'Task Created',
-        description: `Task "${task.title}" has been created successfully.`,
-      });
-      
-      reset();
-      onClose();
-      onTaskCreated?.();
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to create task. Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    
+    // Add a delay to make sure we can see the loading state
+    setTimeout(() => {
+      try {
+        console.log('Calling taskStorage.create...');
+        const task = taskStorage.create(data);
+        console.log('Task created successfully:', task);
+        
+        toast({
+          title: 'Task Created',
+          description: `Task "${task.title}" has been created successfully.`,
+        });
+        
+        reset();
+        onClose();
+        onTaskCreated?.();
+      } catch (error) {
+        console.error('Error creating task:', error);
+        toast({
+          title: 'Error',
+          description: `Failed to create task: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          variant: 'destructive',
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
+    }, 100);
   };
 
   useEffect(() => {
@@ -106,6 +115,9 @@ export function SimpleTaskModal({ open, onClose, onTaskCreated }: SimpleTaskModa
               <SelectItem value="Mathematics">Mathematics</SelectItem>
             </SelectContent>
           </Select>
+          {errors.subject && (
+            <p className="text-sm text-red-500 mt-1">{errors.subject.message}</p>
+          )}
         </div>
 
         <div>
@@ -117,6 +129,9 @@ export function SimpleTaskModal({ open, onClose, onTaskCreated }: SimpleTaskModa
             {...register('description')}
             className="mt-1 resize-none"
           />
+          {errors.description && (
+            <p className="text-sm text-red-500 mt-1">{errors.description.message}</p>
+          )}
         </div>
 
         <div>
@@ -155,6 +170,9 @@ export function SimpleTaskModal({ open, onClose, onTaskCreated }: SimpleTaskModa
               </button>
             ))}
           </div>
+          {errors.priority && (
+            <p className="text-sm text-red-500 mt-1">{errors.priority.message}</p>
+          )}
         </div>
 
         <div className="flex justify-end space-x-3 pt-4">

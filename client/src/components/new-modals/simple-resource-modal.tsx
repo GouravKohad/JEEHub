@@ -40,9 +40,11 @@ export function SimpleResourceModal({ open, onClose, onResourceCreated }: Simple
   });
 
   const onSubmit = async (data: InsertResource) => {
+    console.log('Resource form submitted with data:', data);
     setIsSubmitting(true);
     try {
       const resource = resourceStorage.create(data);
+      console.log('Resource created:', resource);
       
       toast({
         title: 'Resource Added',
@@ -53,6 +55,7 @@ export function SimpleResourceModal({ open, onClose, onResourceCreated }: Simple
       onClose();
       onResourceCreated?.();
     } catch (error) {
+      console.error('Error creating resource:', error);
       toast({
         title: 'Error',
         description: 'Failed to add resource. Please try again.',
@@ -117,6 +120,9 @@ export function SimpleResourceModal({ open, onClose, onResourceCreated }: Simple
               <SelectItem value="General">General</SelectItem>
             </SelectContent>
           </Select>
+          {errors.subject && (
+            <p className="text-sm text-red-500 mt-1">{errors.subject.message}</p>
+          )}
         </div>
 
         <div>
@@ -133,6 +139,9 @@ export function SimpleResourceModal({ open, onClose, onResourceCreated }: Simple
               <SelectItem value="tool">Tool</SelectItem>
             </SelectContent>
           </Select>
+          {errors.category && (
+            <p className="text-sm text-red-500 mt-1">{errors.category.message}</p>
+          )}
         </div>
 
         <div>
@@ -144,6 +153,9 @@ export function SimpleResourceModal({ open, onClose, onResourceCreated }: Simple
             {...register('description')}
             className="mt-1 resize-none"
           />
+          {errors.description && (
+            <p className="text-sm text-red-500 mt-1">{errors.description.message}</p>
+          )}
         </div>
 
         <div className="flex justify-end space-x-3 pt-4">
