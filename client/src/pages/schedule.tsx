@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
+import { SimpleModal } from '@/components/simple-modal';
 import { Calendar as CalendarIcon, Clock, Plus, Edit2, Trash2, BookOpen } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -189,18 +189,18 @@ export default function Schedule() {
           Add Schedule
         </Button>
         
-        <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
-          <DialogContent className="max-w-md">
-            <DialogHeader>
-              <DialogTitle>{editingItem ? 'Edit Schedule' : 'Add New Schedule'}</DialogTitle>
-              <DialogDescription>
-                {editingItem ? 'Modify your existing schedule item.' : 'Create a new schedule item for your study plan.'}
-              </DialogDescription>
-            </DialogHeader>
-            
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <Label htmlFor="title">Title *</Label>
+        <SimpleModal
+          open={isAddModalOpen}
+          onClose={() => {
+            setIsAddModalOpen(false);
+            resetForm();
+          }}
+          title={editingItem ? 'Edit Schedule' : 'Add New Schedule'}
+          size="md"
+        >
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <Label htmlFor="title">Title *</Label>
                 <Input
                   id="title"
                   value={formData.title}
@@ -310,8 +310,7 @@ export default function Schedule() {
                 </Button>
               </div>
             </form>
-          </DialogContent>
-        </Dialog>
+        </SimpleModal>
       </div>
 
       {/* Day Tabs */}
