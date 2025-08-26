@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { TaskModal } from '@/components/modals/task-modal';
+import { SimpleTaskModal } from '@/components/new-modals/simple-task-modal';
 import { taskStorage, studySessionStorage, userStatsStorage } from '@/lib/storage';
 import type { Subject, Task } from '@shared/schema';
 
@@ -304,9 +304,9 @@ export default function Subjects() {
       </div>
 
       {/* Task Modal */}
-      <TaskModal
+      <SimpleTaskModal
         open={isTaskModalOpen}
-        onOpenChange={setIsTaskModalOpen}
+        onClose={() => setIsTaskModalOpen(false)}
         onTaskCreated={handleTaskCreated}
       />
     </div>
