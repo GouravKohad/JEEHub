@@ -51,10 +51,10 @@ export function WelcomeModal({ open, onComplete }: WelcomeModalProps) {
           <div className="mx-auto w-16 h-16 bg-gradient-to-r from-jee-primary to-jee-accent rounded-full flex items-center justify-center mb-4">
             <GraduationCap className="text-white" size={32} />
           </div>
-          <DialogTitle className="text-2xl font-bold text-gray-900 mb-2">
+          <DialogTitle className="text-2xl font-bold text-foreground mb-2">
             Welcome to JEE Study Manager!
           </DialogTitle>
-          <p className="text-jee-muted">
+          <p className="text-muted-foreground">
             Let's personalize your study experience. What should we call you?
           </p>
         </DialogHeader>
@@ -85,7 +85,7 @@ export function WelcomeModal({ open, onComplete }: WelcomeModalProps) {
             
             <Button
               type="submit"
-              className="w-full bg-jee-primary text-white py-3 text-base font-medium hover:bg-blue-700 transition-all duration-200"
+              className="w-full bg-primary text-primary-foreground py-3 text-base font-medium hover:bg-primary/90 transition-all duration-200"
               data-testid="button-save-name"
             >
               Get Started
@@ -93,7 +93,7 @@ export function WelcomeModal({ open, onComplete }: WelcomeModalProps) {
           </form>
         </Form>
         
-        <div className="text-center text-xs text-jee-muted mt-4">
+        <div className="text-center text-xs text-muted-foreground mt-4">
           Your information is stored locally on your device and never shared.
         </div>
       </DialogContent>

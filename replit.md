@@ -42,3 +42,9 @@ A feature-rich, animated task management app designed specifically for JEE aspir
   - Stores user preferences in local storage
   - Personalizes dashboard and timer with user's name
   - User profile management with preferences
+- Added theme system with dark/light mode toggle (August 26, 2025):
+  - Theme provider with localStorage persistence
+  - Theme toggle button in header
+  - Full dark mode support with proper color schemes
+  - Enhanced responsive design across all components
+  - Improved styling with semantic color tokens

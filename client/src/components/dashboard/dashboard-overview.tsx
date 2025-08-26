@@ -63,19 +63,20 @@ export function DashboardOverview({ onAddTask, userProfile }: DashboardOverviewP
     <div className="mb-8 animate-fade-in">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome back, <span className="text-jee-primary">{userProfile?.name || 'Student'}</span>!
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
+            Welcome back, <span className="text-primary">{userProfile?.name || 'Student'}</span>!
           </h2>
-          <p className="text-jee-muted">Track your JEE preparation progress and stay on top of your goals.</p>
+          <p className="text-muted-foreground">Track your JEE preparation progress and stay on top of your goals.</p>
         </div>
         <div className="mt-4 lg:mt-0">
           <Button
             onClick={onAddTask}
-            className="bg-jee-primary text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            className="bg-primary text-primary-foreground px-6 py-3 rounded-xl font-medium hover:bg-primary/90 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             data-testid="button-add-task"
           >
             <Plus className="mr-2" size={18} />
-            Add New Task
+            <span className="hidden sm:inline">Add New Task</span>
+            <span className="sm:hidden">Add</span>
           </Button>
         </div>
       </div>
@@ -85,23 +86,23 @@ export function DashboardOverview({ onAddTask, userProfile }: DashboardOverviewP
         {progressData.map((item, index) => (
           <Card
             key={item.title}
-            className="p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 animate-scale-in"
+            className="p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-border animate-scale-in bg-card"
             style={{ animationDelay: `${index * 0.1}s` }}
           >
             <CardContent className="p-0">
               <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-xl">
+                <div className="w-12 h-12 bg-muted rounded-xl flex items-center justify-center text-xl">
                   {item.icon}
                 </div>
-                <div className="flex items-center text-sm font-medium text-jee-secondary">
+                <div className="flex items-center text-sm font-medium text-secondary">
                   <TrendingUp size={14} className="mr-1" />
                   {item.change}
                 </div>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-1" data-testid={`stat-${item.title.toLowerCase().replace(' ', '-')}`}>
+              <h3 className="text-2xl font-bold text-foreground mb-1" data-testid={`stat-${item.title.toLowerCase().replace(' ', '-')}`}>
                 {item.value}
               </h3>
-              <p className="text-jee-muted text-sm mb-4">{item.title}</p>
+              <p className="text-muted-foreground text-sm mb-4">{item.title}</p>
               <Progress 
                 value={item.progress} 
                 className="h-2"
