@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { SimpleTaskModal } from '@/components/new-modals/simple-task-modal';
+import { ConfirmDeleteModal } from '@/components/confirm-delete-modal';
 import { taskStorage } from '@/lib/storage';
 import type { Task, Subject } from '@shared/schema';
 
@@ -45,6 +46,8 @@ export default function Tasks() {
   const [selectedSubject, setSelectedSubject] = useState<Subject | 'All'>('All');
   const [selectedStatus, setSelectedStatus] = useState<string>('All');
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
 
   useEffect(() => {
     loadTasks();
@@ -97,11 +100,20 @@ export default function Tasks() {
   };
 
   const handleDeleteTask = (taskId: string) => {
-    if (window.confirm('Are you sure you want to delete this task?')) {
-      const success = taskStorage.delete(taskId);
+    const task = tasks.find(t => t.id === taskId);
+    if (task) {
+      setTaskToDelete(task);
+      setDeleteModalOpen(true);
+    }
+  };
+
+  const confirmDeleteTask = () => {
+    if (taskToDelete) {
+      const success = taskStorage.delete(taskToDelete.id);
       if (success) {
         loadTasks();
       }
+      setTaskToDelete(null);
     }
   };
 
@@ -361,6 +373,17 @@ export default function Tasks() {
         open={isTaskModalOpen}
         onClose={() => setIsTaskModalOpen(false)}
         onTaskCreated={handleTaskCreated}
+      />
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmDeleteModal
+        open={deleteModalOpen}
+        onClose={() => {
+          setDeleteModalOpen(false);
+          setTaskToDelete(null);
+        }}
+        onConfirm={confirmDeleteTask}
+        itemName={taskToDelete?.title}
       />
     </div>
   );

@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
+import { ConfirmDeleteModal } from '@/components/confirm-delete-modal';
 import { taskStorage } from '@/lib/storage';
 import type { Task, Subject } from '@shared/schema';
 
@@ -38,6 +39,8 @@ interface SubjectProgressProps {
 
 export function SubjectProgress({ onTaskUpdate }: SubjectProgressProps) {
   const [tasks, setTasks] = useState<Task[]>(taskStorage.getAll());
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
 
   const getSubjectData = (subject: Subject) => {
     const subjectTasks = tasks.filter(task => task.subject === subject);
@@ -64,12 +67,21 @@ export function SubjectProgress({ onTaskUpdate }: SubjectProgressProps) {
   };
 
   const handleDeleteTask = (taskId: string) => {
-    if (window.confirm('Are you sure you want to delete this task?')) {
-      const success = taskStorage.delete(taskId);
+    const task = tasks.find(t => t.id === taskId);
+    if (task) {
+      setTaskToDelete(task);
+      setDeleteModalOpen(true);
+    }
+  };
+
+  const confirmDeleteTask = () => {
+    if (taskToDelete) {
+      const success = taskStorage.delete(taskToDelete.id);
       if (success) {
         setTasks(taskStorage.getAll());
-        onTaskUpdate(taskId, {});
+        onTaskUpdate(taskToDelete.id, {});
       }
+      setTaskToDelete(null);
     }
   };
 
@@ -194,6 +206,17 @@ export function SubjectProgress({ onTaskUpdate }: SubjectProgressProps) {
           );
         })}
       </CardContent>
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmDeleteModal
+        open={deleteModalOpen}
+        onClose={() => {
+          setDeleteModalOpen(false);
+          setTaskToDelete(null);
+        }}
+        onConfirm={confirmDeleteTask}
+        itemName={taskToDelete?.title}
+      />
     </Card>
   );
 }
