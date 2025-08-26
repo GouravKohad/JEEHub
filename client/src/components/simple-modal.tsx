@@ -33,21 +33,21 @@ export function SimpleModal({
 
   return (
     <div 
-      className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-4 md:p-6 modal-backdrop"
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-4 modal-backdrop overflow-auto"
       style={{ 
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        zIndex: 99999,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
+        zIndex: 99999
       }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
       <div 
-        className={`modal-content ${scrollable ? 'modal-content-scrollable' : ''} ${modalSizeClass} bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full ${sizeClasses[size]} ${className}`}
-        style={{ zIndex: 100000 }}
+        className={`modal-content ${scrollable ? 'modal-content-scrollable' : ''} ${modalSizeClass} bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full ${sizeClasses[size]} max-h-[90vh] overflow-hidden ${className}`}
+        style={{ 
+          zIndex: 100000,
+          margin: 'auto'
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header - Fixed */}
@@ -67,7 +67,7 @@ export function SimpleModal({
         </div>
         
         {/* Content - Scrollable */}
-        <div className={`${scrollable ? 'modal-body-scrollable' : ''} p-4 sm:p-6`}>
+        <div className={`${scrollable ? 'overflow-y-auto' : ''} p-4 sm:p-6 max-h-[calc(90vh-120px)]`}>
           {children}
         </div>
       </div>
