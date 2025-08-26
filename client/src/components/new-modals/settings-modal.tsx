@@ -84,11 +84,8 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
     });
 
     if (updatedProfile) {
-      // Apply CSS custom properties for theme
-      const root = document.documentElement;
-      root.style.setProperty('--primary-hue', getHueForColor(formData.colorTheme));
-      root.style.setProperty('--font-size-base', getFontSizeValue(formData.fontSize));
-      root.className = root.className.replace(/animation-\w+/, `animation-${formData.animationLevel}`);
+      // Apply color theme immediately
+      applyColorTheme(formData.colorTheme);
 
       toast({
         title: 'Settings Saved',
@@ -104,25 +101,61 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
     }
   };
 
-  const getHueForColor = (color: string): string => {
-    const hues: { [key: string]: string } = {
-      blue: '217',
-      green: '142',
-      purple: '262',
-      orange: '25',
-      pink: '330',
-      indigo: '239',
+  const applyColorTheme = (colorTheme: string) => {
+    const root = document.documentElement;
+    
+    // Define color schemes for each theme
+    const colorSchemes: { [key: string]: { [key: string]: string } } = {
+      blue: {
+        '--primary': '217 91% 60%',
+        '--primary-foreground': '0 0% 98%',
+        '--jee-primary': 'hsl(217, 91%, 60%)',
+        '--jee-accent': 'hsl(224, 76%, 48%)',
+        '--jee-secondary': 'hsl(213, 82%, 73%)',
+      },
+      green: {
+        '--primary': '142 76% 36%',
+        '--primary-foreground': '0 0% 98%',
+        '--jee-primary': 'hsl(142, 76%, 36%)',
+        '--jee-accent': 'hsl(134, 61%, 41%)',
+        '--jee-secondary': 'hsl(142, 70%, 58%)',
+      },
+      purple: {
+        '--primary': '262 83% 58%',
+        '--primary-foreground': '0 0% 98%',
+        '--jee-primary': 'hsl(262, 83%, 58%)',
+        '--jee-accent': 'hsl(271, 91%, 65%)',
+        '--jee-secondary': 'hsl(262, 70%, 78%)',
+      },
+      orange: {
+        '--primary': '25 95% 53%',
+        '--primary-foreground': '0 0% 98%',
+        '--jee-primary': 'hsl(25, 95%, 53%)',
+        '--jee-accent': 'hsl(31, 100%, 58%)',
+        '--jee-secondary': 'hsl(25, 85%, 73%)',
+      },
+      pink: {
+        '--primary': '330 81% 60%',
+        '--primary-foreground': '0 0% 98%',
+        '--jee-primary': 'hsl(330, 81%, 60%)',
+        '--jee-accent': 'hsl(336, 84%, 57%)',
+        '--jee-secondary': 'hsl(330, 70%, 78%)',
+      },
+      indigo: {
+        '--primary': '239 84% 67%',
+        '--primary-foreground': '0 0% 98%',
+        '--jee-primary': 'hsl(239, 84%, 67%)',
+        '--jee-accent': 'hsl(243, 75%, 59%)',
+        '--jee-secondary': 'hsl(239, 70%, 85%)',
+      },
     };
-    return hues[color] || '217';
-  };
 
-  const getFontSizeValue = (size: string): string => {
-    const sizes: { [key: string]: string } = {
-      sm: '14px',
-      md: '16px',
-      lg: '18px',
-    };
-    return sizes[size] || '16px';
+    const scheme = colorSchemes[colorTheme];
+    if (scheme) {
+      Object.entries(scheme).forEach(([property, value]) => {
+        root.style.setProperty(property, value);
+      });
+    }
   };
 
   return (
@@ -191,7 +224,11 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               {colorThemes.map((colorTheme) => (
                 <button
                   key={colorTheme.value}
-                  onClick={() => setFormData({ ...formData, colorTheme: colorTheme.value })}
+                  onClick={() => {
+                    setFormData({ ...formData, colorTheme: colorTheme.value });
+                    // Apply theme immediately for preview
+                    applyColorTheme(colorTheme.value);
+                  }}
                   className={`p-3 rounded-lg border-2 transition-all ${
                     formData.colorTheme === colorTheme.value
                       ? 'border-primary ring-2 ring-primary/20'
