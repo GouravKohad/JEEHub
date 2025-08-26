@@ -10,15 +10,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { insertTaskSchema } from '@shared/schema';
 import { taskStorage } from '@/lib/storage';
 import { useToast } from '@/hooks/use-toast';
-import type { InsertTask } from '@shared/schema';
+import type { InsertTask, Task } from '@shared/schema';
 
 interface SimpleTaskModalProps {
   open: boolean;
   onClose: () => void;
   onTaskCreated?: () => void;
+  editTask?: Task | null;
 }
 
-export function SimpleTaskModal({ open, onClose, onTaskCreated }: SimpleTaskModalProps) {
+export function SimpleTaskModal({ open, onClose, onTaskCreated, editTask }: SimpleTaskModalProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   
@@ -40,6 +41,26 @@ export function SimpleTaskModal({ open, onClose, onTaskCreated }: SimpleTaskModa
     },
   });
 
+  // Set form values when editing
+  useEffect(() => {
+    if (editTask) {
+      setValue('title', editTask.title);
+      setValue('subject', editTask.subject);
+      setValue('description', editTask.description || '');
+      setValue('priority', editTask.priority);
+      setValue('dueDate', editTask.dueDate);
+      setValue('estimatedTime', editTask.estimatedTime);
+    } else {
+      reset({
+        title: '',
+        subject: 'Physics',
+        description: '',
+        priority: 'medium',
+        dueDate: new Date().toISOString().split('T')[0],
+      });
+    }
+  }, [editTask, setValue, reset]);
+
   const priority = watch('priority');
   const today = new Date().toISOString().split('T')[0];
 
@@ -51,23 +72,34 @@ export function SimpleTaskModal({ open, onClose, onTaskCreated }: SimpleTaskModa
     // Add a delay to make sure we can see the loading state
     setTimeout(() => {
       try {
-        console.log('Calling taskStorage.create...');
-        const task = taskStorage.create(data);
-        console.log('Task created successfully:', task);
-        
-        toast({
-          title: 'Task Created',
-          description: `Task "${task.title}" has been created successfully.`,
-        });
+        if (editTask) {
+          console.log('Calling taskStorage.update...');
+          const updatedTask = taskStorage.update(editTask.id, data);
+          console.log('Task updated successfully:', updatedTask);
+          
+          toast({
+            title: 'Task Updated',
+            description: `Task "${data.title}" has been updated successfully.`,
+          });
+        } else {
+          console.log('Calling taskStorage.create...');
+          const task = taskStorage.create(data);
+          console.log('Task created successfully:', task);
+          
+          toast({
+            title: 'Task Created',
+            description: `Task "${task.title}" has been created successfully.`,
+          });
+        }
         
         reset();
         onClose();
         onTaskCreated?.();
       } catch (error) {
-        console.error('Error creating task:', error);
+        console.error('Error saving task:', error);
         toast({
           title: 'Error',
-          description: `Failed to create task: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          description: `Failed to ${editTask ? 'update' : 'create'} task: ${error instanceof Error ? error.message : 'Unknown error'}`,
           variant: 'destructive',
         });
       } finally {
@@ -86,7 +118,7 @@ export function SimpleTaskModal({ open, onClose, onTaskCreated }: SimpleTaskModa
     <SimpleModal
       open={open}
       onClose={onClose}
-      title="Create New Task"
+      title={editTask ? "Edit Task" : "Create New Task"}
       className="max-w-sm sm:max-w-md lg:max-w-lg"
     >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 sm:space-y-4">
@@ -190,7 +222,7 @@ export function SimpleTaskModal({ open, onClose, onTaskCreated }: SimpleTaskModa
             disabled={isSubmitting}
             className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white text-sm sm:text-base"
           >
-            {isSubmitting ? 'Creating...' : 'Create Task'}
+            {isSubmitting ? (editTask ? 'Updating...' : 'Creating...') : (editTask ? 'Update Task' : 'Create Task')}
           </Button>
         </div>
       </form>

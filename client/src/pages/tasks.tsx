@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Search, Filter, MoreHorizontal, CheckCircle, Clock, AlertCircle, Trash2, AlertTriangle, ArrowUp, Minus } from 'lucide-react';
+import { Plus, Search, Filter, MoreHorizontal, CheckCircle, Clock, AlertCircle, Trash2, AlertTriangle, ArrowUp, Minus, Edit3 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -72,6 +72,7 @@ export default function Tasks() {
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
 
   useEffect(() => {
     loadTasks();
@@ -133,6 +134,16 @@ export default function Tasks() {
 
   const handleTaskCreated = () => {
     loadTasks();
+  };
+
+  const handleEditTask = (task: Task) => {
+    setEditingTask(task);
+    setIsTaskModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsTaskModalOpen(false);
+    setEditingTask(null);
   };
 
   const handleDeleteTask = (taskId: string) => {
@@ -377,6 +388,16 @@ export default function Tasks() {
                         <Button
                           variant="ghost"
                           size="sm"
+                          onClick={() => handleEditTask(task)}
+                          className="h-8 w-8 p-0 text-blue-500 hover:text-blue-700 hover:bg-blue-50"
+                          data-testid={`button-edit-task-${task.id}`}
+                          title="Edit task"
+                        >
+                          <Edit3 size={14} />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
                           onClick={() => handleDeleteTask(task.id)}
                           className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
                           data-testid={`button-delete-task-${task.id}`}
@@ -421,8 +442,9 @@ export default function Tasks() {
       {/* Task Modal */}
       <SimpleTaskModal
         open={isTaskModalOpen}
-        onClose={() => setIsTaskModalOpen(false)}
+        onClose={handleCloseModal}
         onTaskCreated={handleTaskCreated}
+        editTask={editingTask}
       />
 
       {/* Delete Confirmation Modal */}
