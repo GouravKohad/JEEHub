@@ -46,18 +46,18 @@ export function WelcomeModal({ open, onComplete }: WelcomeModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={() => {}} modal>
-      <DialogContent className="sm:max-w-md animate-scale-in [&>button]:hidden">
-        <DialogHeader className="text-center">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-r from-jee-primary to-jee-accent rounded-full flex items-center justify-center mb-4">
-            <GraduationCap className="text-white" size={32} />
+      <DialogContent className="sm:max-w-md modal-content [&>button]:hidden">
+        <div className="modal-header">
+          <div className="mx-auto w-20 h-20 modal-icon-container rounded-full flex items-center justify-center mb-6 bg-gradient-to-br from-primary via-accent to-secondary">
+            <GraduationCap className="text-white" size={36} />
           </div>
-          <DialogTitle className="text-2xl font-bold text-foreground mb-2">
+          <DialogTitle className="text-2xl font-bold text-center text-foreground mb-3">
             Welcome to JEE Study Manager!
           </DialogTitle>
-          <p className="text-muted-foreground">
+          <p className="text-center text-muted-foreground leading-relaxed">
             Let's personalize your study experience. What should we call you?
           </p>
-        </DialogHeader>
+        </div>
         
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-6">
@@ -72,7 +72,7 @@ export function WelcomeModal({ open, onComplete }: WelcomeModalProps) {
                       <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                       <Input
                         placeholder="Enter your name..."
-                        className="pl-10 py-3 text-base"
+                        className="pl-10 py-3 text-base modal-input"
                         {...field}
                         data-testid="input-user-name"
                       />
@@ -85,7 +85,7 @@ export function WelcomeModal({ open, onComplete }: WelcomeModalProps) {
             
             <Button
               type="submit"
-              className="w-full bg-primary text-primary-foreground py-3 text-base font-medium hover:bg-primary/90 transition-all duration-200"
+              className="w-full modal-button bg-gradient-to-r from-primary via-accent to-secondary text-white py-3 text-base font-semibold hover:from-primary/90 hover:via-accent/90 hover:to-secondary/90 transition-all duration-300 shadow-lg"
               data-testid="button-save-name"
             >
               Get Started

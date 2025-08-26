@@ -30,6 +30,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { insertResourceSchema } from '@shared/schema';
 import { resourceStorage } from '@/lib/storage';
 import { useToast } from '@/hooks/use-toast';
+import { BookOpen } from 'lucide-react';
 import type { InsertResource } from '@shared/schema';
 
 interface ResourceModalProps {
@@ -85,17 +86,20 @@ export function ResourceModal({ open, onOpenChange, onResourceCreated }: Resourc
   return (
     <Dialog open={open} onOpenChange={onOpenChange} modal>
       <DialogContent 
-        className="sm:max-w-md animate-scale-in bg-background border-border shadow-lg"
+        className="sm:max-w-lg modal-content"
         style={{ zIndex: 51 }}
       >
-        <DialogHeader>
-          <DialogTitle className="text-lg font-semibold text-foreground">
+        <div className="modal-header">
+          <div className="mx-auto w-16 h-16 modal-icon-container rounded-2xl flex items-center justify-center mb-4">
+            <BookOpen className="text-primary" size={28} />
+          </div>
+          <DialogTitle className="text-xl font-bold text-center text-foreground mb-2">
             Add New Resource
           </DialogTitle>
-          <DialogDescription className="text-sm text-muted-foreground">
+          <DialogDescription className="text-center text-muted-foreground leading-relaxed">
             Add a new study resource with URL, subject, and category information.
           </DialogDescription>
-        </DialogHeader>
+        </div>
         
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -108,6 +112,7 @@ export function ResourceModal({ open, onOpenChange, onResourceCreated }: Resourc
                   <FormControl>
                     <Input
                       placeholder="Enter resource title..."
+                      className="modal-input"
                       {...field}
                       data-testid="input-resource-title"
                     />
@@ -127,6 +132,7 @@ export function ResourceModal({ open, onOpenChange, onResourceCreated }: Resourc
                     <Input
                       type="url"
                       placeholder="https://example.com"
+                      className="modal-input"
                       {...field}
                       data-testid="input-resource-url"
                     />
@@ -200,7 +206,7 @@ export function ResourceModal({ open, onOpenChange, onResourceCreated }: Resourc
                   <FormControl>
                     <Textarea
                       placeholder="Add resource description..."
-                      className="resize-none"
+                      className="resize-none modal-input"
                       rows={3}
                       {...field}
                       data-testid="textarea-resource-description"
@@ -211,18 +217,19 @@ export function ResourceModal({ open, onOpenChange, onResourceCreated }: Resourc
               )}
             />
             
-            <DialogFooter className="flex space-x-3 pt-4">
+            <DialogFooter className="flex flex-col sm:flex-row gap-3 pt-6">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => onOpenChange(false)}
+                className="w-full sm:w-auto modal-button bg-white/50 hover:bg-white/70 dark:bg-gray-800/50 dark:hover:bg-gray-800/70 border-2"
                 data-testid="button-cancel-resource"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
+                className="w-full sm:w-auto modal-button bg-primary text-primary-foreground hover:bg-primary/90 font-semibold"
                 data-testid="button-add-resource"
               >
                 Add Resource

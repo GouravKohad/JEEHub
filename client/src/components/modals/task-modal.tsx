@@ -32,6 +32,7 @@ import { Badge } from '@/components/ui/badge';
 import { insertTaskSchema } from '@shared/schema';
 import { taskStorage } from '@/lib/storage';
 import { useToast } from '@/hooks/use-toast';
+import { CheckSquare } from 'lucide-react';
 import type { InsertTask } from '@shared/schema';
 
 interface TaskModalProps {
@@ -98,17 +99,20 @@ export function TaskModal({ open, onOpenChange, onTaskCreated }: TaskModalProps)
   return (
     <Dialog open={open} onOpenChange={onOpenChange} modal>
       <DialogContent 
-        className="sm:max-w-md animate-scale-in bg-background border-border shadow-lg"
+        className="sm:max-w-lg modal-content"
         style={{ zIndex: 51 }}
       >
-        <DialogHeader>
-          <DialogTitle className="text-lg font-semibold text-foreground">
+        <div className="modal-header">
+          <div className="mx-auto w-16 h-16 modal-icon-container rounded-2xl flex items-center justify-center mb-4">
+            <CheckSquare className="text-primary" size={28} />
+          </div>
+          <DialogTitle className="text-xl font-bold text-center text-foreground mb-2">
             Create New Task
           </DialogTitle>
-          <DialogDescription className="text-sm text-muted-foreground">
+          <DialogDescription className="text-center text-muted-foreground leading-relaxed">
             Add a new task to your study schedule with subject, priority, and due date.
           </DialogDescription>
-        </DialogHeader>
+        </div>
         
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -121,6 +125,7 @@ export function TaskModal({ open, onOpenChange, onTaskCreated }: TaskModalProps)
                   <FormControl>
                     <Input
                       placeholder="Enter task title..."
+                      className="modal-input"
                       {...field}
                       data-testid="input-task-title"
                     />
@@ -165,7 +170,7 @@ export function TaskModal({ open, onOpenChange, onTaskCreated }: TaskModalProps)
                   <FormControl>
                     <Textarea
                       placeholder="Add task description..."
-                      className="resize-none"
+                      className="resize-none modal-input"
                       rows={3}
                       {...field}
                       data-testid="textarea-task-description"
@@ -186,6 +191,7 @@ export function TaskModal({ open, onOpenChange, onTaskCreated }: TaskModalProps)
                     <Input
                       type="date"
                       min={today}
+                      className="modal-input"
                       {...field}
                       data-testid="input-task-due-date"
                     />
@@ -226,18 +232,19 @@ export function TaskModal({ open, onOpenChange, onTaskCreated }: TaskModalProps)
               )}
             />
             
-            <DialogFooter className="flex space-x-3 pt-4">
+            <DialogFooter className="flex flex-col sm:flex-row gap-3 pt-6">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => onOpenChange(false)}
+                className="w-full sm:w-auto modal-button bg-white/50 hover:bg-white/70 dark:bg-gray-800/50 dark:hover:bg-gray-800/70 border-2"
                 data-testid="button-cancel-task"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
+                className="w-full sm:w-auto modal-button bg-primary text-primary-foreground hover:bg-primary/90 font-semibold"
                 data-testid="button-create-task"
               >
                 Create Task

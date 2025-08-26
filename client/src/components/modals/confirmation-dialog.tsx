@@ -46,27 +46,27 @@ export function ConfirmationDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange} modal>
       <DialogContent 
-        className="sm:max-w-md animate-scale-in bg-background border-border shadow-lg"
+        className={`sm:max-w-md modal-content ${variant === 'destructive' ? 'modal-destructive' : 'modal-warning'}`}
         style={{ zIndex: 51 }}
       >
-        <DialogHeader className="text-center">
-          <div className={`mx-auto w-12 h-12 ${iconBgColor} rounded-full flex items-center justify-center mb-4`}>
-            <IconComponent className={`${iconColor}`} size={24} />
+        <div className="modal-header">
+          <div className={`mx-auto w-16 h-16 modal-icon-container rounded-2xl flex items-center justify-center mb-4`}>
+            <IconComponent className={`${iconColor}`} size={28} />
           </div>
-          <DialogTitle className="text-lg font-semibold text-foreground">
+          <DialogTitle className="text-xl font-bold text-center text-foreground mb-2">
             {title}
           </DialogTitle>
-          <DialogDescription className="text-center text-muted-foreground text-sm leading-relaxed">
+          <DialogDescription className="text-center text-muted-foreground leading-relaxed">
             {description}
           </DialogDescription>
-        </DialogHeader>
+        </div>
         
-        <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+        <DialogFooter className="flex flex-col sm:flex-row gap-3 pt-2">
           <Button
             type="button"
             variant="outline"
             onClick={() => onOpenChange(false)}
-            className="w-full sm:w-auto"
+            className="w-full sm:w-auto modal-button bg-white/50 hover:bg-white/70 dark:bg-gray-800/50 dark:hover:bg-gray-800/70 border-2"
             data-testid="button-cancel-confirmation"
           >
             {cancelText}
@@ -75,7 +75,7 @@ export function ConfirmationDialog({
             type="button"
             variant={variant}
             onClick={handleConfirm}
-            className="w-full sm:w-auto"
+            className="w-full sm:w-auto modal-button font-semibold"
             data-testid="button-confirm-action"
           >
             {confirmText}
