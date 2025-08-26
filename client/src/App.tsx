@@ -78,75 +78,75 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="jee-ui-theme">
         <TooltipProvider>
-        <div className="min-h-screen bg-background text-foreground font-inter">
+        <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 text-foreground font-inter transition-all duration-500">
           <Header userProfile={userProfile} />
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               {/* Tab Navigation */}
-              <div className="mb-8">
-                <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-5 bg-card border border-border rounded-xl p-1 shadow-sm">
+              <div className="mb-8 animate-fade-in">
+                <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-5 bg-card border border-border rounded-xl p-1 shadow-sm hover:shadow-lg transition-all duration-300">
                   <TabsTrigger 
                     value="dashboard" 
-                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium"
+                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
                     data-testid="tab-dashboard"
                   >
-                    <LayoutDashboard size={16} />
+                    <LayoutDashboard size={16} className="transition-transform duration-300" />
                     <span className="hidden sm:inline">Dashboard</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="tasks" 
-                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium"
+                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
                     data-testid="tab-tasks"
                   >
-                    <CheckSquare size={16} />
+                    <CheckSquare size={16} className="transition-transform duration-300" />
                     <span className="hidden sm:inline">Tasks</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="subjects" 
-                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium"
+                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
                     data-testid="tab-subjects"
                   >
-                    <BookOpen size={16} />
+                    <BookOpen size={16} className="transition-transform duration-300" />
                     <span className="hidden sm:inline">Subjects</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="resources" 
-                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium"
+                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
                     data-testid="tab-resources"
                   >
-                    <ExternalLink size={16} />
+                    <ExternalLink size={16} className="transition-transform duration-300" />
                     <span className="hidden sm:inline">Resources</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="timer" 
-                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium"
+                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
                     data-testid="tab-timer"
                   >
-                    <Clock size={16} />
+                    <Clock size={16} className="transition-transform duration-300" />
                     <span className="hidden sm:inline">Timer</span>
                   </TabsTrigger>
                 </TabsList>
               </div>
 
               {/* Tab Content */}
-              <TabsContent value="dashboard" className="mt-0">
+              <TabsContent value="dashboard" className="mt-0 animate-fade-in">
                 <Dashboard userProfile={userProfile} />
               </TabsContent>
               
-              <TabsContent value="tasks" className="mt-0">
+              <TabsContent value="tasks" className="mt-0 animate-fade-in">
                 <Tasks />
               </TabsContent>
               
-              <TabsContent value="subjects" className="mt-0">
+              <TabsContent value="subjects" className="mt-0 animate-fade-in">
                 <Subjects />
               </TabsContent>
               
-              <TabsContent value="resources" className="mt-0">
+              <TabsContent value="resources" className="mt-0 animate-fade-in">
                 <Resources />
               </TabsContent>
               
-              <TabsContent value="timer" className="mt-0">
+              <TabsContent value="timer" className="mt-0 animate-fade-in">
                 <Timer userProfile={userProfile} />
               </TabsContent>
             </Tabs>

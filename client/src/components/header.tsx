@@ -17,36 +17,36 @@ export function Header({ userProfile }: HeaderProps) {
       .join('');
   };
   return (
-    <header className="bg-card shadow-sm border-b border-border sticky top-0 z-50">
+    <header className="bg-card/95 backdrop-blur-sm shadow-sm border-b border-border sticky top-0 z-50 animate-slide-in-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-jee-primary to-jee-accent rounded-lg flex items-center justify-center">
-                <GraduationCap className="text-white text-sm" size={16} />
+            <div className="flex items-center space-x-2 group">
+              <div className="w-8 h-8 bg-gradient-to-r from-jee-primary to-jee-accent rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+                <GraduationCap className="text-white text-sm transition-transform duration-300" size={16} />
               </div>
-              <h1 className="text-xl font-bold text-foreground">JEE Study Manager</h1>
+              <h1 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">JEE Study Manager</h1>
             </div>
           </div>
           
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 animate-slide-in-right">
             <ThemeToggle />
             <Button
               variant="ghost"
               size="sm"
-              className="relative p-2 text-muted-foreground hover:text-foreground transition-colors"
+              className="relative p-2 text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-110"
               data-testid="button-notifications"
             >
-              <Bell size={18} />
+              <Bell size={18} className="transition-transform duration-300 hover:rotate-12" />
               <Badge 
                 variant="destructive" 
-                className="absolute -top-1 -right-1 w-4 h-4 text-xs flex items-center justify-center p-0"
+                className="absolute -top-1 -right-1 w-4 h-4 text-xs flex items-center justify-center p-0 animate-bounce-subtle"
               >
                 3
               </Badge>
             </Button>
             <div 
-              className="w-8 h-8 bg-gradient-to-r from-jee-secondary to-jee-primary rounded-full flex items-center justify-center"
+              className="w-8 h-8 bg-gradient-to-r from-jee-secondary to-jee-primary rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer"
               data-testid="user-avatar"
               title={userProfile?.name || 'User'}
             >
@@ -55,7 +55,7 @@ export function Header({ userProfile }: HeaderProps) {
                   {getInitials(userProfile.name)}
                 </span>
               ) : (
-                <User className="text-white" size={16} />
+                <User className="text-white transition-transform duration-300 hover:rotate-12" size={16} />
               )}
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { Plus, TrendingUp } from 'lucide-react';
+import { Plus, TrendingUp, Target, BookOpen, BarChart3, Trophy, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -28,34 +28,42 @@ export function DashboardOverview({ onAddTask, userProfile }: DashboardOverviewP
     {
       title: 'Total Tasks',
       value: stats.totalTasks,
-      progress: 75,
-      icon: '📋',
-      change: '+12%',
-      color: 'bg-blue-600',
+      progress: Math.min((stats.totalTasks / 20) * 100, 100),
+      icon: Target,
+      change: `${stats.totalTasks} tasks`,
+      color: 'from-blue-500 to-blue-600',
+      bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+      iconColor: 'text-blue-600 dark:text-blue-400',
     },
     {
       title: 'Study Hours',
       value: `${stats.studyHours}h`,
-      progress: 80,
-      icon: '⏰',
-      change: `+${stats.studyHours}h`,
-      color: 'bg-green-600',
+      progress: Math.min((stats.studyHours / 10) * 100, 100),
+      icon: Clock,
+      change: `+${stats.studyHours}h total`,
+      color: 'from-green-500 to-green-600',
+      bgColor: 'bg-green-50 dark:bg-green-900/20',
+      iconColor: 'text-green-600 dark:text-green-400',
     },
     {
       title: 'Completion Rate',
       value: `${stats.completionRate}%`,
       progress: stats.completionRate,
-      icon: '📊',
-      change: `${stats.completionRate}%`,
-      color: 'bg-purple-600',
+      icon: BarChart3,
+      change: `${stats.completionRate}% done`,
+      color: 'from-purple-500 to-purple-600',
+      bgColor: 'bg-purple-50 dark:bg-purple-900/20',
+      iconColor: 'text-purple-600 dark:text-purple-400',
     },
     {
       title: 'Day Streak',
       value: stats.streak,
       progress: Math.min((stats.streak / 30) * 100, 100),
-      icon: '🏆',
+      icon: Trophy,
       change: `${stats.streak} days`,
-      color: 'bg-yellow-500',
+      color: 'from-amber-500 to-amber-600',
+      bgColor: 'bg-amber-50 dark:bg-amber-900/20',
+      iconColor: 'text-amber-600 dark:text-amber-400',
     },
   ];
 
@@ -83,34 +91,44 @@ export function DashboardOverview({ onAddTask, userProfile }: DashboardOverviewP
 
       {/* Progress Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {progressData.map((item, index) => (
-          <Card
-            key={item.title}
-            className="p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-border animate-scale-in bg-card"
-            style={{ animationDelay: `${index * 0.1}s` }}
-          >
-            <CardContent className="p-0">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-muted rounded-xl flex items-center justify-center text-xl">
-                  {item.icon}
+        {progressData.map((item, index) => {
+          const IconComponent = item.icon;
+          return (
+            <Card
+              key={item.title}
+              className="group relative overflow-hidden p-0 shadow-sm hover:shadow-xl transition-all duration-500 border border-border bg-card hover:scale-105 animate-fade-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              {/* Gradient Background */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+              
+              <CardContent className="p-6 relative z-10">
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`w-12 h-12 ${item.bgColor} rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110`}>
+                    <IconComponent size={24} className={`${item.iconColor} transition-colors duration-300`} />
+                  </div>
+                  <div className="flex items-center text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-300">
+                    <TrendingUp size={14} className="mr-1" />
+                    {item.change}
+                  </div>
                 </div>
-                <div className="flex items-center text-sm font-medium text-secondary">
-                  <TrendingUp size={14} className="mr-1" />
-                  {item.change}
+                <h3 className="text-2xl font-bold text-foreground mb-1 transition-colors duration-300" data-testid={`stat-${item.title.toLowerCase().replace(' ', '-')}`}>
+                  {item.value}
+                </h3>
+                <p className="text-muted-foreground text-sm mb-4 group-hover:text-foreground/80 transition-colors duration-300">{item.title}</p>
+                <div className="relative">
+                  <Progress 
+                    value={item.progress} 
+                    className="h-2 bg-muted group-hover:bg-muted/50 transition-all duration-300"
+                    data-testid={`progress-${item.title.toLowerCase().replace(' ', '-')}`}
+                  />
+                  <div className={`absolute inset-0 h-2 rounded-full bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500`} 
+                       style={{ width: `${item.progress}%` }} />
                 </div>
-              </div>
-              <h3 className="text-2xl font-bold text-foreground mb-1" data-testid={`stat-${item.title.toLowerCase().replace(' ', '-')}`}>
-                {item.value}
-              </h3>
-              <p className="text-muted-foreground text-sm mb-4">{item.title}</p>
-              <Progress 
-                value={item.progress} 
-                className="h-2"
-                data-testid={`progress-${item.title.toLowerCase().replace(' ', '-')}`}
-              />
-            </CardContent>
-          </Card>
-        ))}
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
     </div>
   );
