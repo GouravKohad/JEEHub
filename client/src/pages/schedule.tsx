@@ -175,20 +175,21 @@ export default function Schedule() {
           <p className="text-muted-foreground">Plan and organize your JEE preparation schedule</p>
         </div>
         
+        <Button 
+          onClick={() => {
+            console.log('Add Schedule button clicked');
+            resetForm();
+            setIsAddModalOpen(true);
+            console.log('Modal should open, isAddModalOpen:', true);
+          }}
+          className="flex items-center gap-2"
+          data-testid="button-add-schedule"
+        >
+          <Plus size={16} />
+          Add Schedule
+        </Button>
+        
         <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
-          <DialogTrigger asChild>
-            <Button 
-              onClick={() => {
-                resetForm();
-                setIsAddModalOpen(true);
-              }}
-              className="flex items-center gap-2"
-              data-testid="button-add-schedule"
-            >
-              <Plus size={16} />
-              Add Schedule
-            </Button>
-          </DialogTrigger>
           <DialogContent className="max-w-md">
             <DialogHeader>
               <DialogTitle>{editingItem ? 'Edit Schedule' : 'Add New Schedule'}</DialogTitle>
