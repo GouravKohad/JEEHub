@@ -12,7 +12,7 @@ import Tasks from "@/pages/tasks";
 import Subjects from "@/pages/subjects";
 import Resources from "@/pages/resources";
 import Timer from "@/pages/timer";
-import { PopupDemo } from "@/components/demo/popup-demo";
+import Schedule from "@/pages/schedule";
 import { initializeDefaultData, userProfileStorage, type UserProfile } from "@/lib/storage";
 import { 
   LayoutDashboard, 
@@ -20,7 +20,7 @@ import {
   BookOpen, 
   ExternalLink, 
   Clock,
-  MousePointer2
+  Calendar
 } from "lucide-react";
 
 function App() {
@@ -144,12 +144,12 @@ function App() {
                     <span className="hidden sm:inline">Timer</span>
                   </TabsTrigger>
                   <TabsTrigger 
-                    value="popup-demo" 
+                    value="schedule" 
                     className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
-                    data-testid="tab-popup-demo"
+                    data-testid="tab-schedule"
                   >
-                    <MousePointer2 size={16} className="transition-transform duration-300" />
-                    <span className="hidden sm:inline">Popups</span>
+                    <Calendar size={16} className="transition-transform duration-300" />
+                    <span className="hidden sm:inline">Schedule</span>
                   </TabsTrigger>
                 </TabsList>
               </div>
@@ -175,8 +175,8 @@ function App() {
                 <Timer userProfile={userProfile} />
               </TabsContent>
 
-              <TabsContent value="popup-demo" className="mt-0 animate-fade-in">
-                <PopupDemo />
+              <TabsContent value="schedule" className="mt-0 animate-fade-in">
+                <Schedule />
               </TabsContent>
             </Tabs>
           </div>
