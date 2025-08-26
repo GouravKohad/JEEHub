@@ -93,9 +93,14 @@ export function TaskModal({ open, onOpenChange, onTaskCreated }: TaskModalProps)
     }
   }, [open, form]);
 
+  if (!open) return null;
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md animate-scale-in bg-background border-border">
+    <Dialog open={open} onOpenChange={onOpenChange} modal>
+      <DialogContent 
+        className="sm:max-w-md animate-scale-in bg-background border-border shadow-lg"
+        style={{ zIndex: 9999 }}
+      >
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold text-foreground">
             Create New Task

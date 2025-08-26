@@ -41,9 +41,14 @@ export function ConfirmationDialog({
   const iconColor = variant === 'destructive' ? 'text-red-500' : 'text-amber-500';
   const iconBgColor = variant === 'destructive' ? 'bg-red-50 dark:bg-red-900/20' : 'bg-amber-50 dark:bg-amber-900/20';
 
+  if (!open) return null;
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md animate-scale-in bg-background border-border">
+    <Dialog open={open} onOpenChange={onOpenChange} modal>
+      <DialogContent 
+        className="sm:max-w-md animate-scale-in bg-background border-border shadow-lg"
+        style={{ zIndex: 9999 }}
+      >
         <DialogHeader className="text-center">
           <div className={`mx-auto w-12 h-12 ${iconBgColor} rounded-full flex items-center justify-center mb-4`}>
             <IconComponent className={`${iconColor}`} size={24} />
