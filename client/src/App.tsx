@@ -48,10 +48,25 @@ function App() {
   }, []);
 
   const handleWelcomeComplete = (name: string) => {
-    const profile = userProfileStorage.create(name);
-    setUserProfile(profile);
-    setShowWelcome(false);
-    initializeDefaultData();
+    console.log('handleWelcomeComplete called with name:', name);
+    try {
+      console.log('Creating user profile...');
+      const profile = userProfileStorage.create(name);
+      console.log('Profile created:', profile);
+      
+      console.log('Setting user profile...');
+      setUserProfile(profile);
+      
+      console.log('Setting showWelcome to false...');
+      setShowWelcome(false);
+      
+      console.log('Initializing default data...');
+      initializeDefaultData();
+      
+      console.log('Welcome setup complete');
+    } catch (error) {
+      console.error('Error in handleWelcomeComplete:', error);
+    }
   };
 
   if (isLoading) {

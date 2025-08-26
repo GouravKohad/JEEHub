@@ -22,10 +22,13 @@ interface SimpleWelcomeModalProps {
 export function SimpleWelcomeModal({ open, onComplete }: SimpleWelcomeModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   
+  console.log('SimpleWelcomeModal render, open:', open);
+  
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm<UserFormData>({
     resolver: zodResolver(userSchema),
     defaultValues: {
@@ -34,13 +37,26 @@ export function SimpleWelcomeModal({ open, onComplete }: SimpleWelcomeModalProps
   });
 
   const onSubmit = async (data: UserFormData) => {
+    console.log('Welcome modal form submitted with:', data);
     setIsSubmitting(true);
     try {
+      console.log('Calling onComplete with name:', data.name);
       onComplete(data.name);
+      console.log('onComplete called successfully');
+      // Reset form after successful submission
+      reset();
+    } catch (error) {
+      console.error('Error in welcome modal submission:', error);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  // Don't render if not open
+  if (!open) {
+    console.log('SimpleWelcomeModal not rendering - open is false');
+    return null;
+  }
 
   return (
     <div 
