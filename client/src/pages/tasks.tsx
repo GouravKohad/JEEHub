@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Search, Filter, MoreHorizontal, CheckCircle, Clock, AlertCircle, Trash2 } from 'lucide-react';
+import { Plus, Search, Filter, MoreHorizontal, CheckCircle, Clock, AlertCircle, Trash2, AlertTriangle, ArrowUp, Minus } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,6 +14,30 @@ const subjectColors = {
   Physics: 'bg-blue-100 text-blue-800 border-blue-200',
   Chemistry: 'bg-green-100 text-green-800 border-green-200',
   Mathematics: 'bg-purple-100 text-purple-800 border-purple-200',
+};
+
+const priorityConfig = {
+  high: {
+    label: 'High Priority',
+    icon: AlertTriangle,
+    className: 'bg-red-50 text-red-700 border border-red-200',
+    iconColor: 'text-red-600',
+    dotColor: 'bg-red-500'
+  },
+  medium: {
+    label: 'Medium Priority',
+    icon: ArrowUp,
+    className: 'bg-yellow-50 text-yellow-700 border border-yellow-200',
+    iconColor: 'text-yellow-600',
+    dotColor: 'bg-yellow-500'
+  },
+  low: {
+    label: 'Low Priority',
+    icon: Minus,
+    className: 'bg-gray-50 text-gray-700 border border-gray-200',
+    iconColor: 'text-gray-600',
+    dotColor: 'bg-gray-500'
+  }
 };
 
 const statusConfig = {
@@ -366,10 +390,24 @@ export default function Tasks() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4 text-sm text-jee-muted">
                         <span>Due: {formatDate(task.dueDate)}</span>
-                        <span>Priority: {task.priority}</span>
                         {task.estimatedTime && (
                           <span>Est: {task.estimatedTime}min</span>
                         )}
+                      </div>
+                      
+                      {/* Priority Badge */}
+                      <div className="flex items-center">
+                        {(() => {
+                          const priorityInfo = priorityConfig[task.priority as keyof typeof priorityConfig];
+                          const PriorityIcon = priorityInfo.icon;
+                          return (
+                            <div className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-lg text-xs font-medium ${priorityInfo.className}`}>
+                              <div className={`w-2 h-2 rounded-full ${priorityInfo.dotColor}`}></div>
+                              <PriorityIcon size={12} className={priorityInfo.iconColor} />
+                              <span className="capitalize">{task.priority}</span>
+                            </div>
+                          );
+                        })()}
                       </div>
                     </div>
                   </div>
