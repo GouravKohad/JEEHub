@@ -48,8 +48,20 @@ export function SubjectProgress({ onTaskUpdate }: SubjectProgressProps) {
     const pendingTasks = subjectTasks.filter(task => task.status !== 'completed');
     const progress = subjectTasks.length > 0 ? Math.round((completedTasks.length / subjectTasks.length) * 100) : 0;
     
+    // Sort tasks: completed tasks go to the bottom
+    const sortedTasks = subjectTasks.sort((a, b) => {
+      // First, sort by completion status (incomplete tasks first)
+      if (a.status === 'completed' && b.status !== 'completed') return 1;
+      if (a.status !== 'completed' && b.status === 'completed') return -1;
+      
+      // If both have same completion status, sort by due date
+      const dateA = new Date(a.dueDate);
+      const dateB = new Date(b.dueDate);
+      return dateA.getTime() - dateB.getTime();
+    });
+    
     return {
-      tasks: subjectTasks.slice(0, 3), // Show only first 3 tasks
+      tasks: sortedTasks.slice(0, 3), // Show only first 3 tasks (now sorted)
       total: subjectTasks.length,
       pending: pendingTasks.length,
       progress,

@@ -83,6 +83,18 @@ export default function Tasks() {
       filtered = filtered.filter(task => task.status === selectedStatus);
     }
 
+    // Sort tasks: completed tasks go to the bottom
+    filtered = filtered.sort((a, b) => {
+      // First, sort by completion status (incomplete tasks first)
+      if (a.status === 'completed' && b.status !== 'completed') return 1;
+      if (a.status !== 'completed' && b.status === 'completed') return -1;
+      
+      // If both have same completion status, sort by due date
+      const dateA = new Date(a.dueDate);
+      const dateB = new Date(b.dueDate);
+      return dateA.getTime() - dateB.getTime();
+    });
+
     setFilteredTasks(filtered);
   };
 
