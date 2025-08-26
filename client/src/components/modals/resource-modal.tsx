@@ -83,7 +83,7 @@ export function ResourceModal({ open, onOpenChange, onResourceCreated }: Resourc
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md animate-scale-in">
         <DialogHeader>
-          <DialogTitle className="text-lg font-semibold text-gray-900">
+          <DialogTitle className="text-lg font-semibold text-foreground">
             Add New Resource
           </DialogTitle>
         </DialogHeader>
@@ -213,7 +213,7 @@ export function ResourceModal({ open, onOpenChange, onResourceCreated }: Resourc
               </Button>
               <Button
                 type="submit"
-                className="jee-primary hover:bg-blue-700"
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
                 data-testid="button-add-resource"
               >
                 Add Resource

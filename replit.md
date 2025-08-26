@@ -55,3 +55,10 @@ A feature-rich, animated task management app designed specifically for JEE aspir
   - Improved header with backdrop blur and animated elements
   - Added comprehensive keyframe animations for better user experience
   - Enhanced tab navigation with scale and transform effects
+- Fixed resources functionality with local storage and custom popups (August 26, 2025):
+  - Implemented full CRUD operations for resources with local storage persistence
+  - Created custom ConfirmationDialog component for deletion confirmations
+  - Fixed popup/modal issues with proper state management
+  - Enhanced resource management with user-friendly confirmation dialogs
+  - Improved theme consistency throughout the resources section
+  - Added proper toast notifications for user feedback

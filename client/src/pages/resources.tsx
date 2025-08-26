@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Plus, Search, ExternalLink, Book, Video, Calculator, FileText, Trash2, Edit } from 'lucide-react';
+import { Plus, Search, ExternalLink, Book, Video, Calculator, FileText, Trash2, Edit, Filter } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { ResourceModal } from '@/components/modals/resource-modal';
+import { ConfirmationDialog } from '@/components/modals/confirmation-dialog';
 import { resourceStorage } from '@/lib/storage';
+import { useToast } from '@/hooks/use-toast';
 import type { Resource, Subject } from '@shared/schema';
 
 const categoryIcons = {
@@ -38,6 +40,10 @@ export default function Resources() {
   const [selectedSubject, setSelectedSubject] = useState<Subject | 'General' | 'All'>('All');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [isResourceModalOpen, setIsResourceModalOpen] = useState(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState<{ open: boolean; resourceId?: string; resourceTitle?: string }>({
+    open: false,
+  });
+  const { toast } = useToast();
 
   useEffect(() => {
     loadResources();
@@ -50,6 +56,37 @@ export default function Resources() {
   const loadResources = () => {
     const allResources = resourceStorage.getAll();
     setResources(allResources);
+  };
+
+  const handleResourceCreated = () => {
+    loadResources();
+  };
+
+  const handleDeleteResource = (id: string, title: string) => {
+    setDeleteConfirmation({
+      open: true,
+      resourceId: id,
+      resourceTitle: title,
+    });
+  };
+
+  const confirmDeleteResource = () => {
+    if (deleteConfirmation.resourceId) {
+      const success = resourceStorage.delete(deleteConfirmation.resourceId);
+      if (success) {
+        toast({
+          title: 'Resource Deleted',
+          description: `Resource "${deleteConfirmation.resourceTitle}" has been deleted successfully.`,
+        });
+        loadResources();
+      } else {
+        toast({
+          title: 'Error',
+          description: 'Failed to delete resource. Please try again.',
+          variant: 'destructive',
+        });
+      }
+    }
   };
 
   const filterResources = () => {
@@ -77,19 +114,8 @@ export default function Resources() {
     setFilteredResources(filtered);
   };
 
-  const handleResourceCreated = () => {
-    loadResources();
-  };
-
   const handleResourceClick = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
-  };
-
-  const handleDeleteResource = (id: string) => {
-    if (confirm('Are you sure you want to delete this resource?')) {
-      resourceStorage.delete(id);
-      loadResources();
-    }
   };
 
   const getResourceStats = () => {
@@ -113,12 +139,12 @@ export default function Resources() {
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Resources</h1>
-          <p className="text-jee-muted">Organize and access your study materials and helpful links</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Resources</h1>
+          <p className="text-muted-foreground">Organize and access your study materials and helpful links</p>
         </div>
         <Button
           onClick={() => setIsResourceModalOpen(true)}
-          className="mt-4 lg:mt-0 bg-jee-primary text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+          className="mt-4 lg:mt-0 bg-primary text-primary-foreground px-6 py-3 rounded-xl font-medium hover:bg-primary/90 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           data-testid="button-add-resource"
         >
           <Plus className="mr-2" size={18} />
@@ -128,57 +154,57 @@ export default function Resources() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="p-4">
+        <Card className="p-4 bg-card border-border">
           <CardContent className="p-0">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-jee-muted">Total Resources</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
+                <p className="text-sm text-muted-foreground">Total Resources</p>
+                <p className="text-2xl font-bold text-foreground">{stats.total}</p>
               </div>
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <ExternalLink className="text-blue-600" size={20} />
+              <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
+                <ExternalLink className="text-blue-600 dark:text-blue-400" size={20} />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="p-4">
+        <Card className="p-4 bg-card border-border">
           <CardContent className="p-0">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-jee-muted">Videos</p>
-                <p className="text-2xl font-bold text-green-600">{stats.byCategory.video || 0}</p>
+                <p className="text-sm text-muted-foreground">Videos</p>
+                <p className="text-2xl font-bold text-green-600 dark:text-green-400">{stats.byCategory.video || 0}</p>
               </div>
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <Video className="text-green-600" size={20} />
+              <div className="w-10 h-10 bg-green-50 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
+                <Video className="text-green-600 dark:text-green-400" size={20} />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="p-4">
+        <Card className="p-4 bg-card border-border">
           <CardContent className="p-0">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-jee-muted">Books</p>
-                <p className="text-2xl font-bold text-purple-600">{stats.byCategory.book || 0}</p>
+                <p className="text-sm text-muted-foreground">Books</p>
+                <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{stats.byCategory.book || 0}</p>
               </div>
-              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                <Book className="text-purple-600" size={20} />
+              <div className="w-10 h-10 bg-purple-50 dark:bg-purple-900/20 rounded-lg flex items-center justify-center">
+                <Book className="text-purple-600 dark:text-purple-400" size={20} />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="p-4">
+        <Card className="p-4 bg-card border-border">
           <CardContent className="p-0">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-jee-muted">Websites</p>
-                <p className="text-2xl font-bold text-gray-600">{stats.byCategory.website || 0}</p>
+                <p className="text-sm text-muted-foreground">Websites</p>
+                <p className="text-2xl font-bold text-muted-foreground">{stats.byCategory.website || 0}</p>
               </div>
-              <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-                <ExternalLink className="text-gray-600" size={20} />
+              <div className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center">
+                <ExternalLink className="text-muted-foreground" size={20} />
               </div>
             </div>
           </CardContent>
@@ -249,7 +275,7 @@ export default function Resources() {
                 {resources.length === 0 && (
                   <Button
                     onClick={() => setIsResourceModalOpen(true)}
-                    className="bg-jee-primary text-white"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90"
                   >
                     <Plus className="mr-2" size={16} />
                     Add Your First Resource
@@ -280,7 +306,7 @@ export default function Resources() {
                       size="sm"
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleDeleteResource(resource.id);
+                        handleDeleteResource(resource.id, resource.title);
                       }}
                       className="opacity-0 group-hover:opacity-100 transition-opacity text-red-500 hover:text-red-700"
                       data-testid={`button-delete-${resource.id}`}
@@ -293,12 +319,12 @@ export default function Resources() {
                     onClick={() => handleResourceClick(resource.url)}
                     className="cursor-pointer"
                   >
-                    <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-jee-primary transition-colors">
+                    <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
                       {resource.title}
                     </h3>
                     
                     {resource.description && (
-                      <p className="text-sm text-jee-muted mb-4 line-clamp-2">
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                         {resource.description}
                       </p>
                     )}
@@ -314,7 +340,7 @@ export default function Resources() {
                       </div>
                       <ExternalLink 
                         size={16} 
-                        className="text-gray-400 group-hover:text-jee-primary transition-colors" 
+                        className="text-muted-foreground group-hover:text-primary transition-colors" 
                       />
                     </div>
                   </div>
@@ -330,6 +356,19 @@ export default function Resources() {
         open={isResourceModalOpen}
         onOpenChange={setIsResourceModalOpen}
         onResourceCreated={handleResourceCreated}
+      />
+
+      {/* Confirmation Dialog */}
+      <ConfirmationDialog
+        open={deleteConfirmation.open}
+        onOpenChange={(open) => setDeleteConfirmation({ ...deleteConfirmation, open })}
+        onConfirm={confirmDeleteResource}
+        title="Delete Resource"
+        description={`Are you sure you want to delete "${deleteConfirmation.resourceTitle}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        variant="destructive"
+        icon="delete"
       />
     </div>
   );
