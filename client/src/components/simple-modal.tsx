@@ -36,7 +36,10 @@ export function SimpleModal({
       className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-4 md:p-6 modal-backdrop"
       style={{ 
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        zIndex: 99999 
+        zIndex: 99999,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();

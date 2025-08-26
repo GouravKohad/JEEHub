@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GraduationCap, Settings, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { SettingsModal } from '@/components/new-modals/settings-modal';
 import type { UserProfile } from '@/lib/storage';
+import { userProfileStorage } from '@/lib/storage';
 
 interface HeaderProps {
   userProfile: UserProfile | null;
@@ -11,6 +12,21 @@ interface HeaderProps {
 
 export function Header({ userProfile }: HeaderProps) {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [currentProfile, setCurrentProfile] = useState<UserProfile | null>(userProfile);
+
+  // Update local profile when prop changes or when settings are updated
+  useEffect(() => {
+    setCurrentProfile(userProfile);
+  }, [userProfile]);
+
+  const handleSettingsClose = () => {
+    setIsSettingsOpen(false);
+    // Refresh profile from storage to get latest changes
+    const updatedProfile = userProfileStorage.get();
+    if (updatedProfile) {
+      setCurrentProfile(updatedProfile);
+    }
+  };
   
   const getInitials = (name: string) => {
     return name
@@ -46,11 +62,11 @@ export function Header({ userProfile }: HeaderProps) {
             <div 
               className="w-8 h-8 bg-gradient-to-r from-jee-secondary to-jee-primary rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer"
               data-testid="user-avatar"
-              title={userProfile?.name || 'User'}
+              title={currentProfile?.name || 'User'}
             >
-              {userProfile?.name ? (
+              {currentProfile?.name ? (
                 <span className="text-white text-sm font-medium">
-                  {getInitials(userProfile.name)}
+                  {getInitials(currentProfile.name)}
                 </span>
               ) : (
                 <User className="text-white transition-transform duration-300 hover:rotate-12" size={16} />
@@ -62,7 +78,7 @@ export function Header({ userProfile }: HeaderProps) {
 
       <SettingsModal
         open={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
+        onClose={handleSettingsClose}
       />
     </header>
   );
