@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
-import { GraduationCap, User } from 'lucide-react';
+import { GraduationCap, User, Info } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { InfoModal } from '@/components/info-modal';
+import { Button } from '@/components/ui/button';
 import type { UserProfile } from '@/lib/storage';
 import { userProfileStorage } from '@/lib/storage';
 
@@ -10,6 +12,7 @@ interface HeaderProps {
 
 export function Header({ userProfile }: HeaderProps) {
   const [currentProfile, setCurrentProfile] = useState<UserProfile | null>(userProfile);
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
 
   // Update local profile when prop changes
   useEffect(() => {
@@ -37,6 +40,16 @@ export function Header({ userProfile }: HeaderProps) {
           </div>
           
           <div className="flex items-center space-x-4 animate-slide-in-right">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsInfoModalOpen(true)}
+              className="w-8 h-8 p-0 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/20"
+              data-testid="button-info"
+              title="How to use & About"
+            >
+              <Info className="text-blue-600 dark:text-blue-400" size={16} />
+            </Button>
             <ThemeToggle />
             <div 
               className="w-8 h-8 bg-gradient-to-r from-jee-secondary to-jee-primary rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer"
@@ -54,6 +67,12 @@ export function Header({ userProfile }: HeaderProps) {
           </div>
         </div>
       </div>
+
+      {/* Info Modal */}
+      <InfoModal
+        open={isInfoModalOpen}
+        onClose={() => setIsInfoModalOpen(false)}
+      />
     </header>
   );
 }
