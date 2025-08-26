@@ -60,49 +60,49 @@ export function SimpleWelcomeModal({ open, onComplete }: SimpleWelcomeModalProps
 
   return (
     <div 
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 md:p-6"
       style={{ 
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
         zIndex: 9999 
       }}
     >
       <div 
-        className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full p-8"
+        className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-sm sm:max-w-md p-6 sm:p-8 max-h-[95vh] overflow-y-auto"
         style={{ zIndex: 10000 }}
       >
         <div className="text-center mb-6">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-4">
-            <GraduationCap className="text-white" size={32} />
+          <div className="mx-auto w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-4">
+            <GraduationCap className="text-white" size={24} />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
             Welcome to JEE Study Manager!
           </h2>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
             Let's personalize your study experience. What should we call you?
           </p>
         </div>
         
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <Label htmlFor="name">Your Name</Label>
+            <Label htmlFor="name" className="text-sm sm:text-base">Your Name</Label>
             <div className="relative mt-1">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
               <Input
                 id="name"
                 placeholder="Enter your name..."
-                className="pl-10 py-3"
+                className="pl-10 py-2 sm:py-3 text-sm sm:text-base"
                 {...register('name')}
               />
             </div>
             {errors.name && (
-              <p className="text-sm text-red-500 mt-1">{errors.name.message}</p>
+              <p className="text-xs sm:text-sm text-red-500 mt-1">{errors.name.message}</p>
             )}
           </div>
           
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-3 font-semibold"
+            className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-2 sm:py-3 font-semibold text-sm sm:text-base"
           >
             {isSubmitting ? 'Getting Started...' : 'Get Started'}
           </Button>

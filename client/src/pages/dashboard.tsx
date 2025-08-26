@@ -8,8 +8,7 @@ import { QuickResources } from '@/components/dashboard/quick-resources';
 import { RecentActivity } from '@/components/dashboard/recent-activity';
 import { SimpleTaskModal } from '@/components/new-modals/simple-task-modal';
 import { SimpleResourceModal } from '@/components/new-modals/simple-resource-modal';
-import { TestPopupTrigger } from '@/components/test-popup';
-import { PopupTestButtons } from '@/components/popup-test-buttons';
+
 import { Button } from '@/components/ui/button';
 import type { UserProfile } from '@/lib/storage';
 
@@ -104,10 +103,7 @@ export default function Dashboard({ userProfile }: DashboardProps) {
           <Plus size={24} />
         </Button>
       </div>
-
-      {/* Test Popup */}
-      <TestPopupTrigger />
-      <PopupTestButtons />
+      
       
       {/* Modals */}
       <SimpleTaskModal

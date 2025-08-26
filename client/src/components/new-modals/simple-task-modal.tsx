@@ -87,26 +87,26 @@ export function SimpleTaskModal({ open, onClose, onTaskCreated }: SimpleTaskModa
       open={open}
       onClose={onClose}
       title="Create New Task"
-      className="max-w-lg"
+      className="max-w-sm sm:max-w-md lg:max-w-lg"
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 sm:space-y-4">
         <div>
-          <Label htmlFor="title">Task Title</Label>
+          <Label htmlFor="title" className="text-sm sm:text-base">Task Title</Label>
           <Input
             id="title"
             placeholder="Enter task title..."
             {...register('title')}
-            className="mt-1"
+            className="mt-1 text-sm sm:text-base"
           />
           {errors.title && (
-            <p className="text-sm text-red-500 mt-1">{errors.title.message}</p>
+            <p className="text-xs sm:text-sm text-red-500 mt-1">{errors.title.message}</p>
           )}
         </div>
 
         <div>
-          <Label htmlFor="subject">Subject</Label>
+          <Label htmlFor="subject" className="text-sm sm:text-base">Subject</Label>
           <Select onValueChange={(value) => setValue('subject', value as any)} defaultValue="Physics">
-            <SelectTrigger className="mt-1">
+            <SelectTrigger className="mt-1 text-sm sm:text-base">
               <SelectValue placeholder="Select Subject" />
             </SelectTrigger>
             <SelectContent>
@@ -116,41 +116,41 @@ export function SimpleTaskModal({ open, onClose, onTaskCreated }: SimpleTaskModa
             </SelectContent>
           </Select>
           {errors.subject && (
-            <p className="text-sm text-red-500 mt-1">{errors.subject.message}</p>
+            <p className="text-xs sm:text-sm text-red-500 mt-1">{errors.subject.message}</p>
           )}
         </div>
 
         <div>
-          <Label htmlFor="description">Description (Optional)</Label>
+          <Label htmlFor="description" className="text-sm sm:text-base">Description (Optional)</Label>
           <Textarea
             id="description"
             placeholder="Add task description..."
             rows={3}
             {...register('description')}
-            className="mt-1 resize-none"
+            className="mt-1 resize-none text-sm sm:text-base"
           />
           {errors.description && (
-            <p className="text-sm text-red-500 mt-1">{errors.description.message}</p>
+            <p className="text-xs sm:text-sm text-red-500 mt-1">{errors.description.message}</p>
           )}
         </div>
 
         <div>
-          <Label htmlFor="dueDate">Due Date</Label>
+          <Label htmlFor="dueDate" className="text-sm sm:text-base">Due Date</Label>
           <Input
             id="dueDate"
             type="date"
             min={today}
             {...register('dueDate')}
-            className="mt-1"
+            className="mt-1 text-sm sm:text-base"
           />
           {errors.dueDate && (
-            <p className="text-sm text-red-500 mt-1">{errors.dueDate.message}</p>
+            <p className="text-xs sm:text-sm text-red-500 mt-1">{errors.dueDate.message}</p>
           )}
         </div>
 
         <div>
-          <Label>Priority</Label>
-          <div className="flex space-x-2 mt-1">
+          <Label className="text-sm sm:text-base">Priority</Label>
+          <div className="flex flex-wrap gap-2 mt-1">
             {[
               { value: 'low', label: 'Low', color: 'bg-green-100 text-green-800 hover:bg-green-200' },
               { value: 'medium', label: 'Medium', color: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200' },
@@ -160,10 +160,10 @@ export function SimpleTaskModal({ open, onClose, onTaskCreated }: SimpleTaskModa
                 key={option.value}
                 type="button"
                 onClick={() => setValue('priority', option.value as any)}
-                className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+                className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium transition-colors flex-1 sm:flex-none ${
                   priority === option.value 
                     ? option.color 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                 }`}
               >
                 {option.label}
@@ -171,23 +171,24 @@ export function SimpleTaskModal({ open, onClose, onTaskCreated }: SimpleTaskModa
             ))}
           </div>
           {errors.priority && (
-            <p className="text-sm text-red-500 mt-1">{errors.priority.message}</p>
+            <p className="text-xs sm:text-sm text-red-500 mt-1">{errors.priority.message}</p>
           )}
         </div>
 
-        <div className="flex justify-end space-x-3 pt-4">
+        <div className="flex flex-col sm:flex-row sm:justify-end gap-2 sm:gap-3 pt-4">
           <Button
             type="button"
             variant="outline"
             onClick={onClose}
             disabled={isSubmitting}
+            className="w-full sm:w-auto text-sm sm:text-base"
           >
             Cancel
           </Button>
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="bg-blue-500 hover:bg-blue-600 text-white"
+            className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white text-sm sm:text-base"
           >
             {isSubmitting ? 'Creating...' : 'Create Task'}
           </Button>

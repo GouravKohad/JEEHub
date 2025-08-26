@@ -77,40 +77,40 @@ export function SimpleResourceModal({ open, onClose, onResourceCreated }: Simple
       open={open}
       onClose={onClose}
       title="Add New Resource"
-      className="max-w-lg"
+      className="max-w-sm sm:max-w-md lg:max-w-lg"
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 sm:space-y-4">
         <div>
-          <Label htmlFor="title">Resource Title</Label>
+          <Label htmlFor="title" className="text-sm sm:text-base">Resource Title</Label>
           <Input
             id="title"
             placeholder="Enter resource title..."
             {...register('title')}
-            className="mt-1"
+            className="mt-1 text-sm sm:text-base"
           />
           {errors.title && (
-            <p className="text-sm text-red-500 mt-1">{errors.title.message}</p>
+            <p className="text-xs sm:text-sm text-red-500 mt-1">{errors.title.message}</p>
           )}
         </div>
 
         <div>
-          <Label htmlFor="url">URL</Label>
+          <Label htmlFor="url" className="text-sm sm:text-base">URL</Label>
           <Input
             id="url"
             type="url"
             placeholder="https://example.com"
             {...register('url')}
-            className="mt-1"
+            className="mt-1 text-sm sm:text-base"
           />
           {errors.url && (
-            <p className="text-sm text-red-500 mt-1">{errors.url.message}</p>
+            <p className="text-xs sm:text-sm text-red-500 mt-1">{errors.url.message}</p>
           )}
         </div>
 
         <div>
-          <Label htmlFor="subject">Subject</Label>
+          <Label htmlFor="subject" className="text-sm sm:text-base">Subject</Label>
           <Select onValueChange={(value) => setValue('subject', value as any)} defaultValue="Physics">
-            <SelectTrigger className="mt-1">
+            <SelectTrigger className="mt-1 text-sm sm:text-base">
               <SelectValue placeholder="Select Subject" />
             </SelectTrigger>
             <SelectContent>
@@ -121,14 +121,14 @@ export function SimpleResourceModal({ open, onClose, onResourceCreated }: Simple
             </SelectContent>
           </Select>
           {errors.subject && (
-            <p className="text-sm text-red-500 mt-1">{errors.subject.message}</p>
+            <p className="text-xs sm:text-sm text-red-500 mt-1">{errors.subject.message}</p>
           )}
         </div>
 
         <div>
-          <Label htmlFor="category">Category</Label>
+          <Label htmlFor="category" className="text-sm sm:text-base">Category</Label>
           <Select onValueChange={(value) => setValue('category', value as any)} defaultValue="website">
-            <SelectTrigger className="mt-1">
+            <SelectTrigger className="mt-1 text-sm sm:text-base">
               <SelectValue placeholder="Select Category" />
             </SelectTrigger>
             <SelectContent>
@@ -140,37 +140,38 @@ export function SimpleResourceModal({ open, onClose, onResourceCreated }: Simple
             </SelectContent>
           </Select>
           {errors.category && (
-            <p className="text-sm text-red-500 mt-1">{errors.category.message}</p>
+            <p className="text-xs sm:text-sm text-red-500 mt-1">{errors.category.message}</p>
           )}
         </div>
 
         <div>
-          <Label htmlFor="description">Description (Optional)</Label>
+          <Label htmlFor="description" className="text-sm sm:text-base">Description (Optional)</Label>
           <Textarea
             id="description"
             placeholder="Add resource description..."
             rows={3}
             {...register('description')}
-            className="mt-1 resize-none"
+            className="mt-1 resize-none text-sm sm:text-base"
           />
           {errors.description && (
-            <p className="text-sm text-red-500 mt-1">{errors.description.message}</p>
+            <p className="text-xs sm:text-sm text-red-500 mt-1">{errors.description.message}</p>
           )}
         </div>
 
-        <div className="flex justify-end space-x-3 pt-4">
+        <div className="flex flex-col sm:flex-row sm:justify-end gap-2 sm:gap-3 pt-4">
           <Button
             type="button"
             variant="outline"
             onClick={onClose}
             disabled={isSubmitting}
+            className="w-full sm:w-auto text-sm sm:text-base"
           >
             Cancel
           </Button>
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="bg-blue-500 hover:bg-blue-600 text-white"
+            className="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white text-sm sm:text-base"
           >
             {isSubmitting ? 'Adding...' : 'Add Resource'}
           </Button>

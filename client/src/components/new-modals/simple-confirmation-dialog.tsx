@@ -41,29 +41,30 @@ export function SimpleConfirmationDialog({
       open={open}
       onClose={onClose}
       title={title}
-      className="max-w-md"
+      className="max-w-xs sm:max-w-sm md:max-w-md"
     >
       <div className="text-center">
-        <div className="mx-auto flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 mb-4">
-          <IconComponent className={`w-6 h-6 ${iconColor}`} />
+        <div className="mx-auto flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-700 mb-4">
+          <IconComponent className={`w-5 h-5 sm:w-6 sm:h-6 ${iconColor}`} />
         </div>
         
-        <p className="text-gray-600 dark:text-gray-300 mb-6">
+        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-6">
           {description}
         </p>
         
-        <div className="flex justify-end space-x-3">
+        <div className="flex flex-col sm:flex-row sm:justify-end gap-2 sm:gap-3">
           <Button
             type="button"
             variant="outline"
             onClick={onClose}
+            className="w-full sm:w-auto text-sm sm:text-base"
           >
             {cancelText}
           </Button>
           <Button
             type="button"
             onClick={handleConfirm}
-            className={`text-white ${buttonColor}`}
+            className={`w-full sm:w-auto text-white text-sm sm:text-base ${buttonColor}`}
           >
             {confirmText}
           </Button>
