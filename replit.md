@@ -24,6 +24,8 @@ A feature-rich, animated task management app designed specifically for JEE aspir
 - Data should be stored in local storage
 - Wants a stylish, animated, and responsive design
 - Requires features for JEE aspirants specifically
+- User name should be collected and stored locally
+- Personalized experience with user's name throughout the app
 
 ## Recent Changes
 - Initial project setup (August 26, 2025)
@@ -35,3 +37,8 @@ A feature-rich, animated task management app designed specifically for JEE aspir
   - Subjects: Subject-wise progress tracking and task organization
   - Resources: Study material links and resource management
   - Timer: Study timer with presets and session tracking
+- Added user profile system with welcome modal (August 26, 2025):
+  - Collects user's real name on first visit
+  - Stores user preferences in local storage
+  - Personalizes dashboard and timer with user's name
+  - User profile management with preferences

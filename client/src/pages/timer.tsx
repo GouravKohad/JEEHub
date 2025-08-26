@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useTimer } from '@/hooks/use-timer';
-import { studySessionStorage } from '@/lib/storage';
+import { studySessionStorage, type UserProfile } from '@/lib/storage';
 import type { Subject } from '@shared/schema';
 
 const TIMER_PRESETS = [
@@ -16,9 +16,17 @@ const TIMER_PRESETS = [
   { label: 'Quick Review', minutes: 10, description: '10-minute review session' },
 ];
 
-export default function Timer() {
-  const [selectedSubject, setSelectedSubject] = useState<Subject>('Physics');
-  const [selectedPreset, setSelectedPreset] = useState(TIMER_PRESETS[0]);
+interface TimerProps {
+  userProfile: UserProfile | null;
+}
+
+export default function Timer({ userProfile }: TimerProps) {
+  const [selectedSubject, setSelectedSubject] = useState<Subject>(
+    userProfile?.preferences.defaultSubject || 'Physics'
+  );
+  const [selectedPreset, setSelectedPreset] = useState(
+    TIMER_PRESETS.find(p => p.minutes === userProfile?.preferences.defaultTimerDuration) || TIMER_PRESETS[0]
+  );
   const [sessionStartTime, setSessionStartTime] = useState<string | null>(null);
   const [sessions, setSessions] = useState(studySessionStorage.getAll());
   const [customMinutes, setCustomMinutes] = useState(25);

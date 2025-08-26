@@ -2,14 +2,15 @@ import { Plus, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { taskStorage, userStatsStorage } from '@/lib/storage';
+import { taskStorage, userStatsStorage, type UserProfile } from '@/lib/storage';
 import { useMemo } from 'react';
 
 interface DashboardOverviewProps {
   onAddTask: () => void;
+  userProfile: UserProfile | null;
 }
 
-export function DashboardOverview({ onAddTask }: DashboardOverviewProps) {
+export function DashboardOverview({ onAddTask, userProfile }: DashboardOverviewProps) {
   const stats = useMemo(() => {
     const userStats = userStatsStorage.get();
     const taskStats = taskStorage.getStats();
@@ -63,7 +64,7 @@ export function DashboardOverview({ onAddTask }: DashboardOverviewProps) {
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
         <div>
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome back, <span className="text-jee-primary">Arjun</span>!
+            Welcome back, <span className="text-jee-primary">{userProfile?.name || 'Student'}</span>!
           </h2>
           <p className="text-jee-muted">Track your JEE preparation progress and stay on top of your goals.</p>
         </div>

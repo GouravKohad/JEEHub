@@ -1,8 +1,20 @@
-import { GraduationCap, Bell } from 'lucide-react';
+import { GraduationCap, Bell, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import type { UserProfile } from '@/lib/storage';
 
-export function Header() {
+interface HeaderProps {
+  userProfile: UserProfile | null;
+}
+
+export function Header({ userProfile }: HeaderProps) {
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase())
+      .slice(0, 2)
+      .join('');
+  };
   return (
     <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -65,8 +77,15 @@ export function Header() {
             <div 
               className="w-8 h-8 bg-gradient-to-r from-jee-secondary to-jee-primary rounded-full flex items-center justify-center"
               data-testid="user-avatar"
+              title={userProfile?.name || 'User'}
             >
-              <span className="text-white text-sm font-medium">AK</span>
+              {userProfile?.name ? (
+                <span className="text-white text-sm font-medium">
+                  {getInitials(userProfile.name)}
+                </span>
+              ) : (
+                <User className="text-white" size={16} />
+              )}
             </div>
           </div>
         </div>

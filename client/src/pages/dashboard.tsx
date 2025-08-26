@@ -9,8 +9,13 @@ import { RecentActivity } from '@/components/dashboard/recent-activity';
 import { TaskModal } from '@/components/modals/task-modal';
 import { ResourceModal } from '@/components/modals/resource-modal';
 import { Button } from '@/components/ui/button';
+import type { UserProfile } from '@/lib/storage';
 
-export default function Dashboard() {
+interface DashboardProps {
+  userProfile: UserProfile | null;
+}
+
+export default function Dashboard({ userProfile }: DashboardProps) {
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [isResourceModalOpen, setIsResourceModalOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -29,7 +34,10 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-8 animate-fade-in">
-      <DashboardOverview onAddTask={() => setIsTaskModalOpen(true)} />
+      <DashboardOverview 
+        onAddTask={() => setIsTaskModalOpen(true)} 
+        userProfile={userProfile}
+      />
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Content */}

@@ -15,6 +15,7 @@ import type {
 
 // Storage keys
 const STORAGE_KEYS = {
+  USER_PROFILE: 'jee_user_profile',
   TASKS: 'jee_tasks',
   RESOURCES: 'jee_resources',
   STUDY_SESSIONS: 'jee_study_sessions',
@@ -22,6 +23,18 @@ const STORAGE_KEYS = {
   ACTIVITIES: 'jee_activities',
   USER_STATS: 'jee_user_stats',
 } as const;
+
+// User profile interface
+export interface UserProfile {
+  name: string;
+  joinDate: string;
+  lastActiveDate: string;
+  preferences: {
+    defaultSubject: Subject;
+    defaultTimerDuration: number;
+    theme: 'light' | 'dark';
+  };
+}
 
 // Generic storage functions
 function getFromStorage<T>(key: string, defaultValue: T): T {
@@ -393,6 +406,60 @@ export const userStatsStorage = {
   },
 };
 
+// User profile management
+export const userProfileStorage = {
+  get: (): UserProfile | null => {
+    try {
+      const profile = localStorage.getItem(STORAGE_KEYS.USER_PROFILE);
+      return profile ? JSON.parse(profile) : null;
+    } catch (error) {
+      console.error('Error reading user profile:', error);
+      return null;
+    }
+  },
+
+  create: (name: string): UserProfile => {
+    const profile: UserProfile = {
+      name: name.trim(),
+      joinDate: new Date().toISOString(),
+      lastActiveDate: new Date().toISOString(),
+      preferences: {
+        defaultSubject: 'Physics',
+        defaultTimerDuration: 25,
+        theme: 'light',
+      },
+    };
+    
+    saveToStorage(STORAGE_KEYS.USER_PROFILE, profile);
+    return profile;
+  },
+
+  update: (updates: Partial<UserProfile>): UserProfile | null => {
+    const existingProfile = userProfileStorage.get();
+    if (!existingProfile) return null;
+    
+    const updatedProfile = {
+      ...existingProfile,
+      ...updates,
+      lastActiveDate: new Date().toISOString(),
+    };
+    
+    saveToStorage(STORAGE_KEYS.USER_PROFILE, updatedProfile);
+    return updatedProfile;
+  },
+
+  updateLastActive: (): void => {
+    const profile = userProfileStorage.get();
+    if (profile) {
+      userProfileStorage.update({ lastActiveDate: new Date().toISOString() });
+    }
+  },
+
+  isFirstTime: (): boolean => {
+    return userProfileStorage.get() === null;
+  },
+};
+
 // Initialize default data
 export const initializeDefaultData = (): void => {
   // Create some default resources if none exist
@@ -426,4 +493,7 @@ export const initializeDefaultData = (): void => {
       resourceStorage.create(resource);
     });
   }
+  
+  // Update last active date if user exists
+  userProfileStorage.updateLastActive();
 };
