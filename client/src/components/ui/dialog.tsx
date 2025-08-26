@@ -30,29 +30,54 @@ const DialogOverlay = React.forwardRef<
 ))
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
+interface DialogContentProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  scrollable?: boolean;
+}
+
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, style, ...props }, ref) => (
-  <DialogPortal>
-    <DialogOverlay style={{ zIndex: 50 }} />
-    <DialogPrimitive.Content
-      ref={ref}
-      className={cn(
-        "fixed left-[50%] top-[50%] z-51 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-6 modal-content p-6 data-[state=open]:animate-modal-enter data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-top-[48%]",
-        className
-      )}
-      style={{ zIndex: 51, ...style }}
-      {...props}
-    >
-      {children}
-      <DialogPrimitive.Close className="absolute right-4 top-4 z-10 rounded-full p-2 bg-white/10 hover:bg-white/20 dark:bg-black/10 dark:hover:bg-black/20 opacity-70 ring-offset-background transition-all duration-200 hover:opacity-100 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:pointer-events-none">
-        <X className="h-4 w-4" />
-        <span className="sr-only">Close</span>
-      </DialogPrimitive.Close>
-    </DialogPrimitive.Content>
-  </DialogPortal>
-))
+  DialogContentProps
+>(({ className, children, style, size = 'md', scrollable = false, ...props }, ref) => {
+  const sizeClasses = {
+    sm: 'max-w-sm',
+    md: 'max-w-lg',
+    lg: 'max-w-2xl',
+    xl: 'max-w-4xl'
+  };
+
+  const modalSizeClass = `modal-${size}`;
+
+  return (
+    <DialogPortal>
+      <DialogOverlay style={{ zIndex: 50 }} />
+      <DialogPrimitive.Content
+        ref={ref}
+        className={cn(
+          "fixed left-[50%] top-[50%] z-51 grid w-full translate-x-[-50%] translate-y-[-50%] modal-content p-6 data-[state=open]:animate-modal-enter data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-top-[48%]",
+          sizeClasses[size],
+          modalSizeClass,
+          scrollable && "modal-content-scrollable",
+          className
+        )}
+        style={{ zIndex: 51, ...style }}
+        {...props}
+      >
+        {scrollable ? (
+          <div className="modal-body-scrollable">
+            {children}
+          </div>
+        ) : (
+          children
+        )}
+        <DialogPrimitive.Close className="absolute right-4 top-4 z-10 rounded-full p-2 bg-white/10 hover:bg-white/20 dark:bg-black/10 dark:hover:bg-black/20 opacity-70 ring-offset-background transition-all duration-200 hover:opacity-100 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:pointer-events-none">
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </DialogPrimitive.Close>
+      </DialogPrimitive.Content>
+    </DialogPortal>
+  )
+})
 DialogContent.displayName = DialogPrimitive.Content.displayName
 
 const DialogHeader = ({

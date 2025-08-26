@@ -309,6 +309,123 @@
   border-radius: 1rem;
   position: relative;
   overflow: hidden;
+  /* Enhanced responsive height */
+  max-height: min(90vh, 800px);
+  min-height: min(200px, 30vh);
+}
+
+/* Responsive modal sizing */
+.modal-content-scrollable {
+  display: flex;
+  flex-direction: column;
+  max-height: min(90vh, 800px);
+  min-height: min(200px, 30vh);
+}
+
+.modal-body-scrollable {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+/* Enhanced scrollbar specifically for modal content */
+.modal-body-scrollable::-webkit-scrollbar {
+  width: 10px;
+}
+
+.modal-body-scrollable::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  margin: 4px;
+}
+
+.modal-body-scrollable::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.6), rgba(139, 92, 246, 0.6));
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.modal-body-scrollable::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(139, 92, 246, 0.8));
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+}
+
+.dark .modal-body-scrollable::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dark .modal-body-scrollable::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.6), rgba(167, 139, 250, 0.6));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .modal-body-scrollable::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.8), rgba(167, 139, 250, 0.8));
+  box-shadow: 0 4px 8px rgba(96, 165, 250, 0.3);
+}
+
+/* Responsive modal breakpoints */
+@media (max-width: 640px) {
+  .modal-content {
+    max-height: 95vh;
+    min-height: 200px;
+    margin: 10px;
+    border-radius: 0.75rem;
+  }
+  
+  .modal-content-scrollable {
+    max-height: 95vh;
+    min-height: 200px;
+  }
+  
+  .modal-body-scrollable::-webkit-scrollbar {
+    width: 8px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .modal-content {
+    max-height: min(85vh, 700px);
+    min-height: min(250px, 35vh);
+  }
+  
+  .modal-content-scrollable {
+    max-height: min(85vh, 700px);
+    min-height: min(250px, 35vh);
+  }
+}
+
+@media (min-width: 1025px) {
+  .modal-content {
+    max-height: min(80vh, 800px);
+    min-height: min(300px, 40vh);
+  }
+  
+  .modal-content-scrollable {
+    max-height: min(80vh, 800px);
+    min-height: min(300px, 40vh);
+  }
+}
+
+/* Modal height utilities */
+.modal-sm {
+  max-height: min(50vh, 400px);
+}
+
+.modal-md {
+  max-height: min(70vh, 600px);
+}
+
+.modal-lg {
+  max-height: min(85vh, 800px);
+}
+
+.modal-xl {
+  max-height: min(95vh, 1000px);
 }
 
 .modal-content::before {
@@ -416,23 +533,52 @@
   background: rgba(31, 41, 55, 0.95);
 }
 
-/* Custom Scrollbar */
+/* Enhanced Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(0 0% 95%);
-  border-radius: 3px;
+  background: hsl(0 0% 96%);
+  border-radius: 4px;
+  margin: 2px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(210 5.26% 70%);
-  border-radius: 3px;
+  background: linear-gradient(135deg, hsl(210 5.26% 75%), hsl(210 5.26% 65%));
+  border-radius: 4px;
+  border: 1px solid hsl(0 0% 92%);
+  transition: all 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(210 5.26% 60%);
+  background: linear-gradient(135deg, hsl(210 5.26% 65%), hsl(210 5.26% 55%));
+  transform: scale(1.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(135deg, hsl(210 5.26% 55%), hsl(210 5.26% 45%));
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-track {
+  background: hsl(215 27.9% 20%);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, hsl(215 27.9% 35%), hsl(215 27.9% 25%));
+  border: 1px solid hsl(215 27.9% 30%);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, hsl(215 27.9% 45%), hsl(215 27.9% 35%));
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dark ::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(135deg, hsl(215 27.9% 55%), hsl(215 27.9% 45%));
 }
 
 /* Progress bar animations */

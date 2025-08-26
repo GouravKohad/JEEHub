@@ -12,13 +12,15 @@ import Tasks from "@/pages/tasks";
 import Subjects from "@/pages/subjects";
 import Resources from "@/pages/resources";
 import Timer from "@/pages/timer";
+import { PopupDemo } from "@/components/demo/popup-demo";
 import { initializeDefaultData, userProfileStorage, type UserProfile } from "@/lib/storage";
 import { 
   LayoutDashboard, 
   CheckSquare, 
   BookOpen, 
   ExternalLink, 
-  Clock 
+  Clock,
+  MousePointer2
 } from "lucide-react";
 
 function App() {
@@ -100,7 +102,7 @@ function App() {
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               {/* Tab Navigation */}
               <div className="mb-8 animate-fade-in">
-                <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-5 bg-card border border-border rounded-xl p-1 shadow-sm hover:shadow-lg transition-all duration-300">
+                <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-6 bg-card border border-border rounded-xl p-1 shadow-sm hover:shadow-lg transition-all duration-300">
                   <TabsTrigger 
                     value="dashboard" 
                     className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
@@ -141,6 +143,14 @@ function App() {
                     <Clock size={16} className="transition-transform duration-300" />
                     <span className="hidden sm:inline">Timer</span>
                   </TabsTrigger>
+                  <TabsTrigger 
+                    value="popup-demo" 
+                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
+                    data-testid="tab-popup-demo"
+                  >
+                    <MousePointer2 size={16} className="transition-transform duration-300" />
+                    <span className="hidden sm:inline">Popups</span>
+                  </TabsTrigger>
                 </TabsList>
               </div>
 
@@ -163,6 +173,10 @@ function App() {
               
               <TabsContent value="timer" className="mt-0 animate-fade-in">
                 <Timer userProfile={userProfile} />
+              </TabsContent>
+
+              <TabsContent value="popup-demo" className="mt-0 animate-fade-in">
+                <PopupDemo />
               </TabsContent>
             </Tabs>
           </div>
