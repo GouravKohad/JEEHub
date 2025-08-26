@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
 import { DashboardOverview } from '@/components/dashboard/dashboard-overview';
 import { SubjectProgress } from '@/components/dashboard/subject-progress';
@@ -10,7 +10,8 @@ import { SimpleTaskModal } from '@/components/new-modals/simple-task-modal';
 import { SimpleResourceModal } from '@/components/new-modals/simple-resource-modal';
 
 import { Button } from '@/components/ui/button';
-import type { UserProfile } from '@/lib/storage';
+import type { UserProfile, WeeklyProgress } from '@/lib/storage';
+import { weeklyProgressStorage } from '@/lib/storage';
 
 interface DashboardProps {
   userProfile: UserProfile | null;
@@ -20,6 +21,17 @@ export default function Dashboard({ userProfile }: DashboardProps) {
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [isResourceModalOpen, setIsResourceModalOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [weeklyProgress, setWeeklyProgress] = useState<WeeklyProgress | null>(null);
+
+  // Load weekly progress data
+  useEffect(() => {
+    const loadProgress = () => {
+      const progress = weeklyProgressStorage.get();
+      setWeeklyProgress(progress);
+    };
+    
+    loadProgress();
+  }, [refreshKey]);
 
   const handleTaskCreated = () => {
     setRefreshKey(prev => prev + 1);
@@ -66,26 +78,35 @@ export default function Dashboard({ userProfile }: DashboardProps) {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-jee-muted">Physics</span>
-                <span className="text-sm font-medium">85%</span>
+                <span className="text-sm font-medium">{weeklyProgress?.Physics || 0}%</span>
               </div>
               <div className="bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-600 h-2 rounded-full progress-bar" style={{ width: '85%' }} />
+                <div 
+                  className="bg-blue-600 h-2 rounded-full progress-bar" 
+                  style={{ width: `${weeklyProgress?.Physics || 0}%` }} 
+                />
               </div>
 
               <div className="flex items-center justify-between">
                 <span className="text-sm text-jee-muted">Chemistry</span>
-                <span className="text-sm font-medium">72%</span>
+                <span className="text-sm font-medium">{weeklyProgress?.Chemistry || 0}%</span>
               </div>
               <div className="bg-gray-200 rounded-full h-2">
-                <div className="bg-green-600 h-2 rounded-full progress-bar" style={{ width: '72%' }} />
+                <div 
+                  className="bg-green-600 h-2 rounded-full progress-bar" 
+                  style={{ width: `${weeklyProgress?.Chemistry || 0}%` }} 
+                />
               </div>
 
               <div className="flex items-center justify-between">
                 <span className="text-sm text-jee-muted">Mathematics</span>
-                <span className="text-sm font-medium">90%</span>
+                <span className="text-sm font-medium">{weeklyProgress?.Mathematics || 0}%</span>
               </div>
               <div className="bg-gray-200 rounded-full h-2">
-                <div className="bg-purple-600 h-2 rounded-full progress-bar" style={{ width: '90%' }} />
+                <div 
+                  className="bg-purple-600 h-2 rounded-full progress-bar" 
+                  style={{ width: `${weeklyProgress?.Mathematics || 0}%` }} 
+                />
               </div>
             </div>
           </div>

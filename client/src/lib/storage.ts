@@ -22,6 +22,7 @@ const STORAGE_KEYS = {
   SCHEDULE: 'jee_schedule',
   ACTIVITIES: 'jee_activities',
   USER_STATS: 'jee_user_stats',
+  WEEKLY_PROGRESS: 'jee_weekly_progress',
 } as const;
 
 // User profile interface
@@ -91,6 +92,7 @@ export const taskStorage = {
     
     // Update stats
     userStatsStorage.updateTaskCount();
+    weeklyProgressStorage.update();
     
     return newTask;
   },
@@ -117,6 +119,7 @@ export const taskStorage = {
       
       // Update stats
       userStatsStorage.updateTaskCompletion();
+      weeklyProgressStorage.update();
     }
     
     tasks[index] = updatedTask;
@@ -217,6 +220,7 @@ export const studySessionStorage = {
     
     // Update stats
     userStatsStorage.updateStudyTime(sessionData.duration);
+    weeklyProgressStorage.update();
     
     return newSession;
   },
@@ -405,6 +409,108 @@ export const userStatsStorage = {
     saveToStorage(STORAGE_KEYS.USER_STATS, updatedStats);
   },
 };
+
+// Weekly progress interface
+export interface WeeklyProgress {
+  weekStart: string;
+  Physics: number;
+  Chemistry: number;
+  Mathematics: number;
+  lastUpdated: string;
+}
+
+// Weekly progress management
+export const weeklyProgressStorage = {
+  get: (): WeeklyProgress => {
+    const currentWeekStart = getWeekStart();
+    const stored = getFromStorage<WeeklyProgress | null>(STORAGE_KEYS.WEEKLY_PROGRESS, null);
+    
+    // If no stored data or it's from a different week, calculate fresh
+    if (!stored || stored.weekStart !== currentWeekStart) {
+      return weeklyProgressStorage.calculate();
+    }
+    
+    return stored;
+  },
+  
+  calculate: (): WeeklyProgress => {
+    const currentWeekStart = getWeekStart();
+    const weekEnd = getWeekEnd();
+    
+    const progress: WeeklyProgress = {
+      weekStart: currentWeekStart,
+      Physics: 0,
+      Chemistry: 0,
+      Mathematics: 0,
+      lastUpdated: new Date().toISOString(),
+    };
+    
+    // Calculate progress for each subject based on tasks completed this week
+    (['Physics', 'Chemistry', 'Mathematics'] as Subject[]).forEach(subject => {
+      const allSubjectTasks = taskStorage.getBySubject(subject);
+      const weekTasks = allSubjectTasks.filter(task => {
+        const taskDate = new Date(task.createdAt);
+        return taskDate >= new Date(currentWeekStart) && taskDate <= new Date(weekEnd);
+      });
+      
+      const completedWeekTasks = weekTasks.filter(task => 
+        task.status === 'completed' && 
+        task.completedAt &&
+        new Date(task.completedAt) >= new Date(currentWeekStart) &&
+        new Date(task.completedAt) <= new Date(weekEnd)
+      );
+      
+      // Also consider study sessions for this week
+      const weekSessions = studySessionStorage.getBySubject(subject).filter(session => {
+        const sessionDate = new Date(session.startTime);
+        return sessionDate >= new Date(currentWeekStart) && sessionDate <= new Date(weekEnd);
+      });
+      
+      const totalStudyMinutes = weekSessions.reduce((total, session) => total + session.duration, 0);
+      
+      // Calculate progress: 60% from completed tasks, 40% from study time
+      const taskProgress = weekTasks.length > 0 ? (completedWeekTasks.length / weekTasks.length) * 60 : 0;
+      const studyProgress = Math.min((totalStudyMinutes / 180) * 40, 40); // 180 minutes = 3 hours target per week
+      
+      progress[subject] = Math.round(taskProgress + studyProgress);
+    });
+    
+    // Save to storage
+    saveToStorage(STORAGE_KEYS.WEEKLY_PROGRESS, progress);
+    
+    return progress;
+  },
+  
+  update: (): WeeklyProgress => {
+    return weeklyProgressStorage.calculate();
+  },
+};
+
+// Helper function to get the start of the current week (Monday)
+function getWeekStart(): string {
+  const now = new Date();
+  const dayOfWeek = now.getDay();
+  const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // Sunday is 0, Monday is 1
+  
+  const monday = new Date(now);
+  monday.setDate(now.getDate() + mondayOffset);
+  monday.setHours(0, 0, 0, 0);
+  
+  return monday.toISOString();
+}
+
+// Helper function to get the end of the current week (Sunday)
+function getWeekEnd(): string {
+  const now = new Date();
+  const dayOfWeek = now.getDay();
+  const sundayOffset = dayOfWeek === 0 ? 0 : 7 - dayOfWeek;
+  
+  const sunday = new Date(now);
+  sunday.setDate(now.getDate() + sundayOffset);
+  sunday.setHours(23, 59, 59, 999);
+  
+  return sunday.toISOString();
+}
 
 // User profile management
 export const userProfileStorage = {
