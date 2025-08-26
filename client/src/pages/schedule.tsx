@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
 import { Calendar as CalendarIcon, Clock, Plus, Edit2, Trash2, BookOpen } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -81,8 +81,10 @@ export default function Schedule() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Form submitted with data:', formData);
     
     if (!formData.title || !formData.startTime || !formData.endTime) {
+      console.log('Validation failed - missing fields');
       toast({
         title: "Missing Information",
         description: "Please fill in all required fields.",
@@ -187,9 +189,12 @@ export default function Schedule() {
               Add Schedule
             </Button>
           </DialogTrigger>
-          <DialogContent size="md" className="max-w-md">
+          <DialogContent className="max-w-md">
             <DialogHeader>
               <DialogTitle>{editingItem ? 'Edit Schedule' : 'Add New Schedule'}</DialogTitle>
+              <DialogDescription>
+                {editingItem ? 'Modify your existing schedule item.' : 'Create a new schedule item for your study plan.'}
+              </DialogDescription>
             </DialogHeader>
             
             <form onSubmit={handleSubmit} className="space-y-4">
