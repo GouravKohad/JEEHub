@@ -467,6 +467,13 @@ export const initializeDefaultData = (): void => {
   if (existingResources.length === 0) {
     const defaultResources = [
       {
+        title: "Physics Wallah",
+        url: "https://www.pw.live/",
+        description: "Comprehensive JEE preparation platform with live classes and study material",
+        subject: "General" as const,
+        category: "website" as const,
+      },
+      {
         title: "NCERT Physics Solutions",
         url: "https://ncert.nic.in/textbook.php?leph1=0-10",
         description: "Complete solutions for NCERT Physics textbook",
