@@ -8,11 +8,11 @@ import { userProfileStorage } from '@/lib/storage';
 
 interface HeaderProps {
   userProfile: UserProfile | null;
+  onInfoClick?: () => void;
 }
 
-export function Header({ userProfile }: HeaderProps) {
+export function Header({ userProfile, onInfoClick }: HeaderProps) {
   const [currentProfile, setCurrentProfile] = useState<UserProfile | null>(userProfile);
-  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
 
   // Update local profile when prop changes
   useEffect(() => {
@@ -43,7 +43,7 @@ export function Header({ userProfile }: HeaderProps) {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setIsInfoModalOpen(true)}
+              onClick={onInfoClick}
               className="w-8 h-8 p-0 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/20"
               data-testid="button-info"
               title="How to use & About"
@@ -67,12 +67,6 @@ export function Header({ userProfile }: HeaderProps) {
           </div>
         </div>
       </div>
-
-      {/* Info Modal */}
-      <InfoModal
-        open={isInfoModalOpen}
-        onClose={() => setIsInfoModalOpen(false)}
-      />
     </header>
   );
 }

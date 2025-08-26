@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/header";
 import { SimpleWelcomeModal } from "@/components/new-modals/simple-welcome-modal";
+import { InfoModal } from "@/components/info-modal";
 import Dashboard from "@/pages/dashboard";
 import Tasks from "@/pages/tasks";
 import Subjects from "@/pages/subjects";
@@ -28,6 +29,7 @@ function App() {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [showWelcome, setShowWelcome] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showInfoModal, setShowInfoModal] = useState(false);
 
   // Initialize app and check for user profile
   useEffect(() => {
@@ -96,7 +98,7 @@ function App() {
       <ThemeProvider defaultTheme="light" storageKey="jee-ui-theme">
         <TooltipProvider>
         <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 text-foreground font-inter transition-all duration-500">
-          <Header userProfile={userProfile} />
+          <Header userProfile={userProfile} onInfoClick={() => setShowInfoModal(true)} />
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -186,6 +188,12 @@ function App() {
         <SimpleWelcomeModal 
           open={showWelcome} 
           onComplete={handleWelcomeComplete}
+        />
+
+        {/* Info Modal */}
+        <InfoModal
+          open={showInfoModal}
+          onClose={() => setShowInfoModal(false)}
         />
         
         <Toaster />
