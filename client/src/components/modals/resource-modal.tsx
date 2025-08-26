@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
   DialogFooter,
 } from '@/components/ui/dialog';
 import {
@@ -81,11 +82,14 @@ export function ResourceModal({ open, onOpenChange, onResourceCreated }: Resourc
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md animate-scale-in">
+      <DialogContent className="sm:max-w-md animate-scale-in bg-background border-border">
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold text-foreground">
             Add New Resource
           </DialogTitle>
+          <DialogDescription className="text-sm text-muted-foreground">
+            Add a new study resource with URL, subject, and category information.
+          </DialogDescription>
         </DialogHeader>
         
         <Form {...form}>

@@ -7,6 +7,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
   DialogFooter,
 } from '@/components/ui/dialog';
 import {
@@ -94,11 +95,14 @@ export function TaskModal({ open, onOpenChange, onTaskCreated }: TaskModalProps)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md animate-scale-in">
+      <DialogContent className="sm:max-w-md animate-scale-in bg-background border-border">
         <DialogHeader>
-          <DialogTitle className="text-lg font-semibold text-gray-900">
+          <DialogTitle className="text-lg font-semibold text-foreground">
             Create New Task
           </DialogTitle>
+          <DialogDescription className="text-sm text-muted-foreground">
+            Add a new task to your study schedule with subject, priority, and due date.
+          </DialogDescription>
         </DialogHeader>
         
         <Form {...form}>
@@ -228,7 +232,7 @@ export function TaskModal({ open, onOpenChange, onTaskCreated }: TaskModalProps)
               </Button>
               <Button
                 type="submit"
-                className="jee-primary hover:bg-blue-700"
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
                 data-testid="button-create-task"
               >
                 Create Task

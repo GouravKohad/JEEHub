@@ -4,6 +4,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -42,7 +43,7 @@ export function ConfirmationDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md animate-scale-in">
+      <DialogContent className="sm:max-w-md animate-scale-in bg-background border-border">
         <DialogHeader className="text-center">
           <div className={`mx-auto w-12 h-12 ${iconBgColor} rounded-full flex items-center justify-center mb-4`}>
             <IconComponent className={`${iconColor}`} size={24} />
@@ -50,13 +51,10 @@ export function ConfirmationDialog({
           <DialogTitle className="text-lg font-semibold text-foreground">
             {title}
           </DialogTitle>
-        </DialogHeader>
-        
-        <div className="text-center py-4">
-          <p className="text-muted-foreground text-sm leading-relaxed">
+          <DialogDescription className="text-center text-muted-foreground text-sm leading-relaxed">
             {description}
-          </p>
-        </div>
+          </DialogDescription>
+        </DialogHeader>
         
         <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-3">
           <Button
