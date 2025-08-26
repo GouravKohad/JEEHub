@@ -72,7 +72,7 @@ export function SubjectProgress({ onTaskUpdate }: SubjectProgressProps) {
     const today = new Date();
     today.setHours(23, 59, 59, 999);
     
-    if (dueDate < now && task.status !== 'completed') return 'overdue';
+    if (dueDate < now) return 'overdue';
     if (dueDate.toDateString() === today.toDateString()) return 'pending';
     
     return 'pending';

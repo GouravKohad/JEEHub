@@ -29,3 +29,9 @@ A feature-rich, animated task management app designed specifically for JEE aspir
 - Initial project setup (August 26, 2025)
 - Created comprehensive data model for tasks, subjects, and links
 - Implemented local storage persistence
+- Added tabbed interface with separate sections (August 26, 2025):
+  - Dashboard: Overview with stats, subject progress, and quick actions
+  - Tasks: Full task management with filtering and search
+  - Subjects: Subject-wise progress tracking and task organization
+  - Resources: Study material links and resource management
+  - Timer: Study timer with presets and session tracking
