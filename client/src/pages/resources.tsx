@@ -4,8 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { ResourceModal } from '@/components/modals/resource-modal';
-import { ConfirmationDialog } from '@/components/modals/confirmation-dialog';
+import { SimpleResourceModal } from '@/components/new-modals/simple-resource-modal';
+import { SimpleConfirmationDialog } from '@/components/new-modals/simple-confirmation-dialog';
 import { resourceStorage } from '@/lib/storage';
 import { useToast } from '@/hooks/use-toast';
 import type { Resource, Subject } from '@shared/schema';
@@ -352,16 +352,16 @@ export default function Resources() {
       </div>
 
       {/* Resource Modal */}
-      <ResourceModal
+      <SimpleResourceModal
         open={isResourceModalOpen}
-        onOpenChange={setIsResourceModalOpen}
+        onClose={() => setIsResourceModalOpen(false)}
         onResourceCreated={handleResourceCreated}
       />
 
       {/* Confirmation Dialog */}
-      <ConfirmationDialog
+      <SimpleConfirmationDialog
         open={deleteConfirmation.open}
-        onOpenChange={(open) => setDeleteConfirmation({ ...deleteConfirmation, open })}
+        onClose={() => setDeleteConfirmation({ ...deleteConfirmation, open: false })}
         onConfirm={confirmDeleteResource}
         title="Delete Resource"
         description={`Are you sure you want to delete "${deleteConfirmation.resourceTitle}"? This action cannot be undone.`}

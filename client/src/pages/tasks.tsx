@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { TaskModal } from '@/components/modals/task-modal';
+import { SimpleTaskModal } from '@/components/new-modals/simple-task-modal';
 import { taskStorage } from '@/lib/storage';
 import type { Task, Subject } from '@shared/schema';
 
@@ -338,9 +338,9 @@ export default function Tasks() {
       </div>
 
       {/* Task Modal */}
-      <TaskModal
+      <SimpleTaskModal
         open={isTaskModalOpen}
-        onOpenChange={setIsTaskModalOpen}
+        onClose={() => setIsTaskModalOpen(false)}
         onTaskCreated={handleTaskCreated}
       />
     </div>

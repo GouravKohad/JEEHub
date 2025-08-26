@@ -6,8 +6,9 @@ import { StudyTimer } from '@/components/dashboard/study-timer';
 import { TodaysSchedule } from '@/components/dashboard/todays-schedule';
 import { QuickResources } from '@/components/dashboard/quick-resources';
 import { RecentActivity } from '@/components/dashboard/recent-activity';
-import { TaskModal } from '@/components/modals/task-modal';
-import { ResourceModal } from '@/components/modals/resource-modal';
+import { SimpleTaskModal } from '@/components/new-modals/simple-task-modal';
+import { SimpleResourceModal } from '@/components/new-modals/simple-resource-modal';
+import { TestPopupTrigger } from '@/components/test-popup';
 import { Button } from '@/components/ui/button';
 import type { UserProfile } from '@/lib/storage';
 
@@ -103,16 +104,19 @@ export default function Dashboard({ userProfile }: DashboardProps) {
         </Button>
       </div>
 
+      {/* Test Popup */}
+      <TestPopupTrigger />
+      
       {/* Modals */}
-      <TaskModal
+      <SimpleTaskModal
         open={isTaskModalOpen}
-        onOpenChange={setIsTaskModalOpen}
+        onClose={() => setIsTaskModalOpen(false)}
         onTaskCreated={handleTaskCreated}
       />
       
-      <ResourceModal
+      <SimpleResourceModal
         open={isResourceModalOpen}
-        onOpenChange={setIsResourceModalOpen}
+        onClose={() => setIsResourceModalOpen(false)}
         onResourceCreated={handleResourceCreated}
       />
     </div>

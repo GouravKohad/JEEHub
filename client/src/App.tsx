@@ -6,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/header";
-import { WelcomeModal } from "@/components/modals/welcome-modal";
+import { SimpleWelcomeModal } from "@/components/new-modals/simple-welcome-modal";
 import Dashboard from "@/pages/dashboard";
 import Tasks from "@/pages/tasks";
 import Subjects from "@/pages/subjects";
@@ -154,7 +154,7 @@ function App() {
         </div>
 
         {/* Welcome Modal */}
-        <WelcomeModal 
+        <SimpleWelcomeModal 
           open={showWelcome} 
           onComplete={handleWelcomeComplete}
         />
