@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Atom, FlaskConical, Calculator, Filter, MoreHorizontal } from 'lucide-react';
+import { Atom, FlaskConical, Calculator, Filter, MoreHorizontal, Trash2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -60,6 +60,16 @@ export function SubjectProgress({ onTaskUpdate }: SubjectProgressProps) {
     if (updatedTask) {
       setTasks(taskStorage.getAll());
       onTaskUpdate(taskId, updates);
+    }
+  };
+
+  const handleDeleteTask = (taskId: string) => {
+    if (window.confirm('Are you sure you want to delete this task?')) {
+      const success = taskStorage.delete(taskId);
+      if (success) {
+        setTasks(taskStorage.getAll());
+        onTaskUpdate(taskId, {});
+      }
     }
   };
 
@@ -157,12 +167,24 @@ export function SubjectProgress({ onTaskUpdate }: SubjectProgressProps) {
                             {task.title}
                           </span>
                         </div>
-                        <Badge
-                          className={`text-xs ${statusInfo.className}`}
-                          data-testid={`badge-status-${task.id}`}
-                        >
-                          {statusInfo.label}
-                        </Badge>
+                        <div className="flex items-center space-x-2">
+                          <Badge
+                            className={`text-xs ${statusInfo.className}`}
+                            data-testid={`badge-status-${task.id}`}
+                          >
+                            {statusInfo.label}
+                          </Badge>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDeleteTask(task.id)}
+                            className="h-6 w-6 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+                            data-testid={`button-delete-task-${task.id}`}
+                            title="Delete task"
+                          >
+                            <Trash2 size={12} />
+                          </Button>
+                        </div>
                       </div>
                     );
                   })

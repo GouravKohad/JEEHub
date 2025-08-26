@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Search, Filter, MoreHorizontal, CheckCircle, Clock, AlertCircle } from 'lucide-react';
+import { Plus, Search, Filter, MoreHorizontal, CheckCircle, Clock, AlertCircle, Trash2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -94,6 +94,15 @@ export default function Tasks() {
 
   const handleTaskCreated = () => {
     loadTasks();
+  };
+
+  const handleDeleteTask = (taskId: string) => {
+    if (window.confirm('Are you sure you want to delete this task?')) {
+      const success = taskStorage.delete(taskId);
+      if (success) {
+        loadTasks();
+      }
+    }
   };
 
   const getTaskStatus = (task: Task): keyof typeof statusConfig => {
@@ -317,6 +326,16 @@ export default function Tasks() {
                         <Badge className={subjectColors[task.subject]}>
                           {task.subject}
                         </Badge>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDeleteTask(task.id)}
+                          className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+                          data-testid={`button-delete-task-${task.id}`}
+                          title="Delete task"
+                        >
+                          <Trash2 size={14} />
+                        </Button>
                       </div>
                     </div>
                     
