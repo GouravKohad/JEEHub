@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { GraduationCap, User, Info } from "lucide-react";
+import { GraduationCap, User, Info, Wifi, WifiOff } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { InfoModal } from "@/components/info-modal";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ export function Header({ userProfile, onInfoClick }: HeaderProps) {
     userProfile,
   );
   const [indiaTime, setIndiaTime] = useState<string>("");
+  const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
 
   // Update local profile when prop changes
   useEffect(() => {
@@ -40,6 +41,20 @@ export function Header({ userProfile, onInfoClick }: HeaderProps) {
     const interval = setInterval(updateIndiaTime, 1000);
 
     return () => clearInterval(interval);
+  }, []);
+
+  // Track online/offline status
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
   }, []);
 
   const getInitials = (name: string) => {
@@ -86,6 +101,17 @@ export function Header({ userProfile, onInfoClick }: HeaderProps) {
             >
               <Info className="text-blue-600 dark:text-blue-400" size={16} />
             </Button>
+            <div
+              className="w-8 h-8 p-0 rounded-full flex items-center justify-center"
+              data-testid="wifi-status"
+              title={isOnline ? "Connected" : "Disconnected"}
+            >
+              {isOnline ? (
+                <Wifi className="text-green-600 dark:text-green-400" size={16} />
+              ) : (
+                <WifiOff className="text-red-600 dark:text-red-400" size={16} />
+              )}
+            </div>
             <ThemeToggle />
             <div
               className="w-8 h-8 bg-gradient-to-r from-jee-secondary to-jee-primary rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer"
