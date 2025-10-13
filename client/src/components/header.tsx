@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { GraduationCap, User, Info, Wifi, WifiOff } from "lucide-react";
+import { GraduationCap, User, Info, Wifi, WifiOff, Battery, BatteryCharging, BatteryLow } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { InfoModal } from "@/components/info-modal";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,8 @@ export function Header({ userProfile, onInfoClick }: HeaderProps) {
   );
   const [indiaTime, setIndiaTime] = useState<string>("");
   const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
+  const [batteryLevel, setBatteryLevel] = useState<number | null>(null);
+  const [isCharging, setIsCharging] = useState<boolean>(false);
 
   // Update local profile when prop changes
   useEffect(() => {
@@ -55,6 +57,23 @@ export function Header({ userProfile, onInfoClick }: HeaderProps) {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
+  }, []);
+
+  // Track battery status
+  useEffect(() => {
+    const updateBatteryStatus = (battery: any) => {
+      setBatteryLevel(Math.round(battery.level * 100));
+      setIsCharging(battery.charging);
+    };
+
+    if ('getBattery' in navigator) {
+      (navigator as any).getBattery().then((battery: any) => {
+        updateBatteryStatus(battery);
+
+        battery.addEventListener('levelchange', () => updateBatteryStatus(battery));
+        battery.addEventListener('chargingchange', () => updateBatteryStatus(battery));
+      });
+    }
   }, []);
 
   const getInitials = (name: string) => {
@@ -112,6 +131,24 @@ export function Header({ userProfile, onInfoClick }: HeaderProps) {
                 <WifiOff className="text-red-600 dark:text-red-400" size={16} />
               )}
             </div>
+            {batteryLevel !== null && (
+              <div
+                className="flex items-center space-x-1 px-2 py-1 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg border border-green-200 dark:border-green-800"
+                data-testid="battery-status"
+                title={isCharging ? `Charging: ${batteryLevel}%` : `Battery: ${batteryLevel}%`}
+              >
+                {isCharging ? (
+                  <BatteryCharging className="text-green-600 dark:text-green-400" size={16} />
+                ) : batteryLevel <= 20 ? (
+                  <BatteryLow className="text-red-600 dark:text-red-400" size={16} />
+                ) : (
+                  <Battery className="text-green-600 dark:text-green-400" size={16} />
+                )}
+                <span className="text-xs font-semibold text-green-700 dark:text-green-300">
+                  {batteryLevel}%
+                </span>
+              </div>
+            )}
             <ThemeToggle />
             <div
               className="w-8 h-8 bg-gradient-to-r from-jee-secondary to-jee-primary rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer"
