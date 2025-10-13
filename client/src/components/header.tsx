@@ -67,7 +67,7 @@ export function Header({ userProfile, onInfoClick }: HeaderProps) {
             </div>
             <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
               <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
-                IST:
+                Time:
               </span>
               <span className="text-sm font-mono font-semibold text-blue-900 dark:text-blue-100 tabular-nums">
                 {indiaTime}
