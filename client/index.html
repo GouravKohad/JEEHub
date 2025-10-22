@@ -23,131 +23,42 @@
     <script type="module" src="/src/main.tsx"></script>
     <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
     <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
-    <script>
-(function blockYouTubeOnThisPage() {
-  const youtubePattern = /youtube\.com|youtu\.be/;
+  <script>
+(function blockDistractingSites() {
+  // Define blocked domains
+  const blockedSites = [
+    /youtube\.com/i,
+    /youtu\.be/i,
+    /instagram\.com/i,
+    /facebook\.com/i,
+    /twitter\.com/i,
+    /tiktok\.com/i,
+    /reddit\.com/i
+  ];
 
-  // Helper: show a friendly block notification
-  function notifyBlocked(url) {
-    // Customize UI as you like — simple alert for demo
-    console.info('Blocked navigation to:', url);
-    // You can show a custom modal instead of alert:
-    // alert('Access to YouTube is blocked on this site.');
-  }
-
-  // 1) Intercept all clicks on anchor tags (including dynamically added)
-  document.addEventListener('click', (e) => {
-    const a = e.target.closest && e.target.closest('a');
-    if (a && a.href && youtubePattern.test(a.href)) {
-      e.preventDefault();
-      notifyBlocked(a.href);
-      // optionally change location to a custom page or do nothing
-      return false;
-    }
-  }, true); // capture phase to intercept early
-
-  // 2) Prevent form submissions targeting youtube
-  document.addEventListener('submit', (e) => {
-    const action = e.target && e.target.action;
-    if (action && youtubePattern.test(action)) {
-      e.preventDefault();
-      notifyBlocked(action);
-      return false;
+  // Function to check and block links
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a");
+    if (link && blockedSites.some(rx => rx.test(link.href))) {
+      event.preventDefault();
+      alert("🚫 This site is blocked for your focus session!");
     }
   }, true);
 
-  // 3) Override window.open so scripts on your page cannot open YouTube
-  try {
-    const origOpen = window.open;
-    window.open = function(url, name, specs) {
-      if (typeof url === 'string' && youtubePattern.test(url)) {
-        notifyBlocked(url);
-        return null;
-      }
-      return origOpen.apply(this, arguments);
-    };
-  } catch (err) {
-    console.warn('Could not override window.open:', err);
-  }
-
-  // 4) Remove or disable existing iframe/embed/object elements with YouTube src
-  function scrubExistingEmbeds(root = document) {
-    // iframes
-    root.querySelectorAll('iframe[src], embed[src], object[data]').forEach((el) => {
-      const src = el.getAttribute('src') || el.getAttribute('data') || '';
-      if (youtubePattern.test(src)) {
-        // Remove or replace with placeholder
-        const placeholder = document.createElement('div');
-        placeholder.textContent = 'Embedded YouTube is blocked on this site.';
-        placeholder.style = 'padding:12px;border:1px solid #ccc;background:#f9f9f9;color:#333';
-        el.parentNode && el.parentNode.replaceChild(placeholder, el);
-      }
-    });
-  }
-  scrubExistingEmbeds();
-
-  // 5) Observe DOM mutations to catch dynamically inserted links/iframes
-  const mo = new MutationObserver((mutations) => {
-    for (const m of mutations) {
-      // new nodes added
-      if (m.addedNodes && m.addedNodes.length) {
-        m.addedNodes.forEach(node => {
-          try {
-            if (node.nodeType === 1) { // Element
-              // Scrub embeds in this node subtree
-              scrubExistingEmbeds(node);
-              // Disable anchors inside new subtree
-              node.querySelectorAll && node.querySelectorAll('a[href]').forEach(a => {
-                if (youtubePattern.test(a.href)) {
-                  // neutralize immediately
-                  a.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    notifyBlocked(a.href);
-                  });
-                }
-              });
-            }
-          } catch (err) {
-            // ignore individual errors from odd nodes
-          }
-        });
-      }
+  // Prevent scripts on your page from opening new tabs
+  const originalOpen = window.open;
+  window.open = function (url, ...args) {
+    if (blockedSites.some(rx => rx.test(url))) {
+      alert("🚫 Blocked: " + url);
+      return null;
     }
-  });
+    return originalOpen.apply(window, [url, ...args]);
+  };
 
-  mo.observe(document.documentElement || document.body, {
-    childList: true,
-    subtree: true
-  });
-
-  // 6) Extra: block programmatic location changes initiated by scripts in your page
-  // Note: This cannot stop the user typing or browser-initiated nav.
-  (function interceptAssignDescriptors() {
-    try {
-      const loc = window.location;
-      // Intercept assignments like window.location = 'https://youtube.com/..'
-      Object.defineProperty(window, 'location', {
-        configurable: true,
-        enumerable: true,
-        get() { return loc; },
-        set(val) {
-          if (typeof val === 'string' && youtubePattern.test(val)) {
-            notifyBlocked(val);
-            return; // block
-          }
-          // fallback to default behavior
-          loc.assign(val);
-        }
-      });
-    } catch (err) {
-      // Some browsers disallow overriding location; ignore if so.
-    }
-  })();
-
-  // Done — log status
-  alert('YouTube-blocking script active for this page (within the limits of the browser).');
+  console.log("Focus mode active — distracting sites blocked on this page!");
 })();
 </script>
+
 
   </body>
 </html>
