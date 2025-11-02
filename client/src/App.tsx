@@ -109,7 +109,7 @@ function App() {
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               {/* Tab Navigation */}
               <div className="mb-4 sm:mb-6 md:mb-8 animate-fade-in flex justify-center">
-                <TabsList className="inline-flex items-center justify-center bg-card border border-border rounded-lg sm:rounded-xl px-2 sm:px-4 py-1 shadow-sm hover:shadow-lg transition-all duration-300 gap-2 sm:gap-3 md:gap-4">
+                <TabsList className="inline-flex items-center justify-center bg-card border border-border rounded-lg sm:rounded-xl px-2 sm:px-4 py-1 shadow-sm hover:shadow-lg transition-all duration-300 gap-3 sm:gap-5 md:gap-6 lg:gap-8">
                   <TabsTrigger 
                     value="dashboard" 
                     className="flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 sm:px-3 py-1.5 sm:py-2"
