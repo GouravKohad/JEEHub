@@ -69,3 +69,19 @@ A feature-rich, animated task management app designed specifically for JEE aspir
   - Implemented stacked button layouts on mobile, side-by-side on desktop
   - Enhanced touch-friendly interactions and proper viewport sizing
   - Removed test modal buttons and cleaned up debugging components
+- Added Schedule with Holiday day (November 2, 2025):
+  - Added "Holiday" as a new day option in the schedule
+  - Updated schedule day selector to include Holiday
+  - Full support for scheduling tasks on holidays
+- Added "For You" motivational tab (November 2, 2025):
+  - Bilingual motivational quotes (English and Hindi) with cycling functionality
+  - Motivational image cards with gradient backgrounds
+  - Personal notes section with full CRUD operations
+  - All data persisted in local storage
+  - Fully responsive design with proper animations
+- Added data management features to avatar dropdown (November 2, 2025):
+  - Reset option to clear all application data with confirmation dialog
+  - Export option to download all data as JSON file
+  - Import option to restore data from JSON file with error handling
+  - Toast notifications for all operations
+  - Secure client-side file handling
