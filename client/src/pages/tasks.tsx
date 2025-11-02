@@ -354,62 +354,65 @@ export default function Tasks() {
                 className="p-4 sm:p-6 hover:shadow-md transition-all duration-200 animate-slide-up"
                 data-testid={`task-card-${task.id}`}
               >
-                <div className="flex items-start space-x-4">
+                <div className="flex items-start gap-3 sm:gap-4">
                   <Checkbox
                     checked={task.status === 'completed'}
                     onCheckedChange={(checked) => handleTaskToggle(task.id, !!checked)}
-                    className="mt-1"
+                    className="mt-1 flex-shrink-0"
                     data-testid={`checkbox-task-${task.id}`}
                   />
                   
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                      <div className="flex-1 min-w-0">
                         <h3 
-                          className={`text-lg font-semibold ${
+                          className={`text-base sm:text-lg font-semibold break-words ${
                             task.status === 'completed' ? 'line-through text-gray-500' : 'text-gray-900'
                           }`}
                         >
                           {task.title}
                         </h3>
                         {task.description && (
-                          <p className="text-sm text-jee-muted mt-1">{task.description}</p>
+                          <p className="text-sm text-jee-muted mt-1 break-words">{task.description}</p>
                         )}
                       </div>
                       
-                      <div className="flex items-center space-x-2">
-                        <Badge className={statusInfo.className}>
+                      <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap flex-shrink-0">
+                        <Badge className={`${statusInfo.className} text-xs`}>
                           <StatusIcon size={12} className="mr-1" />
-                          {statusInfo.label}
+                          <span className="hidden sm:inline">{statusInfo.label}</span>
+                          <span className="sm:hidden">{statusInfo.label.split(' ')[0]}</span>
                         </Badge>
-                        <Badge className={subjectColors[task.subject]}>
+                        <Badge className={`${subjectColors[task.subject]} text-xs`}>
                           {task.subject}
                         </Badge>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleEditTask(task)}
-                          className="h-8 w-8 p-0 text-blue-500 hover:text-blue-700 hover:bg-blue-50"
-                          data-testid={`button-edit-task-${task.id}`}
-                          title="Edit task"
-                        >
-                          <Edit3 size={14} />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDeleteTask(task.id)}
-                          className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
-                          data-testid={`button-delete-task-${task.id}`}
-                          title="Delete task"
-                        >
-                          <Trash2 size={14} />
-                        </Button>
+                        <div className="flex items-center gap-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleEditTask(task)}
+                            className="h-7 w-7 sm:h-8 sm:w-8 p-0 text-blue-500 hover:text-blue-700 hover:bg-blue-50"
+                            data-testid={`button-edit-task-${task.id}`}
+                            title="Edit task"
+                          >
+                            <Edit3 size={14} />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDeleteTask(task.id)}
+                            className="h-7 w-7 sm:h-8 sm:w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+                            data-testid={`button-delete-task-${task.id}`}
+                            title="Delete task"
+                          >
+                            <Trash2 size={14} />
+                          </Button>
+                        </div>
                       </div>
                     </div>
                     
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4 text-sm text-jee-muted">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:text-sm text-jee-muted">
                         <span>Due: {formatDate(task.dueDate)}</span>
                         {task.estimatedTime && (
                           <span>Est: {task.estimatedTime}min</span>
@@ -422,7 +425,7 @@ export default function Tasks() {
                           const priorityInfo = priorityConfig[task.priority as keyof typeof priorityConfig];
                           const PriorityIcon = priorityInfo.icon;
                           return (
-                            <div className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-lg text-xs font-medium ${priorityInfo.className}`}>
+                            <div className={`flex items-center space-x-1.5 px-2 sm:px-2.5 py-1 rounded-lg text-xs font-medium ${priorityInfo.className}`}>
                               <div className={`w-2 h-2 rounded-full ${priorityInfo.dotColor}`}></div>
                               <PriorityIcon size={12} className={priorityInfo.iconColor} />
                               <span className="capitalize">{task.priority}</span>
