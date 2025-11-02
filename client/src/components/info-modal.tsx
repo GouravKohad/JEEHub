@@ -143,9 +143,8 @@ export function InfoModal({ open, onClose }: InfoModalProps) {
                 <p className="text-sm text-gray-600 dark:text-gray-400">Study on the go with the JeeHub Android app</p>
               </div>
               <a
-                href="https://drive.google.com/uc?id=1i_vyh9UbZVfCqjK-QAXsydJIUVFRCuIV"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/attached_assets/JEEHub_1762074020322.apk"
+                download="JEEHub.apk"
                 className="ml-4"
               >
                 <Button
