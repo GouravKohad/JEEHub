@@ -1,8 +1,11 @@
-import { useState, useEffect } from "react";
-import { GraduationCap, User, Info, Wifi, WifiOff, Battery, BatteryCharging, BatteryLow } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { GraduationCap, User, Info, Wifi, WifiOff, Battery, BatteryCharging, BatteryLow, RotateCcw, Download, Upload } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { InfoModal } from "@/components/info-modal";
 import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import { useToast } from "@/hooks/use-toast";
+import { SimpleConfirmationDialog } from "@/components/new-modals/simple-confirmation-dialog";
 import type { UserProfile } from "@/lib/storage";
 import { userProfileStorage } from "@/lib/storage";
 
@@ -19,6 +22,9 @@ export function Header({ userProfile, onInfoClick }: HeaderProps) {
   const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
   const [batteryLevel, setBatteryLevel] = useState<number | null>(null);
   const [isCharging, setIsCharging] = useState<boolean>(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
 
   // Update local profile when prop changes
   useEffect(() => {
@@ -83,6 +89,92 @@ export function Header({ userProfile, onInfoClick }: HeaderProps) {
       .slice(0, 2)
       .join("");
   };
+
+  const handleReset = () => {
+    localStorage.clear();
+    toast({
+      title: "Data Reset",
+      description: "All your data has been cleared. Refreshing the page...",
+    });
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
+  };
+
+  const handleExport = () => {
+    const allData: Record<string, any> = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key) {
+        const value = localStorage.getItem(key);
+        if (value) {
+          try {
+            allData[key] = JSON.parse(value);
+          } catch {
+            allData[key] = value;
+          }
+        }
+      }
+    }
+
+    const dataStr = JSON.stringify(allData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `jee-study-data-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    toast({
+      title: "Data Exported",
+      description: "Your data has been downloaded successfully.",
+    });
+  };
+
+  const handleImport = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target?.result as string);
+        
+        Object.keys(data).forEach(key => {
+          const value = typeof data[key] === 'string' ? data[key] : JSON.stringify(data[key]);
+          localStorage.setItem(key, value);
+        });
+
+        toast({
+          title: "Data Imported",
+          description: "Your data has been imported successfully. Refreshing the page...",
+        });
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      } catch (error) {
+        toast({
+          title: "Import Failed",
+          description: "The file format is invalid. Please upload a valid JSON file.",
+          variant: "destructive",
+        });
+      }
+    };
+    reader.readAsText(file);
+    
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   return (
     <header className="bg-card/95 backdrop-blur-sm shadow-sm border-b border-border sticky top-0 z-50 animate-slide-in-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -150,25 +242,74 @@ export function Header({ userProfile, onInfoClick }: HeaderProps) {
               </div>
             )}
             <ThemeToggle />
-            <div
-              className="w-8 h-8 bg-gradient-to-r from-jee-secondary to-jee-primary rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer"
-              data-testid="user-avatar"
-              title={currentProfile?.name || "User"}
-            >
-              {currentProfile?.name ? (
-                <span className="text-white text-sm font-medium">
-                  {getInitials(currentProfile.name)}
-                </span>
-              ) : (
-                <User
-                  className="text-white transition-transform duration-300 hover:rotate-12"
-                  size={16}
-                />
-              )}
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div
+                  className="w-8 h-8 bg-gradient-to-r from-jee-secondary to-jee-primary rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer"
+                  data-testid="user-avatar"
+                  title={currentProfile?.name || "User"}
+                >
+                  {currentProfile?.name ? (
+                    <span className="text-white text-sm font-medium">
+                      {getInitials(currentProfile.name)}
+                    </span>
+                  ) : (
+                    <User
+                      className="text-white transition-transform duration-300 hover:rotate-12"
+                      size={16}
+                    />
+                  )}
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem 
+                  onClick={() => setShowResetConfirm(true)}
+                  className="cursor-pointer"
+                  data-testid="menu-reset"
+                >
+                  <RotateCcw className="mr-2 h-4 w-4 text-red-500" />
+                  <span>Reset Data</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem 
+                  onClick={handleExport}
+                  className="cursor-pointer"
+                  data-testid="menu-export"
+                >
+                  <Download className="mr-2 h-4 w-4 text-blue-500" />
+                  <span>Export Data</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={handleImport}
+                  className="cursor-pointer"
+                  data-testid="menu-import"
+                >
+                  <Upload className="mr-2 h-4 w-4 text-green-500" />
+                  <span>Import Data</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".json"
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+              data-testid="file-input-import"
+            />
           </div>
         </div>
       </div>
+      
+      <SimpleConfirmationDialog
+        open={showResetConfirm}
+        onClose={() => setShowResetConfirm(false)}
+        onConfirm={handleReset}
+        title="Reset All Data"
+        message="Are you sure you want to reset all your data? This will delete all tasks, resources, schedules, notes, and settings. This action cannot be undone."
+        confirmText="Reset"
+        cancelText="Cancel"
+      />
     </header>
   );
 }
