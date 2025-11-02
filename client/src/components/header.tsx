@@ -306,9 +306,10 @@ export function Header({ userProfile, onInfoClick }: HeaderProps) {
         onClose={() => setShowResetConfirm(false)}
         onConfirm={handleReset}
         title="Reset All Data"
-        message="Are you sure you want to reset all your data? This will delete all tasks, resources, schedules, notes, and settings. This action cannot be undone."
+        description="Are you sure you want to reset all your data? This will delete all tasks, resources, schedules, notes, and settings. This action cannot be undone."
         confirmText="Reset"
         cancelText="Cancel"
+        variant="destructive"
       />
     </header>
   );
