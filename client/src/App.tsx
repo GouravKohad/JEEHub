@@ -14,6 +14,7 @@ import Subjects from "@/pages/subjects";
 import Resources from "@/pages/resources";
 import Timer from "@/pages/timer";
 import Schedule from "@/pages/schedule";
+import ForYou from "@/pages/for-you";
 import { initializeDefaultData, userProfileStorage, type UserProfile } from "@/lib/storage";
 import { 
   LayoutDashboard, 
@@ -21,7 +22,8 @@ import {
   BookOpen, 
   ExternalLink, 
   Clock,
-  Calendar
+  Calendar,
+  Sparkles
 } from "lucide-react";
 
 function App() {
@@ -104,7 +106,7 @@ function App() {
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               {/* Tab Navigation */}
               <div className="mb-8 animate-fade-in">
-                <TabsList className="grid w-full max-w-4xl mx-auto grid-cols-6 place-items-center bg-card border border-border rounded-xl px-2 py-1 shadow-sm hover:shadow-lg transition-all duration-300 gap-1">
+                <TabsList className="grid w-full max-w-5xl mx-auto grid-cols-7 place-items-center bg-card border border-border rounded-xl px-2 py-1 shadow-sm hover:shadow-lg transition-all duration-300 gap-1">
                   <TabsTrigger 
                     value="dashboard" 
                     className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
@@ -153,6 +155,14 @@ function App() {
                     <Calendar size={16} className="transition-transform duration-300" />
                     <span className="hidden sm:inline">Schedule</span>
                   </TabsTrigger>
+                  <TabsTrigger 
+                    value="for-you" 
+                    className="flex items-center justify-center sm:justify-start space-x-2 rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-sm font-medium hover:scale-105"
+                    data-testid="tab-for-you"
+                  >
+                    <Sparkles size={16} className="transition-transform duration-300" />
+                    <span className="hidden sm:inline">For You</span>
+                  </TabsTrigger>
                 </TabsList>
               </div>
 
@@ -179,6 +189,10 @@ function App() {
 
               <TabsContent value="schedule" className="mt-0 animate-fade-in">
                 <Schedule />
+              </TabsContent>
+
+              <TabsContent value="for-you" className="mt-0 animate-fade-in">
+                <ForYou />
               </TabsContent>
             </Tabs>
           </div>
