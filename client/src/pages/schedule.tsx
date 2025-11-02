@@ -16,12 +16,12 @@ interface ScheduleItem {
   subject: 'Physics' | 'Chemistry' | 'Mathematics';
   startTime: string;
   endTime: string;
-  day: 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+  day: 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday' | 'Holiday';
   description?: string;
   type: 'study' | 'revision' | 'practice' | 'break';
 }
 
-const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as const;
+const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Holiday'] as const;
 const SUBJECTS = ['Physics', 'Chemistry', 'Mathematics'] as const;
 const TYPES = [
   { value: 'study', label: 'Study Session', color: 'bg-blue-500' },
