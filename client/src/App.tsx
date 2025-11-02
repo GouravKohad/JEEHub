@@ -108,11 +108,11 @@ function App() {
           <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-6 md:py-8 pb-20 sm:pb-8">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               {/* Tab Navigation */}
-              <div className="mb-4 sm:mb-6 md:mb-8 animate-fade-in flex justify-center overflow-x-auto">
-                <TabsList className="inline-flex items-center justify-center bg-card border border-border rounded-lg sm:rounded-xl px-2 sm:px-4 py-2 sm:py-3 md:py-4 shadow-sm hover:shadow-lg transition-all duration-300 gap-3 sm:gap-5 md:gap-6 lg:gap-8">
+              <div className="mb-4 sm:mb-6 md:mb-8 animate-fade-in flex justify-center">
+                <TabsList className="flex w-full max-w-4xl items-center justify-center bg-card border border-border rounded-lg sm:rounded-xl px-2 sm:px-4 py-2 sm:py-3 md:py-4 shadow-sm hover:shadow-lg transition-all duration-300 gap-1 sm:gap-4 md:gap-6 lg:gap-8">
                   <TabsTrigger 
                     value="dashboard" 
-                    className="flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 sm:px-3 py-1.5 sm:py-2"
+                    className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1 py-1 sm:px-3 sm:py-2"
                     data-testid="tab-dashboard"
                   >
                     <LayoutDashboard size={14} className="sm:w-4 sm:h-4 transition-transform duration-300 flex-shrink-0" />
@@ -120,7 +120,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="tasks" 
-                    className="flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 sm:px-3 py-1.5 sm:py-2"
+                    className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1 py-1 sm:px-3 sm:py-2"
                     data-testid="tab-tasks"
                   >
                     <CheckSquare size={14} className="sm:w-4 sm:h-4 transition-transform duration-300 flex-shrink-0" />
@@ -128,7 +128,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="subjects" 
-                    className="flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 sm:px-3 py-1.5 sm:py-2"
+                    className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1 py-1 sm:px-3 sm:py-2"
                     data-testid="tab-subjects"
                   >
                     <BookOpen size={14} className="sm:w-4 sm:h-4 transition-transform duration-300 flex-shrink-0" />
@@ -136,7 +136,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="resources" 
-                    className="flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 sm:px-3 py-1.5 sm:py-2"
+                    className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1 py-1 sm:px-3 sm:py-2"
                     data-testid="tab-resources"
                   >
                     <ExternalLink size={14} className="sm:w-4 sm:h-4 transition-transform duration-300 flex-shrink-0" />
@@ -144,7 +144,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="timer" 
-                    className="flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 sm:px-3 py-1.5 sm:py-2"
+                    className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1 py-1 sm:px-3 sm:py-2"
                     data-testid="tab-timer"
                   >
                     <Clock size={14} className="sm:w-4 sm:h-4 transition-transform duration-300 flex-shrink-0" />
@@ -152,7 +152,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="schedule" 
-                    className="flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 sm:px-3 py-1.5 sm:py-2"
+                    className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1 py-1 sm:px-3 sm:py-2"
                     data-testid="tab-schedule"
                   >
                     <Calendar size={14} className="sm:w-4 sm:h-4 transition-transform duration-300 flex-shrink-0" />
@@ -160,7 +160,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="for-you" 
-                    className="flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 sm:px-3 py-1.5 sm:py-2"
+                    className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1 py-1 sm:px-3 sm:py-2"
                     data-testid="tab-for-you"
                   >
                     <Sparkles size={14} className="sm:w-4 sm:h-4 transition-transform duration-300 flex-shrink-0" />
