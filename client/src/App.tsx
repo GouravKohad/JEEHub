@@ -69,6 +69,9 @@ function App() {
       console.log('Initializing default data...');
       initializeDefaultData();
       
+      console.log('Opening info modal for first-time user...');
+      setShowInfoModal(true);
+      
       console.log('Welcome setup complete');
     } catch (error) {
       console.error('Error in handleWelcomeComplete:', error);
