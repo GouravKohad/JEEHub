@@ -1,4 +1,4 @@
-import { Info, BookOpen, Clock, Target, User, CheckCircle } from 'lucide-react';
+import { Info, BookOpen, Clock, Target, User, CheckCircle, Smartphone, Download } from 'lucide-react';
 import { SimpleModal } from '@/components/simple-modal';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -127,6 +127,37 @@ export function InfoModal({ open, onClose }: InfoModalProps) {
               Designed specifically for JEE aspirants to help organize study time, track progress, 
               and achieve their engineering entrance exam goals efficiently.
             </p>
+          </div>
+        </div>
+
+        {/* Download Android App Section */}
+        <div className="border-t pt-4">
+          <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+            <Smartphone className="mr-2 text-green-600" size={20} />
+            Download JeeHub Android App
+          </h3>
+          <div className="bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <p className="font-semibold text-gray-900 dark:text-gray-100 mb-1">Get the Mobile App</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Study on the go with the JeeHub Android app</p>
+              </div>
+              <a
+                href="https://drive.google.com/file/d/1i_vyh9UbZVfCqjK-QAXsydJIUVFRCuIV/view?usp=drivesdk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-4"
+              >
+                <Button
+                  className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-2"
+                  data-testid="button-download-android"
+                >
+                  <Download size={16} />
+                  <span className="hidden sm:inline">Download APK</span>
+                  <span className="sm:hidden">Download</span>
+                </Button>
+              </a>
+            </div>
           </div>
         </div>
 
