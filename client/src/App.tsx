@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -8,6 +8,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/header";
 import { SimpleWelcomeModal } from "@/components/new-modals/simple-welcome-modal";
 import { InfoModal } from "@/components/info-modal";
+import { BroadcastDialog } from "@/components/admin/broadcast-dialog";
+import { BroadcastNotification } from "@/components/admin/broadcast-notification";
 import Dashboard from "@/pages/dashboard";
 import Tasks from "@/pages/tasks";
 import Subjects from "@/pages/subjects";
@@ -26,12 +28,21 @@ import {
   Sparkles
 } from "lucide-react";
 
+interface BroadcastMessage {
+  title: string;
+  message: string;
+  timestamp: string;
+}
+
 function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [showWelcome, setShowWelcome] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const [showBroadcastDialog, setShowBroadcastDialog] = useState(false);
+  const [broadcastMessage, setBroadcastMessage] = useState<BroadcastMessage | null>(null);
+  const wsRef = useRef<WebSocket | null>(null);
 
   // Initialize app and check for user profile
   useEffect(() => {
@@ -51,6 +62,67 @@ function App() {
     };
 
     initializeApp();
+  }, []);
+
+  // WebSocket connection for broadcast messages
+  useEffect(() => {
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${protocol}//${window.location.host}/ws`;
+    
+    const connectWebSocket = () => {
+      const ws = new WebSocket(wsUrl);
+      
+      ws.onopen = () => {
+        console.log('WebSocket connected');
+      };
+      
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.type === 'admin_broadcast') {
+            setBroadcastMessage({
+              title: data.title,
+              message: data.message,
+              timestamp: data.timestamp,
+            });
+          }
+        } catch (error) {
+          console.error('Error parsing WebSocket message:', error);
+        }
+      };
+      
+      ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
+      
+      ws.onclose = () => {
+        console.log('WebSocket disconnected, reconnecting in 3s...');
+        setTimeout(connectWebSocket, 3000);
+      };
+      
+      wsRef.current = ws;
+    };
+    
+    connectWebSocket();
+    
+    return () => {
+      if (wsRef.current) {
+        wsRef.current.close();
+      }
+    };
+  }, []);
+
+  // Keyboard shortcut for admin broadcast (Ctrl+Shift+A)
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.shiftKey && event.key === 'A') {
+        event.preventDefault();
+        setShowBroadcastDialog(true);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
   }, []);
 
   const handleWelcomeComplete = (name: string) => {
@@ -211,6 +283,18 @@ function App() {
         <InfoModal
           open={showInfoModal}
           onClose={() => setShowInfoModal(false)}
+        />
+
+        {/* Admin Broadcast Dialog */}
+        <BroadcastDialog
+          open={showBroadcastDialog}
+          onClose={() => setShowBroadcastDialog(false)}
+        />
+
+        {/* Broadcast Notification */}
+        <BroadcastNotification
+          message={broadcastMessage}
+          onDismiss={() => setBroadcastMessage(null)}
         />
         
         <Toaster />
