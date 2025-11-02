@@ -109,62 +109,62 @@ function App() {
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               {/* Tab Navigation */}
               <div className="mb-4 sm:mb-6 md:mb-8 animate-fade-in flex justify-center">
-                <TabsList className="flex w-full max-w-4xl items-center justify-center bg-card border border-border rounded-lg sm:rounded-xl px-2 sm:px-4 py-2 sm:py-3 md:py-4 shadow-sm hover:shadow-lg transition-all duration-300 gap-1 sm:gap-4 md:gap-6 lg:gap-8">
+                <TabsList className="flex w-full max-w-4xl flex-nowrap items-center justify-center bg-card border border-border rounded-lg sm:rounded-xl px-2 sm:px-4 py-2 sm:py-3 md:py-4 shadow-sm hover:shadow-lg transition-all duration-300 gap-1 sm:gap-2 md:gap-4 lg:gap-6">
                   <TabsTrigger 
                     value="dashboard" 
-                    className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1 py-1 sm:px-3 sm:py-2"
+                    className="flex-1 md:flex-none min-w-0 flex items-center justify-center md:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2"
                     data-testid="tab-dashboard"
                   >
                     <LayoutDashboard size={14} className="sm:w-4 sm:h-4 transition-transform duration-300 flex-shrink-0" />
-                    <span className="hidden sm:inline">Dashboard</span>
+                    <span className="hidden md:inline">Dashboard</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="tasks" 
-                    className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1 py-1 sm:px-3 sm:py-2"
+                    className="flex-1 md:flex-none min-w-0 flex items-center justify-center md:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2"
                     data-testid="tab-tasks"
                   >
                     <CheckSquare size={14} className="sm:w-4 sm:h-4 transition-transform duration-300 flex-shrink-0" />
-                    <span className="hidden sm:inline">Tasks</span>
+                    <span className="hidden md:inline">Tasks</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="subjects" 
-                    className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1 py-1 sm:px-3 sm:py-2"
+                    className="flex-1 md:flex-none min-w-0 flex items-center justify-center md:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2"
                     data-testid="tab-subjects"
                   >
                     <BookOpen size={14} className="sm:w-4 sm:h-4 transition-transform duration-300 flex-shrink-0" />
-                    <span className="hidden sm:inline">Subjects</span>
+                    <span className="hidden md:inline">Subjects</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="resources" 
-                    className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1 py-1 sm:px-3 sm:py-2"
+                    className="flex-1 md:flex-none min-w-0 flex items-center justify-center md:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2"
                     data-testid="tab-resources"
                   >
                     <ExternalLink size={14} className="sm:w-4 sm:h-4 transition-transform duration-300 flex-shrink-0" />
-                    <span className="hidden sm:inline">Resources</span>
+                    <span className="hidden md:inline">Resources</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="timer" 
-                    className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1 py-1 sm:px-3 sm:py-2"
+                    className="flex-1 md:flex-none min-w-0 flex items-center justify-center md:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2"
                     data-testid="tab-timer"
                   >
                     <Clock size={14} className="sm:w-4 sm:h-4 transition-transform duration-300 flex-shrink-0" />
-                    <span className="hidden sm:inline">Timer</span>
+                    <span className="hidden md:inline">Timer</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="schedule" 
-                    className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1 py-1 sm:px-3 sm:py-2"
+                    className="flex-1 md:flex-none min-w-0 flex items-center justify-center md:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2"
                     data-testid="tab-schedule"
                   >
                     <Calendar size={14} className="sm:w-4 sm:h-4 transition-transform duration-300 flex-shrink-0" />
-                    <span className="hidden sm:inline">Schedule</span>
+                    <span className="hidden md:inline">Schedule</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="for-you" 
-                    className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1 py-1 sm:px-3 sm:py-2"
+                    className="flex-1 md:flex-none min-w-0 flex items-center justify-center md:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2"
                     data-testid="tab-for-you"
                   >
                     <Sparkles size={14} className="sm:w-4 sm:h-4 transition-transform duration-300 flex-shrink-0" />
-                    <span className="hidden sm:inline">For You</span>
+                    <span className="hidden md:inline">For You</span>
                   </TabsTrigger>
                 </TabsList>
               </div>
