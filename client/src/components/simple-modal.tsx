@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { createPortal } from 'react-dom';
 
 interface SimpleModalProps {
   open: boolean;
@@ -31,7 +32,7 @@ export function SimpleModal({
 
   const modalSizeClass = `modal-${size}`;
 
-  return (
+  const modalContent = (
     <div 
       className="fixed inset-0 z-[99999] modal-backdrop overflow-y-auto"
       style={{ 
@@ -74,4 +75,6 @@ export function SimpleModal({
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }
