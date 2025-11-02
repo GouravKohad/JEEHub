@@ -167,12 +167,12 @@ export default function Schedule() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Study Schedule</h1>
-          <p className="text-muted-foreground">Plan and organize your JEE preparation schedule</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Study Schedule</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">Plan and organize your JEE preparation schedule</p>
         </div>
         
         <Button 

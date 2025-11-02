@@ -72,15 +72,15 @@ export default function Subjects() {
   const overallStats = userStatsStorage.get();
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Subjects</h1>
-        <p className="text-jee-muted">Track your progress across Physics, Chemistry, and Mathematics</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-foreground mb-2">Subjects</h1>
+        <p className="text-sm sm:text-base text-jee-muted">Track your progress across Physics, Chemistry, and Mathematics</p>
       </div>
 
       {/* Subject Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
         {(Object.keys(subjectConfig) as Subject[]).map((subject) => {
           const config = subjectConfig[subject];
           const stats = getSubjectStats(subject);
@@ -95,12 +95,12 @@ export default function Subjects() {
               onClick={() => setSelectedSubject(subject)}
               data-testid={`subject-card-${subject.toLowerCase()}`}
             >
-              <CardContent className="p-6">
-                <div className={`w-full h-32 bg-gradient-to-br ${config.bgGradient} rounded-xl mb-4 flex items-center justify-center`}>
-                  <IconComponent className="text-white" size={48} />
+              <CardContent className="p-4 sm:p-6">
+                <div className={`w-full h-24 sm:h-32 bg-gradient-to-br ${config.bgGradient} rounded-lg sm:rounded-xl mb-3 sm:mb-4 flex items-center justify-center`}>
+                  <IconComponent className="text-white" size={40} />
                 </div>
                 
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{subject}</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-foreground mb-2">{subject}</h3>
                 <p className="text-sm text-jee-muted mb-4">{config.description}</p>
                 
                 <div className="space-y-3">
@@ -128,7 +128,7 @@ export default function Subjects() {
       </div>
 
       {/* Selected Subject Details */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Subject Details */}
         <div className="lg:col-span-2 space-y-6">
           <Card>

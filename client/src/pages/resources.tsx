@@ -135,16 +135,16 @@ export default function Resources() {
   const stats = getResourceStats();
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Resources</h1>
-          <p className="text-muted-foreground">Organize and access your study materials and helpful links</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">Resources</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">Organize and access your study materials and helpful links</p>
         </div>
         <Button
           onClick={() => setIsResourceModalOpen(true)}
-          className="mt-4 lg:mt-0 bg-primary text-primary-foreground px-6 py-3 rounded-xl font-medium hover:bg-primary/90 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+          className="mt-4 lg:mt-0 bg-primary text-primary-foreground px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl text-sm sm:text-base font-medium hover:bg-primary/90 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           data-testid="button-add-resource"
         >
           <Plus className="mr-2" size={18} />
@@ -153,7 +153,7 @@ export default function Resources() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-4">
         <Card className="p-4 bg-card border-border">
           <CardContent className="p-0">
             <div className="flex items-center justify-between">
@@ -212,7 +212,7 @@ export default function Resources() {
       </div>
 
       {/* Filters */}
-      <Card className="p-6">
+      <Card className="p-4 sm:p-6">
         <div className="flex flex-col lg:flex-row gap-4">
           <div className="flex-1">
             <div className="relative">

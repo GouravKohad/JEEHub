@@ -112,17 +112,17 @@ export default function Timer({ userProfile }: TimerProps) {
   const todaysStudyTime = todaysSessions.reduce((acc, session) => acc + session.duration, 0);
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
+    <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6 animate-fade-in">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Study Timer</h1>
-        <p className="text-jee-muted">Focus on your studies with structured time management</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-foreground mb-2">Study Timer</h1>
+        <p className="text-sm sm:text-base text-jee-muted">Focus on your studies with structured time management</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Timer Section */}
         <div className="lg:col-span-2">
-          <Card className="p-8">
+          <Card className="p-4 sm:p-6 md:p-8">
             <CardContent className="p-0">
               {/* Subject Selection */}
               <div className="text-center mb-6">

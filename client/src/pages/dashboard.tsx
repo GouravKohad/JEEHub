@@ -46,15 +46,15 @@ export default function Dashboard({ userProfile }: DashboardProps) {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-4 sm:space-y-6 md:space-y-8 animate-fade-in">
       <DashboardOverview 
         onAddTask={() => setIsTaskModalOpen(true)} 
         userProfile={userProfile}
       />
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
         {/* Main Content */}
-        <div className="lg:col-span-2 space-y-8">
+        <div className="lg:col-span-2 space-y-4 sm:space-y-6 md:space-y-8">
           <SubjectProgress 
             key={`subject-${refreshKey}`}
             onTaskUpdate={handleTaskUpdate} 
@@ -63,7 +63,7 @@ export default function Dashboard({ userProfile }: DashboardProps) {
         </div>
 
         {/* Sidebar */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           <StudyTimer />
           <TodaysSchedule key={`schedule-${refreshKey}`} />
           <QuickResources 
@@ -72,8 +72,8 @@ export default function Dashboard({ userProfile }: DashboardProps) {
           />
           
           {/* Weekly Progress Card */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Weekly Progress</h3>
+          <div className="bg-white dark:bg-card rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-border p-4 sm:p-6">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-foreground mb-3 sm:mb-4">Weekly Progress</h3>
             
             <div className="space-y-4">
               <div className="flex items-center justify-between">
@@ -114,14 +114,14 @@ export default function Dashboard({ userProfile }: DashboardProps) {
       </div>
 
       {/* Floating Action Button */}
-      <div className="fixed bottom-8 right-8 z-50">
+      <div className="fixed bottom-20 sm:bottom-8 right-4 sm:right-8 z-50">
         <Button
           onClick={() => setIsTaskModalOpen(true)}
           size="lg"
-          className="w-14 h-14 bg-gradient-to-r from-jee-primary to-jee-accent text-white rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 animate-float"
+          className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-jee-primary to-jee-accent text-white rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 animate-float"
           data-testid="fab-add-task"
         >
-          <Plus size={24} />
+          <Plus size={20} className="sm:w-6 sm:h-6" />
         </Button>
       </div>
       

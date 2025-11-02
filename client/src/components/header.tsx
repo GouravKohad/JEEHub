@@ -177,64 +177,65 @@ export function Header({ userProfile, onInfoClick }: HeaderProps) {
 
   return (
     <header className="bg-card/95 backdrop-blur-sm shadow-sm border-b border-border sticky top-0 z-50 animate-slide-in-left">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center space-x-6">
-            <div className="flex items-center space-x-2 group">
-              <div className="w-8 h-8 bg-gradient-to-r from-jee-primary to-jee-accent rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+        <div className="flex justify-between items-center h-14 sm:h-16">
+          <div className="flex items-center space-x-2 sm:space-x-6 min-w-0 flex-1">
+            <div className="flex items-center space-x-1.5 sm:space-x-2 group min-w-0">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-jee-primary to-jee-accent rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 flex-shrink-0">
                 <GraduationCap
                   className="text-white text-sm transition-transform duration-300"
-                  size={16}
+                  size={14}
                 />
               </div>
-              <h1 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
-                JEE Study Manager
+              <h1 className="text-base sm:text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300 truncate">
+                <span className="hidden sm:inline">JEE Study Manager</span>
+                <span className="sm:hidden">JEE Study</span>
               </h1>
             </div>
-            <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-              <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
+            <div className="hidden md:flex items-center space-x-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-800 flex-shrink-0">
+              <span className="text-xs sm:text-sm font-medium text-blue-700 dark:text-blue-300">
                 Time:
               </span>
-              <span className="text-sm font-mono font-semibold text-blue-900 dark:text-blue-100 tabular-nums">
+              <span className="text-xs sm:text-sm font-mono font-semibold text-blue-900 dark:text-blue-100 tabular-nums">
                 {indiaTime}
               </span>
             </div>
           </div>
 
-          <div className="flex items-center space-x-4 animate-slide-in-right">
+          <div className="flex items-center space-x-1.5 sm:space-x-2.5 md:space-x-4 animate-slide-in-right flex-shrink-0">
             <Button
               variant="ghost"
               size="sm"
               onClick={onInfoClick}
-              className="w-8 h-8 p-0 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/20"
+              className="w-7 h-7 sm:w-8 sm:h-8 p-0 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/20"
               data-testid="button-info"
               title="How to use & About"
             >
-              <Info className="text-blue-600 dark:text-blue-400" size={16} />
+              <Info className="text-blue-600 dark:text-blue-400" size={14} />
             </Button>
             <div
-              className="w-8 h-8 p-0 rounded-full flex items-center justify-center"
+              className="hidden sm:flex w-7 h-7 sm:w-8 sm:h-8 p-0 rounded-full items-center justify-center"
               data-testid="wifi-status"
               title={isOnline ? "Connected" : "Disconnected"}
             >
               {isOnline ? (
-                <Wifi className="text-green-600 dark:text-green-400" size={16} />
+                <Wifi className="text-green-600 dark:text-green-400" size={14} />
               ) : (
-                <WifiOff className="text-red-600 dark:text-red-400" size={16} />
+                <WifiOff className="text-red-600 dark:text-red-400" size={14} />
               )}
             </div>
             {batteryLevel !== null && (
               <div
-                className="flex items-center space-x-1 px-2 py-1 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg border border-green-200 dark:border-green-800"
+                className="hidden sm:flex items-center space-x-0.5 sm:space-x-1 px-1.5 sm:px-2 py-0.5 sm:py-1 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg border border-green-200 dark:border-green-800"
                 data-testid="battery-status"
                 title={isCharging ? `Charging: ${batteryLevel}%` : `Battery: ${batteryLevel}%`}
               >
                 {isCharging ? (
-                  <BatteryCharging className="text-green-600 dark:text-green-400" size={16} />
+                  <BatteryCharging className="text-green-600 dark:text-green-400" size={14} />
                 ) : batteryLevel <= 20 ? (
-                  <BatteryLow className="text-red-600 dark:text-red-400" size={16} />
+                  <BatteryLow className="text-red-600 dark:text-red-400" size={14} />
                 ) : (
-                  <Battery className="text-green-600 dark:text-green-400" size={16} />
+                  <Battery className="text-green-600 dark:text-green-400" size={14} />
                 )}
                 <span className="text-xs font-semibold text-green-700 dark:text-green-300">
                   {batteryLevel}%
@@ -245,46 +246,46 @@ export function Header({ userProfile, onInfoClick }: HeaderProps) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <div
-                  className="w-8 h-8 bg-gradient-to-r from-jee-secondary to-jee-primary rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer"
+                  className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-jee-secondary to-jee-primary rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer flex-shrink-0"
                   data-testid="user-avatar"
                   title={currentProfile?.name || "User"}
                 >
                   {currentProfile?.name ? (
-                    <span className="text-white text-sm font-medium">
+                    <span className="text-white text-xs sm:text-sm font-medium">
                       {getInitials(currentProfile.name)}
                     </span>
                   ) : (
                     <User
                       className="text-white transition-transform duration-300 hover:rotate-12"
-                      size={16}
+                      size={14}
                     />
                   )}
                 </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuContent align="end" className="w-44 sm:w-48">
                 <DropdownMenuItem 
                   onClick={() => setShowResetConfirm(true)}
-                  className="cursor-pointer"
+                  className="cursor-pointer text-sm"
                   data-testid="menu-reset"
                 >
-                  <RotateCcw className="mr-2 h-4 w-4 text-red-500" />
+                  <RotateCcw className="mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-500" />
                   <span>Reset Data</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem 
                   onClick={handleExport}
-                  className="cursor-pointer"
+                  className="cursor-pointer text-sm"
                   data-testid="menu-export"
                 >
-                  <Download className="mr-2 h-4 w-4 text-blue-500" />
+                  <Download className="mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-500" />
                   <span>Export Data</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem 
                   onClick={handleImport}
-                  className="cursor-pointer"
+                  className="cursor-pointer text-sm"
                   data-testid="menu-import"
                 >
-                  <Upload className="mr-2 h-4 w-4 text-green-500" />
+                  <Upload className="mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-500" />
                   <span>Import Data</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>

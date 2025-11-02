@@ -197,16 +197,16 @@ export default function Tasks() {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Tasks</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-foreground mb-2">Tasks</h1>
           <p className="text-jee-muted">Manage your study tasks and track progress</p>
         </div>
         <Button
           onClick={() => setIsTaskModalOpen(true)}
-          className="mt-4 lg:mt-0 bg-jee-primary text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+          className="mt-4 lg:mt-0 bg-jee-primary text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl text-sm sm:text-base font-medium hover:bg-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           data-testid="button-add-task"
         >
           <Plus className="mr-2" size={18} />
@@ -215,7 +215,7 @@ export default function Tasks() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-4">
         <Card className="p-4">
           <CardContent className="p-0">
             <div className="flex items-center justify-between">
@@ -274,7 +274,7 @@ export default function Tasks() {
       </div>
 
       {/* Filters */}
-      <Card className="p-6">
+      <Card className="p-4 sm:p-6">
         <div className="flex flex-col lg:flex-row gap-4">
           <div className="flex-1">
             <div className="relative">
@@ -351,7 +351,7 @@ export default function Tasks() {
             return (
               <Card
                 key={task.id}
-                className="p-6 hover:shadow-md transition-all duration-200 animate-slide-up"
+                className="p-4 sm:p-6 hover:shadow-md transition-all duration-200 animate-slide-up"
                 data-testid={`task-card-${task.id}`}
               >
                 <div className="flex items-start space-x-4">
