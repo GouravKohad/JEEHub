@@ -322,13 +322,14 @@ export default function Schedule() {
               key={day}
               variant={selectedDay === day ? "default" : "outline"}
               onClick={() => setSelectedDay(day)}
-              className="flex items-center gap-2"
+              className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4"
               data-testid={`tab-${day.toLowerCase()}`}
             >
-              <CalendarIcon size={16} />
-              {day}
+              <CalendarIcon size={14} className="sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">{day}</span>
+              <span className="sm:hidden">{day.substring(0, 3)}</span>
               {dayItems.length > 0 && (
-                <Badge variant="secondary" className="ml-1 text-xs">
+                <Badge variant="secondary" className="ml-0.5 sm:ml-1 text-[10px] sm:text-xs px-1">
                   {dayItems.length}
                 </Badge>
               )}
@@ -339,23 +340,23 @@ export default function Schedule() {
 
       {/* Schedule for Selected Day */}
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CalendarIcon size={20} />
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+            <CalendarIcon size={18} className="sm:w-5 sm:h-5" />
             {selectedDay} Schedule
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-xs sm:text-sm">
             {getDaySchedule(selectedDay).length} scheduled items
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-4 sm:p-6">
           {getDaySchedule(selectedDay).length === 0 ? (
-            <div className="text-center py-8">
-              <CalendarIcon size={48} className="mx-auto text-gray-400 mb-4" />
-              <p className="text-muted-foreground">No schedule items for {selectedDay}</p>
+            <div className="text-center py-6 sm:py-8">
+              <CalendarIcon size={40} className="sm:w-12 sm:h-12 mx-auto text-gray-400 mb-3 sm:mb-4" />
+              <p className="text-sm sm:text-base text-muted-foreground">No schedule items for {selectedDay}</p>
               <Button 
                 variant="outline" 
-                className="mt-4"
+                className="mt-3 sm:mt-4 text-sm"
                 onClick={() => {
                   setFormData({...formData, day: selectedDay as ScheduleItem['day']});
                   setIsAddModalOpen(true);
@@ -372,51 +373,55 @@ export default function Schedule() {
                 return (
                   <div
                     key={item.id}
-                    className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+                    className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 sm:p-4 border rounded-lg hover:bg-muted/50 transition-colors"
                   >
-                    <div className="flex items-start gap-4 flex-1">
-                      <div className={`w-1 h-16 rounded-full ${typeInfo.color}`} />
+                    <div className="flex items-start gap-2 sm:gap-4 flex-1 min-w-0">
+                      <div className={`w-1 h-12 sm:h-16 rounded-full ${typeInfo.color} flex-shrink-0`} />
                       
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-medium text-foreground">{item.title}</h3>
-                          <Badge className={getSubjectColor(item.subject)} variant="secondary">
-                            {item.subject}
-                          </Badge>
-                          <Badge variant="outline">
-                            {typeInfo.label}
-                          </Badge>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1">
+                          <h3 className="font-medium text-sm sm:text-base text-foreground truncate">{item.title}</h3>
+                          <div className="flex flex-wrap items-center gap-1 sm:gap-2">
+                            <Badge className={`${getSubjectColor(item.subject)} text-[10px] sm:text-xs`} variant="secondary">
+                              {item.subject}
+                            </Badge>
+                            <Badge variant="outline" className="text-[10px] sm:text-xs">
+                              {typeInfo.label}
+                            </Badge>
+                          </div>
                         </div>
                         
-                        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
+                        <div className="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-1 sm:mb-2">
                           <div className="flex items-center gap-1">
-                            <Clock size={14} />
-                            {item.startTime} - {item.endTime}
+                            <Clock size={12} className="sm:w-3.5 sm:h-3.5" />
+                            <span className="text-xs sm:text-sm">{item.startTime} - {item.endTime}</span>
                           </div>
                         </div>
                         
                         {item.description && (
-                          <p className="text-sm text-muted-foreground">{item.description}</p>
+                          <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">{item.description}</p>
                         )}
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 justify-end sm:justify-start flex-shrink-0">
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => handleEdit(item)}
+                        className="h-8 w-8 p-0"
                         data-testid={`button-edit-${item.id}`}
                       >
-                        <Edit2 size={16} />
+                        <Edit2 size={14} />
                       </Button>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => handleDelete(item.id)}
+                        className="h-8 w-8 p-0"
                         data-testid={`button-delete-${item.id}`}
                       >
-                        <Trash2 size={16} />
+                        <Trash2 size={14} />
                       </Button>
                     </div>
                   </div>
@@ -429,40 +434,40 @@ export default function Schedule() {
 
       {/* Weekly Overview */}
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <BookOpen size={20} />
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+            <BookOpen size={18} className="sm:w-5 sm:h-5" />
             Weekly Overview
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-xs sm:text-sm">
             Your complete week schedule at a glance
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <CardContent className="p-4 sm:p-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {DAYS.map(day => {
               const dayItems = getDaySchedule(day);
               return (
-                <div key={day} className="border rounded-lg p-4">
-                  <h4 className="font-medium mb-3 flex items-center justify-between">
-                    {day}
-                    <Badge variant="outline">{dayItems.length} items</Badge>
+                <div key={day} className="border rounded-lg p-3 sm:p-4">
+                  <h4 className="font-medium text-sm sm:text-base mb-2 sm:mb-3 flex items-center justify-between">
+                    <span className="truncate">{day}</span>
+                    <Badge variant="outline" className="text-[10px] sm:text-xs ml-2 flex-shrink-0">{dayItems.length} items</Badge>
                   </h4>
                   
                   {dayItems.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">No schedule</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">No schedule</p>
                   ) : (
                     <div className="space-y-2">
                       {dayItems.slice(0, 3).map(item => (
-                        <div key={item.id} className="text-sm">
-                          <div className="font-medium">{item.title}</div>
-                          <div className="text-muted-foreground">
+                        <div key={item.id} className="text-xs sm:text-sm">
+                          <div className="font-medium truncate">{item.title}</div>
+                          <div className="text-muted-foreground text-[10px] sm:text-xs">
                             {item.startTime} - {item.endTime}
                           </div>
                         </div>
                       ))}
                       {dayItems.length > 3 && (
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-[10px] sm:text-xs text-muted-foreground">
                           +{dayItems.length - 3} more items
                         </p>
                       )}
