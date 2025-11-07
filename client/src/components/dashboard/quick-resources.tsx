@@ -92,35 +92,56 @@ export function QuickResources({ onAddResource }: QuickResourcesProps) {
           {/* Default resources shown when no resources exist */}
           {resources.length === 0 && (
             <div className="space-y-3 opacity-60">
-              <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <Book className="text-blue-600" size={16} />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">NCERT Physics Solutions</p>
-                  <p className="text-xs text-jee-muted">Chapter 1-15</p>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+              <button
+                onClick={() => handleResourceClick('https://www.pw.live/')}
+                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group text-left"
+              >
                 <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
                   <Video className="text-green-600" size={16} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">Chemistry Video Lectures</p>
-                  <p className="text-xs text-jee-muted">Organic Chemistry</p>
+                  <p className="text-sm font-medium text-gray-900">Physics Wallah</p>
+                  <p className="text-xs text-jee-muted">JEE Video Lectures</p>
                 </div>
-              </div>
+                <ExternalLink 
+                  size={14} 
+                  className="text-gray-400 group-hover:text-jee-primary transition-colors" 
+                />
+              </button>
 
-              <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+              <button
+                onClick={() => handleResourceClick('https://jeechallengehub.onrender.com')}
+                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group text-left"
+              >
+                <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                  <ExternalLink className="text-gray-600" size={16} />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-900">JEE Challenge Hub</p>
+                  <p className="text-xs text-jee-muted">Practice & Tests</p>
+                </div>
+                <ExternalLink 
+                  size={14} 
+                  className="text-gray-400 group-hover:text-jee-primary transition-colors" 
+                />
+              </button>
+
+              <button
+                onClick={() => handleResourceClick('https://gouravkohad.github.io/ImageSavePDF/')}
+                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group text-left"
+              >
                 <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
                   <Calculator className="text-purple-600" size={16} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">Math Formula Sheet</p>
-                  <p className="text-xs text-jee-muted">Quick Reference</p>
+                  <p className="text-sm font-medium text-gray-900">Image Save PDF</p>
+                  <p className="text-xs text-jee-muted">Convert images to PDF</p>
                 </div>
-              </div>
+                <ExternalLink 
+                  size={14} 
+                  className="text-gray-400 group-hover:text-jee-primary transition-colors" 
+                />
+              </button>
             </div>
           )}
         </div>
