@@ -153,58 +153,58 @@ export default function Resources() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-4">
-        <Card className="p-4 bg-card border-border">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        <Card className="p-3 sm:p-4 bg-card border-border">
           <CardContent className="p-0">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Total Resources</p>
-                <p className="text-2xl font-bold text-foreground">{stats.total}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Total Resources</p>
+                <p className="text-xl sm:text-2xl font-bold text-foreground">{stats.total}</p>
               </div>
-              <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
-                <ExternalLink className="text-blue-600 dark:text-blue-400" size={20} />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-50 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
+                <ExternalLink className="text-blue-600 dark:text-blue-400" size={16} />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="p-4 bg-card border-border">
+        <Card className="p-3 sm:p-4 bg-card border-border">
           <CardContent className="p-0">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Videos</p>
-                <p className="text-2xl font-bold text-green-600 dark:text-green-400">{stats.byCategory.video || 0}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Videos</p>
+                <p className="text-xl sm:text-2xl font-bold text-green-600 dark:text-green-400">{stats.byCategory.video || 0}</p>
               </div>
-              <div className="w-10 h-10 bg-green-50 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
-                <Video className="text-green-600 dark:text-green-400" size={20} />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-50 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
+                <Video className="text-green-600 dark:text-green-400" size={16} />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="p-4 bg-card border-border">
+        <Card className="p-3 sm:p-4 bg-card border-border">
           <CardContent className="p-0">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Books</p>
-                <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{stats.byCategory.book || 0}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Books</p>
+                <p className="text-xl sm:text-2xl font-bold text-purple-600 dark:text-purple-400">{stats.byCategory.book || 0}</p>
               </div>
-              <div className="w-10 h-10 bg-purple-50 dark:bg-purple-900/20 rounded-lg flex items-center justify-center">
-                <Book className="text-purple-600 dark:text-purple-400" size={20} />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-50 dark:bg-purple-900/20 rounded-lg flex items-center justify-center">
+                <Book className="text-purple-600 dark:text-purple-400" size={16} />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="p-4 bg-card border-border">
+        <Card className="p-3 sm:p-4 bg-card border-border">
           <CardContent className="p-0">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Websites</p>
-                <p className="text-2xl font-bold text-muted-foreground">{stats.byCategory.website || 0}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Websites</p>
+                <p className="text-xl sm:text-2xl font-bold text-muted-foreground">{stats.byCategory.website || 0}</p>
               </div>
-              <div className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center">
-                <ExternalLink className="text-muted-foreground" size={20} />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-muted rounded-lg flex items-center justify-center">
+                <ExternalLink className="text-muted-foreground" size={16} />
               </div>
             </div>
           </CardContent>
@@ -213,7 +213,7 @@ export default function Resources() {
 
       {/* Filters */}
       <Card className="p-4 sm:p-6">
-        <div className="flex flex-col lg:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <div className="flex-1">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
@@ -227,11 +227,11 @@ export default function Resources() {
             </div>
           </div>
           
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap sm:flex-nowrap">
             <select
               value={selectedSubject}
               onChange={(e) => setSelectedSubject(e.target.value as Subject | 'General' | 'All')}
-              className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-jee-primary"
+              className="flex-1 sm:flex-initial px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-jee-primary min-w-[120px]"
               data-testid="select-filter-subject"
             >
               <option value="All">All Subjects</option>
@@ -244,7 +244,7 @@ export default function Resources() {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-jee-primary"
+              className="flex-1 sm:flex-initial px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-jee-primary min-w-[120px]"
               data-testid="select-filter-category"
             >
               <option value="All">All Categories</option>

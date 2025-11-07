@@ -31,29 +31,29 @@ export function TodaysSchedule() {
   };
 
   return (
-    <Card className="shadow-sm border border-gray-100 p-6">
+    <Card className="shadow-sm border border-gray-100 p-4 sm:p-6">
       <CardContent className="p-0">
-        <div className="flex items-center justify-between mb-4">
-          <CardTitle className="text-lg font-semibold text-gray-900 flex items-center">
-            <Calendar className="mr-2" size={18} />
-            Today's Schedule
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
+          <CardTitle className="text-base sm:text-lg font-semibold text-gray-900 flex items-center">
+            <Calendar className="mr-1.5 sm:mr-2" size={16} />
+            <span className="truncate">Today's Schedule</span>
           </CardTitle>
           <Button
             variant="ghost"
             size="sm"
-            className="text-jee-primary hover:text-blue-700 transition-colors"
+            className="text-jee-primary hover:text-blue-700 transition-colors flex-shrink-0"
             data-testid="button-add-schedule"
           >
             <Plus size={16} />
           </Button>
         </div>
         
-        <div className="space-y-3">
+        <div className="space-y-2 sm:space-y-3">
           {schedule.length === 0 ? (
-            <div className="text-center py-8 text-jee-muted">
-              <Calendar className="mx-auto mb-3 opacity-50" size={24} />
-              <p className="text-sm">No schedule for today</p>
-              <p className="text-xs">Add your first schedule item!</p>
+            <div className="text-center py-6 sm:py-8 text-jee-muted">
+              <Calendar className="mx-auto mb-2 sm:mb-3 opacity-50" size={20} />
+              <p className="text-xs sm:text-sm">No schedule for today</p>
+              <p className="text-[10px] sm:text-xs">Add your first schedule item!</p>
             </div>
           ) : (
             schedule.map((item) => {
@@ -62,7 +62,7 @@ export function TodaysSchedule() {
               return (
                 <div
                   key={item.id}
-                  className={`flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 ${
+                  className={`flex items-center space-x-2 sm:space-x-3 p-2.5 sm:p-3 rounded-lg transition-all duration-200 ${
                     item.completed 
                       ? 'bg-gray-100 opacity-60' 
                       : item.subject === 'Physics' 
@@ -73,12 +73,12 @@ export function TodaysSchedule() {
                   }`}
                   data-testid={`schedule-item-${item.id}`}
                 >
-                  <div className={`w-2 h-8 ${colorClass} rounded-full`} />
-                  <div className="flex-1">
-                    <p className={`text-sm font-medium ${item.completed ? 'line-through text-gray-500' : 'text-gray-900'}`}>
+                  <div className={`w-1.5 sm:w-2 h-8 ${colorClass} rounded-full flex-shrink-0`} />
+                  <div className="flex-1 min-w-0">
+                    <p className={`text-xs sm:text-sm font-medium truncate ${item.completed ? 'line-through text-gray-500' : 'text-gray-900'}`}>
                       {item.title}
                     </p>
-                    <p className="text-xs text-jee-muted">
+                    <p className="text-[10px] sm:text-xs text-jee-muted">
                       {formatTime(item.startTime)} - {formatTime(item.endTime)}
                     </p>
                   </div>
@@ -86,7 +86,7 @@ export function TodaysSchedule() {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleToggleComplete(item.id, !item.completed)}
-                    className="text-xs"
+                    className="text-[10px] sm:text-xs px-2 sm:px-3 py-1 h-auto flex-shrink-0"
                     data-testid={`button-toggle-${item.id}`}
                   >
                     {item.completed ? 'Undo' : 'Done'}
@@ -99,28 +99,28 @@ export function TodaysSchedule() {
         
         {/* Default schedule items if none exist */}
         {schedule.length === 0 && (
-          <div className="space-y-3 mt-4 opacity-60">
-            <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
-              <div className="w-2 h-8 bg-blue-600 rounded-full" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Physics Mock Test</p>
-                <p className="text-xs text-jee-muted">10:00 AM - 12:00 PM</p>
+          <div className="space-y-2 sm:space-y-3 mt-3 sm:mt-4 opacity-60">
+            <div className="flex items-center space-x-2 sm:space-x-3 p-2.5 sm:p-3 bg-blue-50 rounded-lg">
+              <div className="w-1.5 sm:w-2 h-8 bg-blue-600 rounded-full flex-shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">Physics Mock Test</p>
+                <p className="text-[10px] sm:text-xs text-jee-muted">10:00 AM - 12:00 PM</p>
               </div>
             </div>
 
-            <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
-              <div className="w-2 h-8 bg-green-600 rounded-full" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Chemistry Revision</p>
-                <p className="text-xs text-jee-muted">2:00 PM - 4:00 PM</p>
+            <div className="flex items-center space-x-2 sm:space-x-3 p-2.5 sm:p-3 bg-green-50 rounded-lg">
+              <div className="w-1.5 sm:w-2 h-8 bg-green-600 rounded-full flex-shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">Chemistry Revision</p>
+                <p className="text-[10px] sm:text-xs text-jee-muted">2:00 PM - 4:00 PM</p>
               </div>
             </div>
 
-            <div className="flex items-center space-x-3 p-3 bg-purple-50 rounded-lg">
-              <div className="w-2 h-8 bg-purple-600 rounded-full" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Math Practice</p>
-                <p className="text-xs text-jee-muted">6:00 PM - 8:00 PM</p>
+            <div className="flex items-center space-x-2 sm:space-x-3 p-2.5 sm:p-3 bg-purple-50 rounded-lg">
+              <div className="w-1.5 sm:w-2 h-8 bg-purple-600 rounded-full flex-shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">Math Practice</p>
+                <p className="text-[10px] sm:text-xs text-jee-muted">6:00 PM - 8:00 PM</p>
               </div>
             </div>
           </div>
