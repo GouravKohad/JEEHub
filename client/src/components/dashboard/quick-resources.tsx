@@ -36,7 +36,7 @@ export function QuickResources({ onAddResource }: QuickResourcesProps) {
     <Card className="shadow-sm border border-gray-100 dark:border-gray-700 p-6 bg-card dark:bg-card">
       <CardContent className="p-0">
         <div className="flex items-center justify-between mb-4">
-          <CardTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">
             Quick Resources
           </CardTitle>
           <Button
@@ -73,10 +73,10 @@ export function QuickResources({ onAddResource }: QuickResourcesProps) {
                     <IconComponent size={16} />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100 group-hover:text-primary transition-colors">
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-200 group-hover:text-primary transition-colors">
                       {resource.title}
                     </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-gray-600 dark:text-gray-400">
                       {resource.description || resource.subject}
                     </p>
                   </div>
@@ -100,8 +100,8 @@ export function QuickResources({ onAddResource }: QuickResourcesProps) {
                   <Video className="text-green-600 dark:text-green-400" size={16} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">Physics Wallah</p>
-                  <p className="text-xs text-muted-foreground">JEE Video Lectures</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-200">Physics Wallah</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">JEE Video Lectures</p>
                 </div>
                 <ExternalLink 
                   size={14} 
@@ -117,8 +117,8 @@ export function QuickResources({ onAddResource }: QuickResourcesProps) {
                   <ExternalLink className="text-gray-600 dark:text-gray-400" size={16} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">JEE Challenge Hub</p>
-                  <p className="text-xs text-muted-foreground">Practice & Tests</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-200">JEE Challenge Hub</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">Practice & Tests</p>
                 </div>
                 <ExternalLink 
                   size={14} 
@@ -134,8 +134,8 @@ export function QuickResources({ onAddResource }: QuickResourcesProps) {
                   <Calculator className="text-purple-600 dark:text-purple-400" size={16} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">Image Save PDF</p>
-                  <p className="text-xs text-muted-foreground">Convert images to PDF</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-200">Image Save PDF</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">Convert images to PDF</p>
                 </div>
                 <ExternalLink 
                   size={14} 

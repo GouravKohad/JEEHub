@@ -34,7 +34,7 @@ export function TodaysSchedule() {
     <Card className="shadow-sm border border-gray-100 dark:border-gray-700 p-4 sm:p-6 bg-card dark:bg-card">
       <CardContent className="p-0">
         <div className="flex items-center justify-between mb-3 sm:mb-4">
-          <CardTitle className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center">
+          <CardTitle className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white flex items-center">
             <Calendar className="mr-1.5 sm:mr-2" size={16} />
             <span className="truncate">Today's Schedule</span>
           </CardTitle>
@@ -75,10 +75,10 @@ export function TodaysSchedule() {
                 >
                   <div className={`w-1.5 sm:w-2 h-8 ${colorClass} rounded-full flex-shrink-0`} />
                   <div className="flex-1 min-w-0">
-                    <p className={`text-xs sm:text-sm font-medium truncate ${item.completed ? 'line-through text-gray-500 dark:text-gray-400' : 'text-gray-900 dark:text-gray-100'}`}>
+                    <p className={`text-xs sm:text-sm font-medium truncate ${item.completed ? 'line-through text-gray-500 dark:text-gray-500' : 'text-gray-900 dark:text-gray-200'}`}>
                       {item.title}
                     </p>
-                    <p className="text-[10px] sm:text-xs text-muted-foreground">
+                    <p className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400">
                       {formatTime(item.startTime)} - {formatTime(item.endTime)}
                     </p>
                   </div>
@@ -103,24 +103,24 @@ export function TodaysSchedule() {
             <div className="flex items-center space-x-2 sm:space-x-3 p-2.5 sm:p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
               <div className="w-1.5 sm:w-2 h-8 bg-blue-600 rounded-full flex-shrink-0" />
               <div className="flex-1 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100 truncate">Physics Mock Test</p>
-                <p className="text-[10px] sm:text-xs text-muted-foreground">10:00 AM - 12:00 PM</p>
+                <p className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-200 truncate">Physics Mock Test</p>
+                <p className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400">10:00 AM - 12:00 PM</p>
               </div>
             </div>
 
             <div className="flex items-center space-x-2 sm:space-x-3 p-2.5 sm:p-3 bg-green-50 dark:bg-green-950/30 rounded-lg">
               <div className="w-1.5 sm:w-2 h-8 bg-green-600 rounded-full flex-shrink-0" />
               <div className="flex-1 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100 truncate">Chemistry Revision</p>
-                <p className="text-[10px] sm:text-xs text-muted-foreground">2:00 PM - 4:00 PM</p>
+                <p className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-200 truncate">Chemistry Revision</p>
+                <p className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400">2:00 PM - 4:00 PM</p>
               </div>
             </div>
 
             <div className="flex items-center space-x-2 sm:space-x-3 p-2.5 sm:p-3 bg-purple-50 dark:bg-purple-950/30 rounded-lg">
               <div className="w-1.5 sm:w-2 h-8 bg-purple-600 rounded-full flex-shrink-0" />
               <div className="flex-1 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100 truncate">Math Practice</p>
-                <p className="text-[10px] sm:text-xs text-muted-foreground">6:00 PM - 8:00 PM</p>
+                <p className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-200 truncate">Math Practice</p>
+                <p className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400">6:00 PM - 8:00 PM</p>
               </div>
             </div>
           </div>
