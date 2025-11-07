@@ -580,25 +580,18 @@ export const initializeDefaultData = (): void => {
         category: "website" as const,
       },
       {
-        title: "NCERT Physics Solutions",
-        url: "https://ncert.nic.in/textbook.php?leph1=0-10",
-        description: "Complete solutions for NCERT Physics textbook",
-        subject: "Physics" as const,
-        category: "book" as const,
-      },
-      {
-        title: "Khan Academy Chemistry",
-        url: "https://www.khanacademy.org/science/chemistry",
-        description: "Free online chemistry courses and tutorials",
-        subject: "Chemistry" as const,
-        category: "video" as const,
-      },
-      {
-        title: "Math Formula Reference",
-        url: "https://en.wikipedia.org/wiki/List_of_mathematical_formulas",
-        description: "Comprehensive list of mathematical formulas",
-        subject: "Mathematics" as const,
+        title: "JEE Challenge Hub",
+        url: "https://jeechallengehub.onrender.com",
+        description: "Practice problems and mock tests for JEE preparation",
+        subject: "General" as const,
         category: "website" as const,
+      },
+      {
+        title: "Image Save PDF",
+        url: "https://gouravkohad.github.io/ImageSavePDF/",
+        description: "Convert images to PDF for study notes",
+        subject: "General" as const,
+        category: "tool" as const,
       },
     ];
     
