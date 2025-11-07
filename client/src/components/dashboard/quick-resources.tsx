@@ -33,10 +33,10 @@ export function QuickResources({ onAddResource }: QuickResourcesProps) {
   };
 
   return (
-    <Card className="shadow-sm border border-gray-100 p-6">
+    <Card className="shadow-sm border border-gray-100 dark:border-gray-700 p-6 bg-card dark:bg-card">
       <CardContent className="p-0">
         <div className="flex items-center justify-between mb-4">
-          <CardTitle className="text-lg font-semibold text-gray-900">
+          <CardTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
             Quick Resources
           </CardTitle>
           <Button
@@ -52,7 +52,7 @@ export function QuickResources({ onAddResource }: QuickResourcesProps) {
         
         <div className="space-y-3">
           {resources.length === 0 ? (
-            <div className="text-center py-8 text-jee-muted">
+            <div className="text-center py-8 text-muted-foreground">
               <ExternalLink className="mx-auto mb-3 opacity-50" size={24} />
               <p className="text-sm">No resources yet</p>
               <p className="text-xs">Add your first resource!</p>
@@ -66,23 +66,23 @@ export function QuickResources({ onAddResource }: QuickResourcesProps) {
                 <button
                   key={resource.id}
                   onClick={() => handleResourceClick(resource.url)}
-                  className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group text-left"
+                  className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group text-left"
                   data-testid={`resource-${resource.id}`}
                 >
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${colorClass}`}>
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${colorClass} dark:bg-opacity-20`}>
                     <IconComponent size={16} />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-900 group-hover:text-jee-primary transition-colors">
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100 group-hover:text-primary transition-colors">
                       {resource.title}
                     </p>
-                    <p className="text-xs text-jee-muted">
+                    <p className="text-xs text-muted-foreground">
                       {resource.description || resource.subject}
                     </p>
                   </div>
                   <ExternalLink 
                     size={14} 
-                    className="text-gray-400 group-hover:text-jee-primary transition-colors" 
+                    className="text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors" 
                   />
                 </button>
               );
@@ -94,52 +94,52 @@ export function QuickResources({ onAddResource }: QuickResourcesProps) {
             <div className="space-y-3 opacity-60">
               <button
                 onClick={() => handleResourceClick('https://www.pw.live/')}
-                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group text-left"
+                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group text-left"
               >
-                <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                  <Video className="text-green-600" size={16} />
+                <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+                  <Video className="text-green-600 dark:text-green-400" size={16} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">Physics Wallah</p>
-                  <p className="text-xs text-jee-muted">JEE Video Lectures</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">Physics Wallah</p>
+                  <p className="text-xs text-muted-foreground">JEE Video Lectures</p>
                 </div>
                 <ExternalLink 
                   size={14} 
-                  className="text-gray-400 group-hover:text-jee-primary transition-colors" 
+                  className="text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors" 
                 />
               </button>
 
               <button
                 onClick={() => handleResourceClick('https://jeechallengehub.onrender.com')}
-                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group text-left"
+                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group text-left"
               >
-                <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
-                  <ExternalLink className="text-gray-600" size={16} />
+                <div className="w-8 h-8 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
+                  <ExternalLink className="text-gray-600 dark:text-gray-400" size={16} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">JEE Challenge Hub</p>
-                  <p className="text-xs text-jee-muted">Practice & Tests</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">JEE Challenge Hub</p>
+                  <p className="text-xs text-muted-foreground">Practice & Tests</p>
                 </div>
                 <ExternalLink 
                   size={14} 
-                  className="text-gray-400 group-hover:text-jee-primary transition-colors" 
+                  className="text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors" 
                 />
               </button>
 
               <button
                 onClick={() => handleResourceClick('https://gouravkohad.github.io/ImageSavePDF/')}
-                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group text-left"
+                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group text-left"
               >
-                <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <Calculator className="text-purple-600" size={16} />
+                <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
+                  <Calculator className="text-purple-600 dark:text-purple-400" size={16} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">Image Save PDF</p>
-                  <p className="text-xs text-jee-muted">Convert images to PDF</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">Image Save PDF</p>
+                  <p className="text-xs text-muted-foreground">Convert images to PDF</p>
                 </div>
                 <ExternalLink 
                   size={14} 
-                  className="text-gray-400 group-hover:text-jee-primary transition-colors" 
+                  className="text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors" 
                 />
               </button>
             </div>

@@ -70,31 +70,55 @@
 }
 
 .dark {
-  --background: hsl(224 71.4% 4.1%);
-  --foreground: hsl(210 20% 98%);
-  --card: hsl(215 27.9% 16.9%);
-  --card-foreground: hsl(210 20% 98%);
-  --popover: hsl(215 27.9% 16.9%);
-  --popover-foreground: hsl(210 20% 98%);
-  --primary: hsl(214 95% 73%);
-  --primary-foreground: hsl(0 0% 100%);
-  --secondary: hsl(159 100% 46%);
-  --secondary-foreground: hsl(0 0% 100%);
-  --muted: hsl(215 27.9% 16.9%);
-  --muted-foreground: hsl(217.9 10.6% 64.9%);
-  --accent: hsl(258 74% 79%);
-  --accent-foreground: hsl(0 0% 100%);
-  --destructive: hsl(0 63% 31%);
-  --destructive-foreground: hsl(210 20% 98%);
-  --border: hsl(215 27.9% 16.9%);
-  --input: hsl(215 27.9% 16.9%);
-  --ring: hsl(216 12.2% 83.9%);
+  --background: hsl(222 47% 11%);
+  --foreground: hsl(210 40% 98%);
+  --card: hsl(222 47% 15%);
+  --card-foreground: hsl(210 40% 98%);
+  --popover: hsl(222 47% 13%);
+  --popover-foreground: hsl(210 40% 98%);
+  --primary: hsl(217 91% 70%);
+  --primary-foreground: hsl(222 47% 11%);
+  --secondary: hsl(160 84% 50%);
+  --secondary-foreground: hsl(222 47% 11%);
+  --muted: hsl(217 33% 22%);
+  --muted-foreground: hsl(215 20% 65%);
+  --accent: hsl(258 90% 75%);
+  --accent-foreground: hsl(222 47% 11%);
+  --destructive: hsl(0 84% 60%);
+  --destructive-foreground: hsl(210 40% 98%);
+  --border: hsl(217 33% 22%);
+  --input: hsl(217 33% 20%);
+  --ring: hsl(217 91% 70%);
+  --chart-1: hsl(217 91% 70%);
+  --chart-2: hsl(160 84% 50%);
+  --chart-3: hsl(38 92% 65%);
+  --chart-4: hsl(142 76% 55%);
+  --chart-5: hsl(346 77% 65%);
+  --sidebar: hsl(222 47% 13%);
+  --sidebar-foreground: hsl(210 40% 98%);
+  --sidebar-primary: hsl(217 91% 70%);
+  --sidebar-primary-foreground: hsl(222 47% 11%);
+  --sidebar-accent: hsl(217 33% 25%);
+  --sidebar-accent-foreground: hsl(217 91% 70%);
+  --sidebar-border: hsl(217 33% 20%);
+  --sidebar-ring: hsl(217 91% 70%);
   
-  /* Dark theme JEE colors */
-  --jee-primary: hsl(214 95% 73%);
-  --jee-secondary: hsl(159 100% 46%);
-  --jee-accent: hsl(258 74% 79%);
-  --jee-muted: hsl(217.9 10.6% 64.9%);
+  /* Enhanced Dark theme JEE colors */
+  --jee-primary: hsl(217 91% 70%);
+  --jee-secondary: hsl(160 84% 50%);
+  --jee-accent: hsl(258 90% 75%);
+  --jee-muted: hsl(215 20% 65%);
+  
+  /* Subject Colors - Dark Mode */
+  --physics-color: hsl(217 91% 70%);
+  --chemistry-color: hsl(160 84% 50%);
+  --mathematics-color: hsl(258 90% 75%);
+  
+  /* Status Colors - Dark Mode */
+  --status-pending: hsl(38 92% 65%);
+  --status-progress: hsl(217 91% 70%);
+  --status-completed: hsl(160 84% 50%);
+  --status-overdue: hsl(0 84% 60%);
 }
 
 @layer base {
@@ -150,6 +174,22 @@
   .mathematics-theme {
     background-color: hsl(258.18 73.91% 96%);
     border-color: hsl(258.18 73.91% 85%);
+  }
+  
+  /* Dark mode theme variants */
+  .dark .physics-theme {
+    background-color: hsl(213.91 100% 20%);
+    border-color: hsl(213.91 100% 35%);
+  }
+  
+  .dark .chemistry-theme {
+    background-color: hsl(159.78 100% 20%);
+    border-color: hsl(159.78 100% 35%);
+  }
+  
+  .dark .mathematics-theme {
+    background-color: hsl(258.18 73.91% 20%);
+    border-color: hsl(258.18 73.91% 35%);
   }
 }
 
