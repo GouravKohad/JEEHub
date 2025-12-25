@@ -64,7 +64,7 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
     <>
       <div 
         className="fixed top-0 left-0 pointer-events-none overflow-hidden" 
-        style={{ width: '1080px', height: '1080px', zIndex: -1000, opacity: 0.01 }}
+        style={{ width: '0', height: '0', zIndex: -1000, opacity: 0, position: 'absolute', top: '-2000px' }}
       >
         <div 
           ref={exportRef}
