@@ -24,15 +24,14 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
     setIsExporting(true);
     try {
       // Small delay to ensure any layout shifts are settled
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise(resolve => setTimeout(resolve, 200));
       
       const dataUrl = await toPng(exportRef.current, {
         cacheBust: true,
         backgroundColor: '#ffffff',
-        pixelRatio: 2, // Higher quality
-        style: {
-          borderRadius: '0px',
-        }
+        pixelRatio: 2,
+        // Ensure all fonts and images are loaded
+        skipAutoScale: true,
       });
       
       saveAs(dataUrl, `jee-hub-targets-${new Date().toISOString().split('T')[0]}.png`);
@@ -90,7 +89,7 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
               {/* Header */}
               <div className="flex items-center justify-between mb-10">
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-white/20 backdrop-blur-lg rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
+                  <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
                     <GraduationCap size={24} className="text-white" />
                   </div>
                   <div>
@@ -99,7 +98,7 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs font-bold text-white/90 bg-white/10 px-3 py-1 rounded-full backdrop-blur-md border border-white/10">{today}</p>
+                  <p className="text-xs font-bold text-white/90 bg-white/10 px-3 py-1 rounded-full border border-white/10">{today}</p>
                 </div>
               </div>
 
@@ -116,7 +115,7 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
               <div className="flex-1 space-y-3.5 overflow-hidden">
                 {tasks.length > 0 ? (
                   tasks.slice(0, 6).map((task) => (
-                    <div key={task.id} className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 flex items-center space-x-4 transform transition-all hover:bg-white/15">
+                    <div key={task.id} className="bg-white/10 border border-white/20 rounded-2xl p-4 flex items-center space-x-4">
                       <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
                         <Target size={16} className="text-white" />
                       </div>
@@ -124,8 +123,8 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
                         <div className="flex items-center justify-between mb-0.5">
                           <span className="text-[10px] font-black px-2 py-0.5 bg-white/20 rounded-md tracking-wider uppercase">{task.subject}</span>
                           <div className={`w-2 h-2 rounded-full ${
-                            task.priority === 'high' ? 'bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.6)]' : 
-                            task.priority === 'medium' ? 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]' : 'bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.6)]'
+                            task.priority === 'high' ? 'bg-red-400' : 
+                            task.priority === 'medium' ? 'bg-amber-400' : 'bg-blue-400'
                           }`} />
                         </div>
                         <p className="text-sm font-bold truncate leading-tight tracking-tight">{task.title}</p>
@@ -142,7 +141,7 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
                 )}
                 {tasks.length > 6 && (
                   <div className="pt-2 text-center">
-                    <span className="text-[11px] font-bold text-white/70 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm">
+                    <span className="text-[11px] font-bold text-white/70 bg-white/10 px-3 py-1 rounded-full">
                       + {tasks.length - 6} more targets for today
                     </span>
                   </div>
