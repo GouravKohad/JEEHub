@@ -21,12 +21,11 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
     
     setIsExporting(true);
     try {
-      // Small delay to ensure any layout shifts are settled and fonts are ready
       await new Promise(resolve => setTimeout(resolve, 800));
       
       const dataUrl = await toPng(exportRef.current, {
         cacheBust: true,
-        backgroundColor: '#020617', // Explicitly set background
+        backgroundColor: '#020617',
         width: 1080,
         height: 1080,
         pixelRatio: 1,
@@ -63,10 +62,6 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
 
   return (
     <>
-      {/* 
-          Robust Off-screen export container (1080x1080)
-          We use visibility: hidden but absolute positioning so it's in the DOM and renderable by html-to-image
-      */}
       <div 
         className="fixed top-0 left-0 pointer-events-none overflow-hidden" 
         style={{ width: '1080px', height: '1080px', zIndex: -1000, opacity: 0.01 }}
@@ -76,110 +71,94 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
           className="bg-[#020617] flex flex-col text-white font-inter overflow-hidden relative"
           style={{ width: '1080px', height: '1080px' }}
         >
-          {/* Decorative Background Elements - More robustly styled */}
           <div className="absolute top-[-5%] right-[-5%] w-[70%] h-[70%] bg-indigo-600/30 blur-[120px] rounded-full" />
           <div className="absolute bottom-[-5%] left-[-5%] w-[60%] h-[60%] bg-purple-600/25 blur-[110px] rounded-full" />
           <div className="absolute top-[30%] left-[-10%] w-[40%] h-[40%] bg-blue-500/15 blur-[90px] rounded-full" />
-
-          {/* Grid pattern overlay */}
           <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
-          <div className="relative z-10 flex flex-col h-full p-20">
-            {/* Header Section */}
-            <div className="flex items-center justify-between mb-20">
-              <div className="flex items-center space-x-8">
-                <div className="w-24 h-24 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-[28px] flex items-center justify-center shadow-[0_0_40px_rgba(79,70,229,0.3)] border border-white/20">
-                  <GraduationCap size={52} className="text-white" />
+          <div className="relative z-10 flex flex-col h-full p-16">
+            <div className="flex items-center justify-between mb-10">
+              <div className="flex items-center space-x-6">
+                <div className="w-20 h-20 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-[24px] flex items-center justify-center border border-white/20">
+                  <GraduationCap size={44} className="text-white" />
                 </div>
                 <div>
-                  <h2 className="text-6xl font-black tracking-tighter leading-none text-white">JEE HUB</h2>
-                  <p className="text-xl text-indigo-400 font-black uppercase tracking-[0.5em] mt-3">Study Manager</p>
+                  <h2 className="text-5xl font-black tracking-tighter leading-none text-white">JEE HUB</h2>
+                  <p className="text-lg text-indigo-400 font-black uppercase tracking-[0.4em] mt-2">Study Manager</p>
                 </div>
               </div>
-              <div className="bg-white/5 border border-white/10 px-10 py-4 rounded-3xl backdrop-blur-md">
-                <p className="text-2xl font-bold text-white/90 tracking-wide">{today}</p>
+              <div className="bg-white/5 border border-white/10 px-8 py-3 rounded-2xl backdrop-blur-md">
+                <p className="text-xl font-bold text-white/90 tracking-wide">{today}</p>
               </div>
             </div>
 
-            {/* User & Title Section */}
-            <div className="mb-20">
-              <div className="flex items-center space-x-5 mb-6">
-                <Sparkles size={36} className="text-amber-400" />
-                <span className="text-3xl font-black text-indigo-400/80 tracking-[0.3em] uppercase">Daily Mission</span>
+            <div className="mb-8">
+              <div className="flex items-center space-x-4 mb-4">
+                <Sparkles size={28} className="text-amber-400" />
+                <span className="text-2xl font-black text-indigo-400/80 tracking-[0.3em] uppercase">Daily Mission</span>
               </div>
-              <h3 className="text-[120px] font-black tracking-tighter text-white leading-[0.9] mb-4">
-                Today's<br />Targets
+              <h3 className="text-7xl font-black tracking-tighter text-white leading-[0.9] mb-4">
+                Today's Targets
               </h3>
-              <div className="flex items-center space-x-6 mt-10">
-                <div className="h-2 w-20 bg-gradient-to-r from-indigo-500 to-transparent rounded-full" />
-                <p className="text-4xl text-white/90 font-black tracking-tight">
-                  For <span className="text-indigo-400 underline decoration-indigo-500/30 underline-offset-8">{userName}</span>
-                </p>
-              </div>
+              <p className="text-3xl text-white/90 font-black tracking-tight">
+                For <span className="text-indigo-400">{userName}</span>
+              </p>
             </div>
 
-            {/* Tasks Grid */}
-            <div className="flex-1 flex flex-col space-y-6">
+            <div className="flex-1 flex flex-col space-y-4 overflow-hidden">
               {tasks.length > 0 ? (
-                tasks.slice(0, 5).map((task) => (
+                tasks.slice(0, 6).map((task) => (
                   <div 
                     key={task.id} 
-                    className="bg-white/[0.04] border border-white/10 rounded-[36px] p-10 flex items-center space-x-10 shadow-2xl backdrop-blur-md"
+                    className="bg-white/[0.04] border border-white/10 rounded-[28px] p-6 flex items-center space-x-6"
                   >
-                    <div className={`w-20 h-20 rounded-3xl flex items-center justify-center shadow-lg ${
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0 ${
                       task.subject === 'Physics' ? 'bg-blue-500/30 text-blue-300 border border-blue-400/40' : 
                       task.subject === 'Chemistry' ? 'bg-emerald-500/30 text-emerald-300 border border-emerald-400/40' : 
                       'bg-amber-500/30 text-amber-300 border border-amber-400/40'
                     }`}>
-                      <Target size={40} />
+                      <Target size={28} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-xl font-black px-5 py-1.5 bg-white/10 rounded-xl tracking-widest uppercase text-white/80">{task.subject}</span>
-                        <div className="flex items-center space-x-4">
-                           <span className={`text-base font-black uppercase px-4 py-1.5 rounded-xl ${
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-sm font-black px-3 py-1 bg-white/10 rounded-lg tracking-widest uppercase text-white/80">{task.subject}</span>
+                        <div className="flex items-center space-x-3">
+                           <span className={`text-xs font-black uppercase px-2 py-0.5 rounded-lg ${
                               task.priority === 'high' ? 'bg-red-500/30 text-red-300' : 
                               task.priority === 'medium' ? 'bg-amber-500/30 text-amber-300' : 'bg-blue-500/30 text-blue-300'
                             }`}>
-                              {task.priority} Priority
+                              {task.priority}
                             </span>
                         </div>
                       </div>
-                      <p className="text-4xl font-black truncate text-white tracking-tight">{task.title}</p>
+                      <p className="text-2xl font-black truncate text-white tracking-tight mb-1">{task.title}</p>
+                      {task.description && (
+                        <p className="text-base text-white/60 font-medium truncate italic leading-tight">{task.description}</p>
+                      )}
                     </div>
                     {task.status === 'completed' && (
-                      <div className="w-16 h-16 bg-emerald-500/30 rounded-full flex items-center justify-center text-emerald-300 border border-emerald-400/40 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
-                        <CheckCircle2 size={36} />
+                      <div className="w-12 h-12 bg-emerald-500/30 rounded-full flex items-center justify-center text-emerald-300 border border-emerald-400/40">
+                        <CheckCircle2 size={24} />
                       </div>
                     )}
                   </div>
                 ))
               ) : (
-                <div className="flex flex-col items-center justify-center flex-1 text-white/20 text-center space-y-10">
-                  <div className="w-48 h-48 bg-white/5 rounded-full flex items-center justify-center border-2 border-dashed border-white/10">
-                    <Target size={96} className="opacity-20" />
-                  </div>
-                  <p className="text-5xl font-black tracking-tight opacity-50 uppercase">Ready for tomorrow's grind</p>
-                </div>
-              )}
-              {tasks.length > 5 && (
-                <div className="text-center pt-8">
-                  <span className="text-2xl font-black text-white/30 tracking-widest uppercase bg-white/5 px-12 py-4 rounded-full border border-white/10">
-                    + {tasks.length - 5} More Targets Added
-                  </span>
+                <div className="flex flex-col items-center justify-center flex-1 text-white/20 text-center space-y-6">
+                  <Target size={80} className="opacity-20" />
+                  <p className="text-4xl font-black tracking-tight uppercase opacity-50">No targets set</p>
                 </div>
               )}
             </div>
 
-            {/* Footer Branding */}
-            <div className="pt-16 mt-auto border-t border-white/10 flex flex-col items-center space-y-6">
-              <div className="flex items-center space-x-6">
-                <div className="w-14 h-14 bg-white rounded-[18px] flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.2)]">
-                  <GraduationCap size={32} className="text-slate-950" />
+            <div className="pt-10 mt-auto border-t border-white/10 flex flex-col items-center space-y-4">
+              <div className="flex items-center space-x-4">
+                <div className="w-10 h-10 bg-white rounded-[14px] flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                  <GraduationCap size={24} className="text-slate-950" />
                 </div>
-                <p className="text-4xl font-black text-white tracking-[0.4em] leading-none">POWERED BY JEE HUB</p>
+                <p className="text-3xl font-black text-white tracking-[0.4em] leading-none uppercase">POWERED BY JEE HUB</p>
               </div>
-              <p className="text-xl text-white/40 font-black tracking-[0.8em] uppercase">WWW.JEEHUB.APP</p>
+              <p className="text-lg text-white/40 font-black tracking-[0.8em] uppercase">WWW.JEEHUB.APP</p>
             </div>
           </div>
         </div>
