@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { taskStorage, userStatsStorage, type UserProfile } from '@/lib/storage';
 import { useMemo } from 'react';
+import { TaskExport } from './task-export';
 
 interface DashboardOverviewProps {
   onAddTask: () => void;
@@ -21,6 +22,10 @@ export function DashboardOverview({ onAddTask, userProfile }: DashboardOverviewP
       studyHours: Math.round(userStats.totalStudyTime / 60 * 10) / 10, // Convert to hours
       streak: userStats.currentStreak,
       completionRate: taskStats.total > 0 ? Math.round((taskStats.completed / taskStats.total) * 100) : 0,
+      todayTasks: taskStorage.getAll().filter(t => {
+        const today = new Date().toISOString().split('T')[0];
+        return t.dueDate === today;
+      })
     };
   }, []);
 
@@ -76,7 +81,8 @@ export function DashboardOverview({ onAddTask, userProfile }: DashboardOverviewP
           </h2>
           <p className="text-muted-foreground">Track your JEE preparation progress and stay on top of your goals.</p>
         </div>
-        <div className="mt-4 lg:mt-0">
+        <div className="mt-4 lg:mt-0 flex flex-wrap gap-2">
+          <TaskExport tasks={stats.todayTasks} userName={userProfile?.name || 'Student'} />
           <Button
             onClick={onAddTask}
             className="bg-primary text-primary-foreground px-6 py-3 rounded-xl font-medium hover:bg-primary/90 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
