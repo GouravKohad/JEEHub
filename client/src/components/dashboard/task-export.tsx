@@ -107,42 +107,53 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
 
             <div className="flex-1 flex flex-col space-y-4 overflow-hidden">
               {tasks.length > 0 ? (
-                tasks.slice(0, 6).map((task) => (
-                  <div 
-                    key={task.id} 
-                    className="bg-white/[0.04] border border-white/10 rounded-[28px] p-6 flex items-center space-x-6"
-                  >
-                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0 ${
-                      task.subject === 'Physics' ? 'bg-blue-500/30 text-blue-300 border border-blue-400/40' : 
-                      task.subject === 'Chemistry' ? 'bg-emerald-500/30 text-emerald-300 border border-emerald-400/40' : 
-                      'bg-amber-500/30 text-amber-300 border border-amber-400/40'
-                    }`}>
-                      <Target size={28} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm font-black px-3 py-1 bg-white/10 rounded-lg tracking-widest uppercase text-white/80">{task.subject}</span>
-                        <div className="flex items-center space-x-3">
-                           <span className={`text-xs font-black uppercase px-2 py-0.5 rounded-lg ${
-                              task.priority === 'high' ? 'bg-red-500/30 text-red-300' : 
-                              task.priority === 'medium' ? 'bg-amber-500/30 text-amber-300' : 'bg-blue-500/30 text-blue-300'
-                            }`}>
-                              {task.priority}
-                            </span>
-                        </div>
+                tasks.slice(0, 10).map((task) => {
+                  // Dynamically calculate padding and text sizes based on task count
+                  const taskCount = Math.min(tasks.length, 10);
+                  const isCompact = taskCount > 6;
+                  const paddingClass = isCompact ? 'p-4' : 'p-6';
+                  const titleSize = isCompact ? 'text-xl' : 'text-2xl';
+                  const iconSize = isCompact ? 24 : 28;
+                  const badgeSize = isCompact ? 'text-[10px]' : 'text-sm';
+                  const containerSize = isCompact ? 'w-12 h-12' : 'w-14 h-14';
+
+                  return (
+                    <div 
+                      key={task.id} 
+                      className={`bg-white/[0.04] border border-white/10 rounded-[28px] flex items-center space-x-6 ${paddingClass}`}
+                    >
+                      <div className={`rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0 ${containerSize} ${
+                        task.subject === 'Physics' ? 'bg-blue-500/30 text-blue-300 border border-blue-400/40' : 
+                        task.subject === 'Chemistry' ? 'bg-emerald-500/30 text-emerald-300 border border-emerald-400/40' : 
+                        'bg-amber-500/30 text-amber-300 border border-amber-400/40'
+                      }`}>
+                        <Target size={iconSize} />
                       </div>
-                      <p className="text-2xl font-black truncate text-white tracking-tight mb-1">{task.title}</p>
-                      {task.description && (
-                        <p className="text-base text-white/60 font-medium truncate italic leading-tight">{task.description}</p>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className={`font-black px-3 py-1 bg-white/10 rounded-lg tracking-widest uppercase text-white/80 ${badgeSize}`}>{task.subject}</span>
+                          <div className="flex items-center space-x-3">
+                             <span className={`font-black uppercase px-2 py-0.5 rounded-lg ${badgeSize} ${
+                                task.priority === 'high' ? 'bg-red-500/30 text-red-300' : 
+                                task.priority === 'medium' ? 'bg-amber-500/30 text-amber-300' : 'bg-blue-500/30 text-blue-300'
+                              }`}>
+                                {task.priority}
+                              </span>
+                          </div>
+                        </div>
+                        <p className={`font-black truncate text-white tracking-tight mb-1 ${titleSize}`}>{task.title}</p>
+                        {task.description && !isCompact && (
+                          <p className="text-base text-white/60 font-medium truncate italic leading-tight">{task.description}</p>
+                        )}
+                      </div>
+                      {task.status === 'completed' && (
+                        <div className={`${isCompact ? 'w-10 h-10' : 'w-12 h-12'} bg-emerald-500/30 rounded-full flex items-center justify-center text-emerald-300 border border-emerald-400/40`}>
+                          <CheckCircle2 size={isCompact ? 20 : 24} />
+                        </div>
                       )}
                     </div>
-                    {task.status === 'completed' && (
-                      <div className="w-12 h-12 bg-emerald-500/30 rounded-full flex items-center justify-center text-emerald-300 border border-emerald-400/40">
-                        <CheckCircle2 size={24} />
-                      </div>
-                    )}
-                  </div>
-                ))
+                  );
+                })
               ) : (
                 <div className="flex flex-col items-center justify-center flex-1 text-white/20 text-center space-y-6">
                   <Target size={80} className="opacity-20" />
