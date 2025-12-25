@@ -22,15 +22,18 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
     setIsExporting(true);
     try {
       // Small delay to ensure any layout shifts are settled and fonts are ready
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 800));
       
       const dataUrl = await toPng(exportRef.current, {
         cacheBust: true,
-        backgroundColor: '#0F172A', // Dark professional background
+        backgroundColor: '#020617', // Explicitly set background
         width: 1080,
         height: 1080,
-        pixelRatio: 1, // Already 1080x1080
-        skipAutoScale: true,
+        pixelRatio: 1,
+        style: {
+          visibility: 'visible',
+          opacity: '1',
+        }
       });
       
       saveAs(dataUrl, `jee-hub-targets-${new Date().toISOString().split('T')[0]}.png`);
@@ -60,118 +63,124 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
 
   return (
     <>
-      {/* Off-screen export container (1080x1080) */}
+      {/* 
+          Robust Off-screen export container (1080x1080)
+          We use visibility: hidden but absolute positioning so it's in the DOM and renderable by html-to-image
+      */}
       <div 
-        ref={exportRef}
-        className="bg-slate-950 flex flex-col text-white font-inter overflow-hidden relative"
-        style={{ 
-          width: '1080px', 
-          height: '1080px', 
-          position: 'fixed', 
-          left: '-9999px', 
-          top: '-9999px',
-          zIndex: -100
-        }}
+        className="fixed top-0 left-0 pointer-events-none overflow-hidden" 
+        style={{ width: '1080px', height: '1080px', zIndex: -1000, opacity: 0.01 }}
       >
-        {/* Decorative Background Elements */}
-        <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-indigo-600/20 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-600/20 blur-[100px] rounded-full" />
-        <div className="absolute top-[20%] left-[-5%] w-[30%] h-[30%] bg-blue-600/10 blur-[80px] rounded-full" />
+        <div 
+          ref={exportRef}
+          className="bg-[#020617] flex flex-col text-white font-inter overflow-hidden relative"
+          style={{ width: '1080px', height: '1080px' }}
+        >
+          {/* Decorative Background Elements - More robustly styled */}
+          <div className="absolute top-[-5%] right-[-5%] w-[70%] h-[70%] bg-indigo-600/30 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[-5%] left-[-5%] w-[60%] h-[60%] bg-purple-600/25 blur-[110px] rounded-full" />
+          <div className="absolute top-[30%] left-[-10%] w-[40%] h-[40%] bg-blue-500/15 blur-[90px] rounded-full" />
 
-        <div className="relative z-10 flex flex-col h-full p-16">
-          {/* Header Section */}
-          <div className="flex items-center justify-between mb-16">
-            <div className="flex items-center space-x-6">
-              <div className="w-20 h-20 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-[24px] flex items-center justify-center shadow-2xl shadow-indigo-500/20 border border-white/10">
-                <GraduationCap size={44} className="text-white" />
+          {/* Grid pattern overlay */}
+          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+
+          <div className="relative z-10 flex flex-col h-full p-20">
+            {/* Header Section */}
+            <div className="flex items-center justify-between mb-20">
+              <div className="flex items-center space-x-8">
+                <div className="w-24 h-24 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-[28px] flex items-center justify-center shadow-[0_0_40px_rgba(79,70,229,0.3)] border border-white/20">
+                  <GraduationCap size={52} className="text-white" />
+                </div>
+                <div>
+                  <h2 className="text-6xl font-black tracking-tighter leading-none text-white">JEE HUB</h2>
+                  <p className="text-xl text-indigo-400 font-black uppercase tracking-[0.5em] mt-3">Study Manager</p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-5xl font-black tracking-tighter leading-none text-white">JEE HUB</h2>
-                <p className="text-lg text-indigo-400 font-bold uppercase tracking-[0.4em] mt-2">Study Manager</p>
+              <div className="bg-white/5 border border-white/10 px-10 py-4 rounded-3xl backdrop-blur-md">
+                <p className="text-2xl font-bold text-white/90 tracking-wide">{today}</p>
               </div>
             </div>
-            <div className="bg-white/5 border border-white/10 px-8 py-3 rounded-2xl backdrop-blur-md shadow-xl">
-              <p className="text-xl font-bold text-white/90 tracking-wide">{today}</p>
-            </div>
-          </div>
 
-          {/* User & Title Section */}
-          <div className="mb-16">
-            <div className="flex items-center space-x-4 mb-4">
-              <Sparkles size={28} className="text-amber-400" />
-              <span className="text-2xl font-bold text-white/60 tracking-widest uppercase">Daily Mission</span>
+            {/* User & Title Section */}
+            <div className="mb-20">
+              <div className="flex items-center space-x-5 mb-6">
+                <Sparkles size={36} className="text-amber-400" />
+                <span className="text-3xl font-black text-indigo-400/80 tracking-[0.3em] uppercase">Daily Mission</span>
+              </div>
+              <h3 className="text-[120px] font-black tracking-tighter text-white leading-[0.9] mb-4">
+                Today's<br />Targets
+              </h3>
+              <div className="flex items-center space-x-6 mt-10">
+                <div className="h-2 w-20 bg-gradient-to-r from-indigo-500 to-transparent rounded-full" />
+                <p className="text-4xl text-white/90 font-black tracking-tight">
+                  For <span className="text-indigo-400 underline decoration-indigo-500/30 underline-offset-8">{userName}</span>
+                </p>
+              </div>
             </div>
-            <h3 className="text-8xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/70 leading-[1.1]">
-              Today's<br />Targets
-            </h3>
-            <p className="text-3xl text-indigo-300 font-bold mt-6 tracking-wide flex items-center">
-              <span className="w-12 h-1 bg-indigo-500 rounded-full mr-4" />
-              Set for {userName}
-            </p>
-          </div>
 
-          {/* Tasks Grid */}
-          <div className="flex-1 grid grid-cols-1 gap-6 mb-16">
-            {tasks.length > 0 ? (
-              tasks.slice(0, 5).map((task) => (
-                <div 
-                  key={task.id} 
-                  className="bg-white/[0.03] border border-white/10 rounded-[32px] p-8 flex items-center space-x-8 shadow-2xl backdrop-blur-sm hover:bg-white/[0.05] transition-all"
-                >
-                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg ${
-                    task.subject === 'Physics' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 
-                    task.subject === 'Chemistry' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 
-                    'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-                  }`}>
-                    <Target size={32} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-lg font-black px-4 py-1 bg-white/10 rounded-xl tracking-wider uppercase text-white/90">{task.subject}</span>
-                      <div className="flex items-center space-x-3">
-                         <span className={`text-sm font-black uppercase px-3 py-1 rounded-lg ${
-                            task.priority === 'high' ? 'bg-red-500/20 text-red-400' : 
-                            task.priority === 'medium' ? 'bg-amber-500/20 text-amber-400' : 'bg-blue-500/20 text-blue-400'
-                          }`}>
-                            {task.priority} Priority
-                          </span>
+            {/* Tasks Grid */}
+            <div className="flex-1 flex flex-col space-y-6">
+              {tasks.length > 0 ? (
+                tasks.slice(0, 5).map((task) => (
+                  <div 
+                    key={task.id} 
+                    className="bg-white/[0.04] border border-white/10 rounded-[36px] p-10 flex items-center space-x-10 shadow-2xl backdrop-blur-md"
+                  >
+                    <div className={`w-20 h-20 rounded-3xl flex items-center justify-center shadow-lg ${
+                      task.subject === 'Physics' ? 'bg-blue-500/30 text-blue-300 border border-blue-400/40' : 
+                      task.subject === 'Chemistry' ? 'bg-emerald-500/30 text-emerald-300 border border-emerald-400/40' : 
+                      'bg-amber-500/30 text-amber-300 border border-amber-400/40'
+                    }`}>
+                      <Target size={40} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-xl font-black px-5 py-1.5 bg-white/10 rounded-xl tracking-widest uppercase text-white/80">{task.subject}</span>
+                        <div className="flex items-center space-x-4">
+                           <span className={`text-base font-black uppercase px-4 py-1.5 rounded-xl ${
+                              task.priority === 'high' ? 'bg-red-500/30 text-red-300' : 
+                              task.priority === 'medium' ? 'bg-amber-500/30 text-amber-300' : 'bg-blue-500/30 text-blue-300'
+                            }`}>
+                              {task.priority} Priority
+                            </span>
+                        </div>
                       </div>
+                      <p className="text-4xl font-black truncate text-white tracking-tight">{task.title}</p>
                     </div>
-                    <p className="text-3xl font-bold truncate text-white leading-tight">{task.title}</p>
+                    {task.status === 'completed' && (
+                      <div className="w-16 h-16 bg-emerald-500/30 rounded-full flex items-center justify-center text-emerald-300 border border-emerald-400/40 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                        <CheckCircle2 size={36} />
+                      </div>
+                    )}
                   </div>
-                  {task.status === 'completed' && (
-                    <div className="w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center text-emerald-400 border border-emerald-500/30">
-                      <CheckCircle2 size={24} />
-                    </div>
-                  )}
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center flex-1 text-white/20 text-center space-y-10">
+                  <div className="w-48 h-48 bg-white/5 rounded-full flex items-center justify-center border-2 border-dashed border-white/10">
+                    <Target size={96} className="opacity-20" />
+                  </div>
+                  <p className="text-5xl font-black tracking-tight opacity-50 uppercase">Ready for tomorrow's grind</p>
                 </div>
-              ))
-            ) : (
-              <div className="flex flex-col items-center justify-center h-full text-white/20 text-center space-y-6">
-                <div className="w-32 h-32 bg-white/5 rounded-full flex items-center justify-center border-2 border-dashed border-white/10">
-                  <Target size={64} className="opacity-20" />
+              )}
+              {tasks.length > 5 && (
+                <div className="text-center pt-8">
+                  <span className="text-2xl font-black text-white/30 tracking-widest uppercase bg-white/5 px-12 py-4 rounded-full border border-white/10">
+                    + {tasks.length - 5} More Targets Added
+                  </span>
                 </div>
-                <p className="text-4xl font-black tracking-tight">Focusing for tomorrow...</p>
-              </div>
-            )}
-            {tasks.length > 5 && (
-              <div className="text-center pt-4">
-                <span className="text-xl font-bold text-white/40 bg-white/5 px-8 py-3 rounded-full border border-white/5">
-                  + {tasks.length - 5} additional mission targets
-                </span>
-              </div>
-            )}
-          </div>
-
-          {/* Footer Branding */}
-          <div className="pt-12 border-t border-white/10 flex flex-col items-center space-y-4">
-            <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center shadow-lg">
-                <GraduationCap size={24} className="text-slate-950" />
-              </div>
-              <p className="text-3xl font-black text-white tracking-[0.3em]">POWERED BY JEE HUB</p>
+              )}
             </div>
-            <p className="text-lg text-white/40 font-bold tracking-[0.5em]">WWW.JEEHUB.APP</p>
+
+            {/* Footer Branding */}
+            <div className="pt-16 mt-auto border-t border-white/10 flex flex-col items-center space-y-6">
+              <div className="flex items-center space-x-6">
+                <div className="w-14 h-14 bg-white rounded-[18px] flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                  <GraduationCap size={32} className="text-slate-950" />
+                </div>
+                <p className="text-4xl font-black text-white tracking-[0.4em] leading-none">POWERED BY JEE HUB</p>
+              </div>
+              <p className="text-xl text-white/40 font-black tracking-[0.8em] uppercase">WWW.JEEHUB.APP</p>
+            </div>
           </div>
         </div>
       </div>
