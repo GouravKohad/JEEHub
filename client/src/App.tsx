@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useTimer } from "@/hooks/use-timer";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -42,6 +43,7 @@ function App() {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [showBroadcastDialog, setShowBroadcastDialog] = useState(false);
   const [broadcastMessage, setBroadcastMessage] = useState<BroadcastMessage | null>(null);
+  const { isRunning: isTimerRunning } = useTimer();
   const wsRef = useRef<WebSocket | null>(null);
 
   // Initialize app and check for user profile
@@ -181,9 +183,10 @@ function App() {
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               {/* Tab Navigation */}
               <div className="mb-4 sm:mb-6 md:mb-8 animate-fade-in flex justify-center">
-                <TabsList className="flex w-full max-w-4xl flex-nowrap items-center justify-center bg-card border border-border rounded-lg sm:rounded-xl px-2 sm:px-4 py-2 sm:py-3 md:py-4 shadow-sm hover:shadow-lg transition-all duration-300 gap-1 sm:gap-2 md:gap-4 lg:gap-6">
+                <TabsList className={`flex w-full max-w-4xl flex-nowrap items-center justify-center bg-card border border-border rounded-lg sm:rounded-xl px-2 sm:px-4 py-2 sm:py-3 md:py-4 shadow-sm transition-all duration-300 gap-1 sm:gap-2 md:gap-4 lg:gap-6 ${isTimerRunning ? 'opacity-50 pointer-events-none' : 'hover:shadow-lg'}`}>
                   <TabsTrigger 
                     value="dashboard" 
+                    disabled={isTimerRunning && activeTab !== "dashboard"}
                     className="flex-1 md:flex-none min-w-0 flex items-center justify-center md:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2"
                     data-testid="tab-dashboard"
                   >
@@ -192,6 +195,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="tasks" 
+                    disabled={isTimerRunning && activeTab !== "tasks"}
                     className="flex-1 md:flex-none min-w-0 flex items-center justify-center md:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2"
                     data-testid="tab-tasks"
                   >
@@ -200,6 +204,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="subjects" 
+                    disabled={isTimerRunning && activeTab !== "subjects"}
                     className="flex-1 md:flex-none min-w-0 flex items-center justify-center md:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2"
                     data-testid="tab-subjects"
                   >
@@ -208,6 +213,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="resources" 
+                    disabled={isTimerRunning && activeTab !== "resources"}
                     className="flex-1 md:flex-none min-w-0 flex items-center justify-center md:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2"
                     data-testid="tab-resources"
                   >
@@ -224,6 +230,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="schedule" 
+                    disabled={isTimerRunning && activeTab !== "schedule"}
                     className="flex-1 md:flex-none min-w-0 flex items-center justify-center md:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2"
                     data-testid="tab-schedule"
                   >
@@ -232,6 +239,7 @@ function App() {
                   </TabsTrigger>
                   <TabsTrigger 
                     value="for-you" 
+                    disabled={isTimerRunning && activeTab !== "for-you"}
                     className="flex-1 md:flex-none min-w-0 flex items-center justify-center md:justify-start space-x-1 sm:space-x-2 rounded-md sm:rounded-lg transition-all duration-500 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs sm:text-sm font-medium hover:scale-105 px-1.5 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2"
                     data-testid="tab-for-you"
                   >

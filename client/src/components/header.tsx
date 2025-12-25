@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useTimer } from "@/hooks/use-timer";
 import { GraduationCap, User, Info, Wifi, WifiOff, Battery, BatteryCharging, BatteryLow, RotateCcw, Download, Upload } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { InfoModal } from "@/components/info-modal";
@@ -23,6 +24,7 @@ export function Header({ userProfile, onInfoClick }: HeaderProps) {
   const [batteryLevel, setBatteryLevel] = useState<number | null>(null);
   const [isCharging, setIsCharging] = useState<boolean>(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const { isRunning: isTimerRunning } = useTimer();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
@@ -244,11 +246,11 @@ export function Header({ userProfile, onInfoClick }: HeaderProps) {
             )}
             <ThemeToggle />
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+              <DropdownMenuTrigger asChild disabled={isTimerRunning}>
                 <div
-                  className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-jee-secondary to-jee-primary rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer flex-shrink-0"
+                  className={`w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-jee-secondary to-jee-primary rounded-full flex items-center justify-center transition-all duration-300 flex-shrink-0 ${isTimerRunning ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110 hover:shadow-lg cursor-pointer'}`}
                   data-testid="user-avatar"
-                  title={currentProfile?.name || "User"}
+                  title={isTimerRunning ? "Avatar disabled during study session" : (currentProfile?.name || "User")}
                 >
                   {currentProfile?.name ? (
                     <span className="text-white text-xs sm:text-sm font-medium">
