@@ -105,7 +105,7 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
               </p>
             </div>
 
-            <div className="flex-1 flex flex-col space-y-3 overflow-hidden">
+            <div className="flex-1 flex flex-col space-y-2 overflow-hidden">
               {tasks.length > 0 ? (
                 tasks.slice(0, 10).map((task) => {
                   // Dynamically calculate padding and text sizes based on task count
@@ -113,16 +113,16 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
                   const isCompact = taskCount > 4;
                   const isVeryCompact = taskCount > 7;
                   
-                  const paddingClass = isVeryCompact ? 'p-3' : isCompact ? 'p-4' : 'p-6';
-                  const titleSize = isVeryCompact ? 'text-lg' : isCompact ? 'text-xl' : 'text-2xl';
-                  const iconSize = isVeryCompact ? 20 : isCompact ? 24 : 28;
-                  const badgeSize = isVeryCompact ? 'text-[9px]' : isCompact ? 'text-[10px]' : 'text-sm';
-                  const containerSize = isVeryCompact ? 'w-10 h-10' : isCompact ? 'w-12 h-12' : 'w-14 h-14';
+                  const paddingClass = isVeryCompact ? 'p-2.5' : isCompact ? 'p-3.5' : 'p-6';
+                  const titleSize = isVeryCompact ? 'text-base' : isCompact ? 'text-lg' : 'text-2xl';
+                  const iconSize = isVeryCompact ? 18 : isCompact ? 22 : 28;
+                  const badgeSize = isVeryCompact ? 'text-[8px]' : isCompact ? 'text-[10px]' : 'text-sm';
+                  const containerSize = isVeryCompact ? 'w-9 h-9' : isCompact ? 'w-11 h-11' : 'w-14 h-14';
 
                   return (
                     <div 
                       key={task.id} 
-                      className={`bg-white border border-slate-200 shadow-sm rounded-[24px] flex items-center space-x-4 ${paddingClass}`}
+                      className={`bg-white border border-slate-200 shadow-sm rounded-[20px] flex items-center space-x-3 ${paddingClass}`}
                     >
                       <div className={`rounded-xl flex items-center justify-center shadow-sm flex-shrink-0 ${containerSize} ${
                         task.subject === 'Physics' ? 'bg-blue-100 text-blue-600 border border-blue-200' : 
@@ -132,10 +132,10 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
                         <Target size={iconSize} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-0.5">
-                          <span className={`font-black px-2 py-0.5 bg-slate-100 rounded-md tracking-widest uppercase text-slate-600 ${badgeSize}`}>{task.subject}</span>
+                        <div className="flex items-center justify-between mb-0">
+                          <span className={`font-black px-1.5 py-0 bg-slate-100 rounded-md tracking-widest uppercase text-slate-600 ${badgeSize}`}>{task.subject}</span>
                           <div className="flex items-center space-x-2">
-                             <span className={`font-black uppercase px-2 py-0.5 rounded-md ${badgeSize} ${
+                             <span className={`font-black uppercase px-1.5 py-0 rounded-md ${badgeSize} ${
                                 task.priority === 'high' ? 'bg-red-100 text-red-600 border border-red-200' : 
                                 task.priority === 'medium' ? 'bg-amber-100 text-amber-600 border border-amber-200' : 'bg-blue-100 text-blue-600 border border-blue-200'
                               }`}>
@@ -149,8 +149,8 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
                         )}
                       </div>
                       {task.status === 'completed' && (
-                        <div className={`${isVeryCompact ? 'w-8 h-8' : isCompact ? 'w-10 h-10' : 'w-12 h-12'} bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 border border-emerald-200`}>
-                          <CheckCircle2 size={isVeryCompact ? 16 : isCompact ? 20 : 24} />
+                        <div className={`${isVeryCompact ? 'w-7 h-7' : isCompact ? 'w-9 h-9' : 'w-12 h-12'} bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 border border-emerald-200`}>
+                          <CheckCircle2 size={isVeryCompact ? 14 : isCompact ? 18 : 24} />
                         </div>
                       )}
                     </div>
@@ -164,14 +164,14 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
               )}
             </div>
 
-            <div className="pt-10 mt-auto border-t border-slate-200 flex flex-col items-center space-y-4">
-              <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 bg-slate-900 rounded-[14px] flex items-center justify-center shadow-lg">
-                  <GraduationCap size={24} className="text-white" />
+            <div className="pt-6 mt-auto border-t border-slate-200 flex flex-col items-center space-y-2">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-slate-900 rounded-[10px] flex items-center justify-center shadow-lg">
+                  <GraduationCap size={20} className="text-white" />
                 </div>
-                <p className="text-3xl font-black text-slate-900 tracking-[0.4em] leading-none uppercase">POWERED BY JEE HUB</p>
+                <p className="text-2xl font-black text-slate-900 tracking-[0.4em] leading-none uppercase">POWERED BY JEE HUB</p>
               </div>
-              <p className="text-lg text-slate-400 font-black tracking-[0.8em] uppercase">JEEHUB.ONRENDER.COM</p>
+              <p className="text-sm text-slate-400 font-black tracking-[0.8em] uppercase">JEEHUB.ONRENDER.COM</p>
             </div>
           </div>
         </div>
