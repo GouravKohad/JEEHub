@@ -164,14 +164,14 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
               )}
             </div>
 
-            <div className="pt-6 mt-auto border-t border-slate-200 flex flex-col items-center space-y-2">
-              <div className="flex items-center space-x-3">
+            <div className="pt-6 mt-auto border-t border-slate-200 flex flex-col items-center">
+              <div className="flex items-center space-x-3 mb-2">
                 <div className="w-8 h-8 bg-slate-900 rounded-[10px] flex items-center justify-center shadow-lg">
                   <GraduationCap size={20} className="text-white" />
                 </div>
                 <p className="text-2xl font-black text-slate-900 tracking-[0.4em] leading-none uppercase">POWERED BY JEE HUB</p>
               </div>
-              <p className="text-sm text-slate-400 font-black tracking-[0.8em] uppercase">JEEHUB.ONRENDER.COM</p>
+              <p className="text-sm text-slate-400 font-black tracking-[0.8em] uppercase text-center w-full">JEEHUB.ONRENDER.COM</p>
             </div>
           </div>
         </div>
