@@ -25,7 +25,7 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
       
       const dataUrl = await toPng(exportRef.current, {
         cacheBust: true,
-        backgroundColor: '#020617',
+        backgroundColor: '#f8fafc',
         width: 1080,
         height: 1080,
         pixelRatio: 1,
@@ -68,40 +68,40 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
       >
         <div 
           ref={exportRef}
-          className="bg-[#020617] flex flex-col text-white font-inter overflow-hidden relative"
+          className="bg-[#f8fafc] flex flex-col text-slate-900 font-inter overflow-hidden relative"
           style={{ width: '1080px', height: '1080px' }}
         >
-          <div className="absolute top-[-5%] right-[-5%] w-[70%] h-[70%] bg-indigo-600/30 blur-[120px] rounded-full" />
-          <div className="absolute bottom-[-5%] left-[-5%] w-[60%] h-[60%] bg-purple-600/25 blur-[110px] rounded-full" />
-          <div className="absolute top-[30%] left-[-10%] w-[40%] h-[40%] bg-blue-500/15 blur-[90px] rounded-full" />
-          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+          <div className="absolute top-[-5%] right-[-5%] w-[70%] h-[70%] bg-indigo-500/10 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[-5%] left-[-5%] w-[60%] h-[60%] bg-purple-500/10 blur-[110px] rounded-full" />
+          <div className="absolute top-[30%] left-[-10%] w-[40%] h-[40%] bg-blue-400/5 blur-[90px] rounded-full" />
+          <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#64748b 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
           <div className="relative z-10 flex flex-col h-full p-16">
             <div className="flex items-center justify-between mb-10">
               <div className="flex items-center space-x-6">
-                <div className="w-20 h-20 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-[24px] flex items-center justify-center border border-white/20">
+                <div className="w-20 h-20 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-[24px] flex items-center justify-center shadow-lg">
                   <GraduationCap size={44} className="text-white" />
                 </div>
                 <div>
-                  <h2 className="text-5xl font-black tracking-tighter leading-none text-white">JEE HUB</h2>
-                  <p className="text-lg text-indigo-400 font-black uppercase tracking-[0.4em] mt-2">Study Manager</p>
+                  <h2 className="text-5xl font-black tracking-tighter leading-none text-slate-900">JEE HUB</h2>
+                  <p className="text-lg text-indigo-600 font-black uppercase tracking-[0.4em] mt-2">Study Manager</p>
                 </div>
               </div>
-              <div className="bg-white/5 border border-white/10 px-8 py-3 rounded-2xl backdrop-blur-md">
-                <p className="text-xl font-bold text-white/90 tracking-wide">{today}</p>
+              <div className="bg-slate-200/50 border border-slate-200 px-8 py-3 rounded-2xl backdrop-blur-md">
+                <p className="text-xl font-bold text-slate-700 tracking-wide">{today}</p>
               </div>
             </div>
 
             <div className="mb-8">
               <div className="flex items-center space-x-4 mb-4">
-                <Sparkles size={28} className="text-amber-400" />
-                <span className="text-2xl font-black text-indigo-400/80 tracking-[0.3em] uppercase">Daily Mission</span>
+                <Sparkles size={28} className="text-amber-500" />
+                <span className="text-2xl font-black text-indigo-600/60 tracking-[0.3em] uppercase">Daily Mission</span>
               </div>
-              <h3 className="text-7xl font-black tracking-tighter text-white leading-[0.9] mb-4">
+              <h3 className="text-7xl font-black tracking-tighter text-slate-900 leading-[0.9] mb-4">
                 Today's Targets
               </h3>
-              <p className="text-3xl text-white/90 font-black tracking-tight">
-                For <span className="text-indigo-400">{userName}</span>
+              <p className="text-3xl text-slate-700 font-black tracking-tight">
+                For <span className="text-indigo-600">{userName}</span>
               </p>
             </div>
 
@@ -122,34 +122,34 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
                   return (
                     <div 
                       key={task.id} 
-                      className={`bg-white/[0.04] border border-white/10 rounded-[24px] flex items-center space-x-4 ${paddingClass}`}
+                      className={`bg-white border border-slate-200 shadow-sm rounded-[24px] flex items-center space-x-4 ${paddingClass}`}
                     >
-                      <div className={`rounded-xl flex items-center justify-center shadow-lg flex-shrink-0 ${containerSize} ${
-                        task.subject === 'Physics' ? 'bg-blue-500/30 text-blue-300 border border-blue-400/40' : 
-                        task.subject === 'Chemistry' ? 'bg-emerald-500/30 text-emerald-300 border border-emerald-400/40' : 
-                        'bg-amber-500/30 text-amber-300 border border-amber-400/40'
+                      <div className={`rounded-xl flex items-center justify-center shadow-sm flex-shrink-0 ${containerSize} ${
+                        task.subject === 'Physics' ? 'bg-blue-100 text-blue-600 border border-blue-200' : 
+                        task.subject === 'Chemistry' ? 'bg-emerald-100 text-emerald-600 border border-emerald-200' : 
+                        'bg-amber-100 text-amber-600 border border-amber-200'
                       }`}>
                         <Target size={iconSize} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between mb-0.5">
-                          <span className={`font-black px-2 py-0.5 bg-white/10 rounded-md tracking-widest uppercase text-white/80 ${badgeSize}`}>{task.subject}</span>
+                          <span className={`font-black px-2 py-0.5 bg-slate-100 rounded-md tracking-widest uppercase text-slate-600 ${badgeSize}`}>{task.subject}</span>
                           <div className="flex items-center space-x-2">
                              <span className={`font-black uppercase px-2 py-0.5 rounded-md ${badgeSize} ${
-                                task.priority === 'high' ? 'bg-red-500/30 text-red-300' : 
-                                task.priority === 'medium' ? 'bg-amber-500/30 text-amber-300' : 'bg-blue-500/30 text-blue-300'
+                                task.priority === 'high' ? 'bg-red-100 text-red-600 border border-red-200' : 
+                                task.priority === 'medium' ? 'bg-amber-100 text-amber-600 border border-amber-200' : 'bg-blue-100 text-blue-600 border border-blue-200'
                               }`}>
                                 {task.priority}
                               </span>
                           </div>
                         </div>
-                        <p className={`font-black truncate text-white tracking-tight ${titleSize}`}>{task.title}</p>
+                        <p className={`font-black truncate text-slate-900 tracking-tight ${titleSize}`}>{task.title}</p>
                         {task.description && !isCompact && (
-                          <p className="text-base text-white/60 font-medium truncate italic leading-tight mt-1">{task.description}</p>
+                          <p className="text-base text-slate-500 font-medium truncate italic leading-tight mt-1">{task.description}</p>
                         )}
                       </div>
                       {task.status === 'completed' && (
-                        <div className={`${isVeryCompact ? 'w-8 h-8' : isCompact ? 'w-10 h-10' : 'w-12 h-12'} bg-emerald-500/30 rounded-full flex items-center justify-center text-emerald-300 border border-emerald-400/40`}>
+                        <div className={`${isVeryCompact ? 'w-8 h-8' : isCompact ? 'w-10 h-10' : 'w-12 h-12'} bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 border border-emerald-200`}>
                           <CheckCircle2 size={isVeryCompact ? 16 : isCompact ? 20 : 24} />
                         </div>
                       )}
@@ -157,21 +157,21 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
                   );
                 })
               ) : (
-                <div className="flex flex-col items-center justify-center flex-1 text-white/20 text-center space-y-6">
+                <div className="flex flex-col items-center justify-center flex-1 text-slate-300 text-center space-y-6">
                   <Target size={80} className="opacity-20" />
                   <p className="text-4xl font-black tracking-tight uppercase opacity-50">No targets set</p>
                 </div>
               )}
             </div>
 
-            <div className="pt-10 mt-auto border-t border-white/10 flex flex-col items-center space-y-4">
+            <div className="pt-10 mt-auto border-t border-slate-200 flex flex-col items-center space-y-4">
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 bg-white rounded-[14px] flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-                  <GraduationCap size={24} className="text-slate-950" />
+                <div className="w-10 h-10 bg-slate-900 rounded-[14px] flex items-center justify-center shadow-lg">
+                  <GraduationCap size={24} className="text-white" />
                 </div>
-                <p className="text-3xl font-black text-white tracking-[0.4em] leading-none uppercase">POWERED BY JEE HUB</p>
+                <p className="text-3xl font-black text-slate-900 tracking-[0.4em] leading-none uppercase">POWERED BY JEE HUB</p>
               </div>
-              <p className="text-lg text-white/40 font-black tracking-[0.8em] uppercase">JEEHUB.ONRENDER.COM</p>
+              <p className="text-lg text-slate-400 font-black tracking-[0.8em] uppercase">JEEHUB.ONRENDER.COM</p>
             </div>
           </div>
         </div>
