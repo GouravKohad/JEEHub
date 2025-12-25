@@ -1,11 +1,11 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { toPng } from 'html-to-image';
 import { saveAs } from 'file-saver';
-import { Share2, Download, GraduationCap, Target } from 'lucide-react';
+import { Share2, Download, GraduationCap, Target, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { useToast } from '@/hooks/use-toast';
 import type { Task } from '@shared/schema';
 
 interface TaskExportProps {
@@ -15,21 +15,41 @@ interface TaskExportProps {
 
 export function TaskExport({ tasks, userName }: TaskExportProps) {
   const exportRef = useRef<HTMLDivElement>(null);
+  const [isExporting, setIsExporting] = useState(false);
+  const { toast } = useToast();
 
   const handleExport = async () => {
     if (exportRef.current === null) return;
     
+    setIsExporting(true);
     try {
+      // Small delay to ensure any layout shifts are settled
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
       const dataUrl = await toPng(exportRef.current, {
         cacheBust: true,
         backgroundColor: '#ffffff',
+        pixelRatio: 2, // Higher quality
         style: {
           borderRadius: '0px',
         }
       });
+      
       saveAs(dataUrl, `jee-hub-targets-${new Date().toISOString().split('T')[0]}.png`);
+      
+      toast({
+        title: "Targets Exported!",
+        description: "Your daily targets image has been downloaded. Share it with your community!",
+      });
     } catch (err) {
       console.error('Error exporting image:', err);
+      toast({
+        title: "Export Failed",
+        description: "There was an error generating your image. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -43,96 +63,128 @@ export function TaskExport({ tasks, userName }: TaskExportProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="hover-elevate">
-          <Share2 className="mr-2 h-4 w-4" />
+        <Button 
+          variant="outline" 
+          className="hover-elevate bg-background/50 backdrop-blur-sm border-primary/20 hover:border-primary/50 transition-all duration-300"
+          data-testid="button-share-targets"
+        >
+          <Share2 className="mr-2 h-4 w-4 text-primary" />
           Share Targets
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md bg-card/95 backdrop-blur-md border-border shadow-2xl">
         <DialogHeader>
-          <DialogTitle>Export Daily Targets</DialogTitle>
+          <DialogTitle className="text-xl font-bold flex items-center">
+            <Share2 className="mr-2 h-5 w-5 text-primary" />
+            Export Daily Targets
+          </DialogTitle>
         </DialogHeader>
         
-        <div className="flex flex-col space-y-4">
-          <div className="border rounded-lg overflow-hidden bg-muted p-4">
+        <div className="flex flex-col space-y-6">
+          <div className="relative border rounded-2xl overflow-hidden shadow-inner bg-black/5 dark:bg-white/5 p-4 flex justify-center">
             <div 
               ref={exportRef}
-              className="w-full aspect-[4/5] bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 p-8 flex flex-col text-white font-inter"
-              style={{ width: '400px' }} // Fixed width for consistent export
+              className="w-full max-w-full aspect-[4/5] bg-gradient-to-br from-[#4F46E5] via-[#9333EA] to-[#EC4899] p-8 flex flex-col text-white font-inter"
+              style={{ width: '400px', borderRadius: '0' }} // Fixed width for consistent export, but rounded in UI via parent
             >
               {/* Header */}
-              <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center space-x-2">
-                  <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/30">
-                    <GraduationCap size={20} className="text-white" />
+              <div className="flex items-center justify-between mb-10">
+                <div className="flex items-center space-x-3">
+                  <div className="w-12 h-12 bg-white/20 backdrop-blur-lg rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
+                    <GraduationCap size={24} className="text-white" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold tracking-tight">JEE Hub</h2>
-                    <p className="text-[10px] text-white/70 uppercase tracking-widest font-semibold">Study Manager</p>
+                    <h2 className="text-2xl font-black tracking-tight leading-none">JEE HUB</h2>
+                    <p className="text-[10px] text-white/80 uppercase tracking-[0.2em] font-bold mt-1">Study Manager</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs font-medium text-white/80">{today}</p>
+                  <p className="text-xs font-bold text-white/90 bg-white/10 px-3 py-1 rounded-full backdrop-blur-md border border-white/10">{today}</p>
                 </div>
               </div>
 
               {/* Title Section */}
-              <div className="mb-6">
-                <h3 className="text-3xl font-extrabold mb-1">Today's Targets</h3>
-                <p className="text-sm text-white/80 font-medium">Preparation Goals for {userName}</p>
+              <div className="mb-8">
+                <h3 className="text-4xl font-black mb-2 tracking-tight">Today's Targets</h3>
+                <div className="flex items-center space-x-2">
+                  <div className="h-1 w-12 bg-white/40 rounded-full" />
+                  <p className="text-sm text-white/90 font-semibold tracking-wide">Ready for {userName}</p>
+                </div>
               </div>
 
-              <Separator className="bg-white/20 mb-6" />
-
               {/* Tasks List */}
-              <div className="flex-1 space-y-4 overflow-hidden">
+              <div className="flex-1 space-y-3.5 overflow-hidden">
                 {tasks.length > 0 ? (
                   tasks.slice(0, 6).map((task) => (
-                    <div key={task.id} className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 flex items-start space-x-3">
-                      <div className="mt-1">
-                        <Target size={18} className="text-white/80" />
+                    <div key={task.id} className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 flex items-center space-x-4 transform transition-all hover:bg-white/15">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                        <Target size={16} className="text-white" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs font-bold px-2 py-0.5 bg-white/20 rounded-full">{task.subject}</span>
-                          <span className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded-sm ${
-                            task.priority === 'high' ? 'bg-red-500/50' : 
-                            task.priority === 'medium' ? 'bg-amber-500/50' : 'bg-blue-500/50'
-                          }`}>
-                            {task.priority}
-                          </span>
+                        <div className="flex items-center justify-between mb-0.5">
+                          <span className="text-[10px] font-black px-2 py-0.5 bg-white/20 rounded-md tracking-wider uppercase">{task.subject}</span>
+                          <div className={`w-2 h-2 rounded-full ${
+                            task.priority === 'high' ? 'bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.6)]' : 
+                            task.priority === 'medium' ? 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]' : 'bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.6)]'
+                          }`} />
                         </div>
-                        <p className="text-sm font-semibold truncate leading-tight">{task.title}</p>
+                        <p className="text-sm font-bold truncate leading-tight tracking-tight">{task.title}</p>
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full text-white/60 text-center">
-                    <p className="text-sm font-medium">No targets set for today yet.</p>
+                  <div className="flex flex-col items-center justify-center h-full text-white/60 text-center space-y-3">
+                    <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center border border-dashed border-white/30">
+                      <Target size={32} className="opacity-40" />
+                    </div>
+                    <p className="text-base font-bold">No targets set for today yet.</p>
                   </div>
                 )}
                 {tasks.length > 6 && (
-                  <p className="text-[10px] text-center text-white/60 italic">And {tasks.length - 6} more targets...</p>
+                  <div className="pt-2 text-center">
+                    <span className="text-[11px] font-bold text-white/70 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm">
+                      + {tasks.length - 6} more targets for today
+                    </span>
+                  </div>
                 )}
               </div>
 
               {/* Footer */}
-              <div className="mt-8 pt-6 border-t border-white/20 flex items-center justify-center">
-                <div className="flex flex-col items-center">
-                  <p className="text-xs font-bold text-white tracking-wide">Powered By JEE Hub</p>
-                  <p className="text-[10px] text-white/60 font-medium">jeehub.app</p>
+              <div className="mt-10 pt-8 border-t border-white/20 flex flex-col items-center space-y-2">
+                <div className="flex items-center space-x-2">
+                  <div className="w-6 h-6 bg-white rounded-lg flex items-center justify-center">
+                    <GraduationCap size={14} className="text-indigo-600" />
+                  </div>
+                  <p className="text-sm font-black text-white tracking-widest">POWERED BY JEE HUB</p>
                 </div>
+                <p className="text-[10px] text-white/60 font-bold tracking-[0.3em]">WWW.JEEHUB.APP</p>
               </div>
             </div>
           </div>
 
-          <Button onClick={handleExport} className="w-full">
-            <Download className="mr-2 h-4 w-4" />
-            Download Image
-          </Button>
-          <p className="text-xs text-center text-muted-foreground">
-            Perfect for YouTube posts, community updates, and social sharing.
-          </p>
+          <div className="flex flex-col space-y-3">
+            <Button 
+              onClick={handleExport} 
+              disabled={isExporting}
+              className="w-full h-12 text-base font-bold rounded-xl shadow-lg hover:shadow-xl transition-all active:scale-[0.98]"
+              data-testid="button-download-image"
+            >
+              {isExporting ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Generating High-Quality Image...
+                </>
+              ) : (
+                <>
+                  <Download className="mr-2 h-5 w-5" />
+                  Download PNG
+                </>
+              )}
+            </Button>
+            <p className="text-[11px] text-center text-muted-foreground font-medium px-4">
+              Tip: Post this on your YouTube Community or PW Groups to inspire others and stay accountable!
+            </p>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
